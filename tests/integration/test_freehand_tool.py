@@ -18,7 +18,7 @@ class TestFreehandTool(unittest.TestCase):
         ensure_qgis_app()
         from qgis.core import QgsSnappingConfig, QgsTolerance
 
-        from freehand_digitize.gui.freehand_tool import FreehandTool
+        from freehand_digitize.gui.freehand_tool import MODE_RESHAPE, FreehandTool
         from freehand_digitize.gui.qt_compat import KEY_CONTROL, KEY_ESCAPE, RIGHT_BUTTON
         from tests.integration.fakes import (
             MOVE,
@@ -35,6 +35,7 @@ class TestFreehandTool(unittest.TestCase):
         cls.QgsSnappingConfig = QgsSnappingConfig
         cls.QgsTolerance = QgsTolerance
         cls.FreehandTool = FreehandTool
+        cls.MODE_RESHAPE = MODE_RESHAPE
         cls.KEY_CONTROL = KEY_CONTROL
         cls.KEY_ESCAPE = KEY_ESCAPE
         cls.RIGHT_BUTTON = RIGHT_BUTTON
@@ -108,6 +109,19 @@ class TestFreehandTool(unittest.TestCase):
         rings = self.emitted[0][0].asPolygon()
         self.assertEqual(len(rings[0]), 4)
         self.assertEqual(rings[0][0], rings[0][-1])
+
+    def test_reshape_mode_emits_an_open_line(self) -> None:
+        """Reshape mode emits a line even on a polygon layer."""
+        polygon_layer = self.make_layer("Polygon")
+        self.iface.setActiveLayer(polygon_layer)
+        tool = self.FreehandTool(self.canvas, self.iface, mode=self.MODE_RESHAPE)
+        emitted = []
+        tool.geometryFinished.connect(lambda geometry, layer: emitted.append(geometry))
+        tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
+        tool.canvasMoveEvent(self.mouse_event(self.canvas, self.MOVE, 150, 150))
+        tool.canvasReleaseEvent(self.mouse_event(self.canvas, self.RELEASE, 150, 150))
+        self.assertEqual(len(emitted), 1)
+        self.assertEqual(len(emitted[0].asPolyline()), 2)
 
     def test_short_stroke_is_ignored(self) -> None:
         """A polygon with fewer than three points emits nothing."""

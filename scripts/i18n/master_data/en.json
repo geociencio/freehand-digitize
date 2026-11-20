@@ -1,17 +1,25 @@
 {
     "Arrastra con el botón izquierdo para dibujar una línea o un polígono en la capa activa.\nMantén Ctrl para ajustar el primer y el último vértice; Esc cancela el trazo.": "Drag with the left mouse button to draw a line or polygon on the active layer.\nHold Ctrl to snap the first and last vertex; Esc cancels the stroke.",
+    "Dibuja un trazo que cruce la geometría que quieras reformar. Si hay una selección, solo se reformarán las entidades seleccionadas.": "Draw a stroke crossing the geometry you want to reshape. If there is a selection, only the selected features are reshaped.",
     "Dibujo a mano alzada": "Freehand digitize",
+    "El trazo no cruza ninguna entidad.": "The stroke does not cross any feature.",
+    "El trazo no reformó ninguna entidad.": "The stroke did not reshape any feature.",
     "Entidad no válida": "Invalid feature",
     "Esta herramienta solo dibuja en capas de línea o polígono.": "This tool only draws on line or polygon layers.",
     "Freehand Digitize: añadir entidad": "Freehand Digitize: add feature",
+    "Freehand Digitize: reformar entidad(es)": "Freehand Digitize: reshape feature(s)",
     "La capa activa usa un CRS geográfico: la tolerancia se ignora y la simplificación usa 0.": "The active layer uses a geographic CRS: the tolerance is ignored and simplification uses 0.",
     "La capa «{name}» rechazó la entidad.": "Layer “{name}” rejected the feature.",
+    "La capa «{name}» rechazó la reforma.": "Layer “{name}” rejected the reshape.",
     "La geometría de la entidad que acabas de dibujar no es válida.\n¿Quieres usarla de todos modos?": "The geometry of the feature you just drew is not valid.\nDo you want to use it anyway?",
+    "La geometría reformada no es válida; no se modificó nada.": "The reshaped geometry is not valid; nothing was changed.",
     "La geometría resultante está vacía; no se añadió nada.": "The resulting geometry is empty; nothing was added.",
     "No se pudo crear la entidad: {error}": "Could not create the feature: {error}",
     "No se pudo poner «{name}» en edición.": "Layer “{name}” could not be put in edit mode.",
     "No se pudo poner «{name}» en edición: {error}": "Layer “{name}” could not be put in edit mode: {error}",
+    "Reformar geometría": "Reshape feature",
     "Selecciona primero la capa donde quieres dibujar.": "Select the layer where you want to draw first.",
     "Selecciona una capa vectorial de línea o polígono editable antes de dibujar.": "Select an editable line or polygon vector layer before drawing.",
-    "Tolerancia de simplificación en unidades de la capa (0 = sin simplificación).\nSe desactiva con CRS geográficos, donde la simplificación siempre usa 0.": "Simplification tolerance in layer units (0 = no simplification).\nDisabled for geographic CRS, where simplification always uses 0."
+    "Tolerancia de simplificación en unidades de la capa (0 = sin simplificación).\nSe desactiva con CRS geográficos, donde la simplificación siempre usa 0.": "Simplification tolerance in layer units (0 = no simplification).\nDisabled for geographic CRS, where simplification always uses 0.",
+    "{count} entidad(es) reformada(s).": "{count} feature(s) reshaped."
 }

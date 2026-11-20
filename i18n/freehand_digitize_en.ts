@@ -30,19 +30,20 @@
 Do you want to use it anyway?</translation>
         </message>
         <message>
-            <location filename="../freehand_plugin.py" line="172" />
-            <location filename="../gui/freehand_tool.py" line="130" />
+            <location filename="../freehand_plugin.py" line="242" />
+            <location filename="../gui/reshape_creator.py" line="176" />
+            <location filename="../gui/freehand_tool.py" line="242" />
             <location filename="../gui/feature_creator.py" line="208" />
             <source>No se pudo poner «{name}» en edición.</source>
             <translation>Layer “{name}” could not be put in edit mode.</translation>
         </message>
         <message>
-            <location filename="../gui/freehand_tool.py" line="116" />
+            <location filename="../gui/freehand_tool.py" line="128" />
             <source>Selecciona primero la capa donde quieres dibujar.</source>
             <translation>Select the layer where you want to draw first.</translation>
         </message>
         <message>
-            <location filename="../gui/freehand_tool.py" line="123" />
+            <location filename="../gui/freehand_tool.py" line="135" />
             <source>Esta herramienta solo dibuja en capas de línea o polígono.</source>
             <translation>This tool only draws on line or polygon layers.</translation>
         </message>
@@ -76,14 +77,49 @@ Disabled for geographic CRS, where simplification always uses 0.</translation>
             <translation>Freehand Digitize: add feature</translation>
         </message>
         <message>
-            <location filename="../freehand_plugin.py" line="159" />
-            <source>Selecciona una capa vectorial de línea o polígono editable antes de dibujar.</source>
-            <translation>Select an editable line or polygon vector layer before drawing.</translation>
+            <location filename="../gui/texts.py" line="55" />
+            <source>Reformar geometría</source>
+            <translation>Reshape feature</translation>
         </message>
         <message>
-            <location filename="../freehand_plugin.py" line="181" />
-            <source>No se pudo poner «{name}» en edición: {error}</source>
-            <translation>Layer “{name}” could not be put in edit mode: {error}</translation>
+            <location filename="../gui/texts.py" line="60" />
+            <source>Dibuja un trazo que cruce la geometría que quieras reformar. Si hay una selección, solo se reformarán las entidades seleccionadas.</source>
+            <translation>Draw a stroke crossing the geometry you want to reshape. If there is a selection, only the selected features are reshaped.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="69" />
+            <source>Freehand Digitize: reformar entidad(es)</source>
+            <translation>Freehand Digitize: reshape feature(s)</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="74" />
+            <source>El trazo no cruza ninguna entidad.</source>
+            <translation>The stroke does not cross any feature.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="79" />
+            <source>El trazo no reformó ninguna entidad.</source>
+            <translation>The stroke did not reshape any feature.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="84" />
+            <source>La geometría reformada no es válida; no se modificó nada.</source>
+            <translation>The reshaped geometry is not valid; nothing was changed.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="91" />
+            <source>La capa «{name}» rechazó la reforma.</source>
+            <translation>Layer “{name}” rejected the reshape.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="98" />
+            <source>{count} entidad(es) reformada(s).</source>
+            <translation>{count} feature(s) reshaped.</translation>
+        </message>
+        <message>
+            <location filename="../freehand_plugin.py" line="422" />
+            <source>Selecciona una capa vectorial de línea o polígono editable antes de dibujar.</source>
+            <translation>Select an editable line or polygon vector layer before drawing.</translation>
         </message>
     </context>
 </TS>

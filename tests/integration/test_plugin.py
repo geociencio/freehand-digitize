@@ -15,12 +15,15 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
     def setUpClass(cls) -> None:
         """Bootstrap QGIS and import the modules under test."""
         ensure_qgis_app()
+        from qgis.core import QgsFeature, QgsGeometry, QgsPointXY
+
         from freehand_digitize.freehand_plugin import FreehandDigitizePlugin
         from tests.integration.fakes import (
             MOVE,
             PRESS,
             RELEASE,
             FakeIface,
+            device_point,
             make_canvas,
             make_layer,
             mouse_event,
@@ -32,6 +35,10 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         cls.PRESS = PRESS
         cls.RELEASE = RELEASE
         cls.make_canvas = staticmethod(make_canvas)
+        cls.QgsFeature = QgsFeature
+        cls.QgsGeometry = QgsGeometry
+        cls.QgsPointXY = QgsPointXY
+        cls.device_point = staticmethod(device_point)
         cls.make_layer = staticmethod(make_layer)
         cls.mouse_event = staticmethod(mouse_event)
 
@@ -58,6 +65,42 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertIsNotNone(self.plugin.tool)
         self.assertTrue(self.plugin.action.isEnabled())
         self.assertTrue(self.plugin.action.isCheckable())
+
+    def test_reshape_action_exists(self) -> None:
+        """The reshape action and tool are created and enabled."""
+        self.assertIsNotNone(self.plugin.reshape_action)
+        self.assertIsNotNone(self.plugin.reshape_tool)
+        self.assertTrue(self.plugin.reshape_action.isEnabled())
+
+    def test_activate_reshape_without_selection(self) -> None:
+        """Reshape activation does not require a preselected feature."""
+        self.plugin._on_reshape_triggered(True)
+        self.assertIs(self.canvas.mapTool(), self.plugin.reshape_tool)
+        self.assertTrue(self.plugin.reshape_action.isChecked())
+        self.assertTrue(self.layer.isEditable())
+
+    def test_end_to_end_reshape(self) -> None:
+        """A reshape stroke updates the feature under it."""
+        feature = self.QgsFeature(self.layer.fields())
+        feature.setGeometry(
+            self.QgsGeometry.fromPolylineXY([self.QgsPointXY(0, 5), self.QgsPointXY(10, 5)])
+        )
+        self.layer.dataProvider().addFeature(feature)
+        original = self.layer.getFeature(feature.id()).geometry().asWkt()
+        self.plugin._on_reshape_triggered(True)
+        tool = self.plugin.reshape_tool
+
+        def event(event_type, x, y):
+            return self.mouse_event(
+                self.canvas, event_type, *self.device_point(self.canvas, (x, y))
+            )
+
+        tool.canvasPressEvent(event(self.PRESS, 3, 3))
+        tool.canvasMoveEvent(event(self.MOVE, 3, 7))
+        tool.canvasMoveEvent(event(self.MOVE, 7, 7))
+        tool.canvasMoveEvent(event(self.MOVE, 7, 3))
+        tool.canvasReleaseEvent(event(self.RELEASE, 7, 3))
+        self.assertNotEqual(self.layer.getFeature(feature.id()).geometry().asWkt(), original)
 
     def test_action_disabled_for_point_layer(self) -> None:
         """Point layers disable the action."""
@@ -116,6 +159,8 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.plugin.unload()
         self.assertIsNone(self.plugin.action)
         self.assertIsNone(self.plugin.tool)
+        self.assertIsNone(self.plugin.reshape_tool)
+        self.assertIsNone(self.plugin.reshape_action)
         self.assertIsNone(self.plugin.spinbox)
         self.assertIsNot(self.canvas.mapTool(), tool)
 

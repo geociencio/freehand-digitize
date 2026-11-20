@@ -12,23 +12,23 @@
     },
     "summary": {
         "total_sessions": 1,
-        "tasks_completed": 4,
+        "tasks_completed": 5,
         "overall_effectiveness_score": 1.0,
         "task_completion_rate": 1.0,
         "avg_retries_per_session": 1.0,
-        "tests_ok": 85,
-        "tests_static": 85,
-        "tests_executed": 85,
-        "test_count": 85,
-        "quality_score_latest": 60.1,
+        "tests_ok": 97,
+        "tests_static": 97,
+        "tests_executed": 97,
+        "test_count": 97,
+        "quality_score_latest": 58.5,
         "maintainability_score": 99.9,
         "security_score": 100.0,
-        "type_hint_coverage_params": 87.7,
+        "type_hint_coverage_params": 87.3,
         "type_hint_coverage_returns": 100.0,
         "docstring_coverage": 100.0,
         "cyclomatic_complexity_gate": "PASS",
         "module_size_gate": "PASS",
-        "i18n_hygiene_gate": "N/A (Spanish-only UI; MISSING_I18N disabled in the analyzer profile)",
+        "i18n_hygiene_gate": "PASS (en catalog; 22 messages; make i18n-check)",
         "total_issues": 3,
         "issue_breakdown": {
             "GOD_OBJECT": 3,
@@ -38,7 +38,7 @@
             "MISSING_TYPE_HINTS": 0
         },
         "tests_unit": 49,
-        "tests_integration": 36,
+        "tests_integration": 48,
         "i18n_catalogs": [
             "en"
         ]
@@ -49,7 +49,7 @@
             "command": "uv run --frozen qgis-analyzer analyze . --max-cc 10",
             "output": "analysis_results/",
             "scores": {
-                "module_stability": 60.1,
+                "module_stability": 58.5,
                 "maintainability": 99.9,
                 "security": 100.0
             },
@@ -61,33 +61,33 @@
         "tests_local": {
             "date": "2026-11-19",
             "command": "PYTHONPATH=.. uv run --frozen python -m unittest discover tests",
-            "result": "85 ran, 36 skipped (integration), OK"
+            "result": "97 ran, 48 skipped (integration), OK"
         },
         "tests_qgis": {
             "date": "2026-11-19",
             "command": "make test-qgis",
-            "result": "36 ran, OK (QGIS 4.2.2, Qt6)"
+            "result": "48 ran, OK (QGIS 4.2.2, Qt6)"
         },
         "tests_container": {
             "date": "2026-11-19",
             "command": "make docker-test",
-            "result": "36 ran, OK (qgis/qgis:latest, Qt5)"
+            "result": "48 ran, OK (qgis/qgis:latest, Qt5)"
         },
         "packaging": {
             "date": "2026-11-19",
             "command": "uv run --frozen qgis-manage package && qgis-manage validate --zip",
             "artifact": "dist/freehand_digitize.2.0.0.zip",
-            "result": "validated"
+            "result": "validated (i18n/freehand_digitize_en.qm included)"
         },
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "13 documentation files, relative links OK"
+            "result": "16 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
             "command": "make i18n-check",
-            "result": "7 catalog tests OK; 15 messages translated; en.qm present"
+            "result": "7 catalog tests OK; 22 messages translated; en.qm present"
         }
     },
     "retries": {
@@ -100,8 +100,8 @@
     "last_session": {
         "date": "2026-11-19",
         "topic": "parity_2_0_0_agentic_qa",
-        "tests_ok": 85,
-        "quality_score": 60.1,
+        "tests_ok": 97,
+        "quality_score": 58.5,
         "task_completion_rate": 1.0,
         "retries": 1,
         "stop_conditions_triggered": 0,
@@ -110,7 +110,8 @@
             "Implement core/gui parity (tolerance, snapping, cursor, CRS, form, undo, validity)",
             "Vendor Agentic Forge and adapt project state/skills/workflows",
             "Add uv/QA/CI/tests and validate the 2.0.0 ZIP",
-            "Add QCoreApplication.translate integration and the English catalog"
+            "Add QCoreApplication.translate integration and the English catalog",
+            "Implement and verify freehand reshape (stroke targets, selection filter, one undo)"
         ],
         "status": "SUCCESS"
     },

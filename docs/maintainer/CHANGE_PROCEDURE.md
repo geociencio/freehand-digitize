@@ -186,5 +186,5 @@ Stop and escalate to the user when:
 ## 7. Example
 
 The reshape feature plan is
-[`PLAN_RESHAPE.md`](PLAN_RESHAPE.md). It is currently `PROPOSED` and must not be
-implemented until approved.
+[`PLAN_RESHAPE.md`](PLAN_RESHAPE.md). Revision 2 was approved for **v2.0.0** on
+2026-11-19 and implemented.

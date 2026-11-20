@@ -8,6 +8,8 @@ QGIS 3.28–4.x (Qt5/Qt6).
 
 ### Added
 
+- **Freehand reshape** of existing line/polygon features under the stroke, with an
+  optional selection filter, multi-feature support and a single undo command.
 - Adjustable simplification tolerance (0–5, 3 decimals) in the digitize toolbar,
   persisted in `QgsSettings` with migration of the legacy
   `/freehandEdit/tolerance` key.

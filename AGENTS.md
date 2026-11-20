@@ -104,9 +104,9 @@ translation catalogs. Documentation-only changes are exempt.
    commit hash.
 
 The skill is [plan-first](.agent-state/skills/plan-first/SKILL.md); the workflow
-is `/plan-change`. The current proposed example is
-[PLAN_RESHAPE.md](docs/maintainer/PLAN_RESHAPE.md), which must not be implemented
-before approval.
+is `/plan-change`. The worked example is
+[PLAN_RESHAPE.md](docs/maintainer/PLAN_RESHAPE.md), approved for v2.0.0 and
+implemented.
 
 ---
 
@@ -171,7 +171,8 @@ freehand_plugin.py   wiring: action, tolerance spinbox, signals, lifecycle
    draws the rubber band in canvas coordinates.
 2. On release it emits `geometryFinished(QgsGeometry, QgsVectorLayer)`.
 3. `FeatureCreator` simplifies, validates, opens the attribute form and inserts
-   the feature inside an undo command.
+   the feature inside an undo command. In reshape mode, `ReshapeCreator` applies
+   the stroke to the features under it (selection acts as a filter).
 4. `FreehandDigitizePlugin` owns the action, spinbox, layer enablement and
    lifecycle.
 
@@ -317,7 +318,7 @@ Load only the relevant `SKILL.md` on demand.
 ## 📚 Key Resources
 
 - **Change procedure**: `docs/maintainer/CHANGE_PROCEDURE.md`
-- **Reshape plan (proposed)**: `docs/maintainer/PLAN_RESHAPE.md`
+- **Reshape plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_RESHAPE.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`

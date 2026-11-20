@@ -99,10 +99,15 @@ class FakeMessageBar:
 
     def __init__(self) -> None:
         self.warnings: list[tuple[str, str]] = []
+        self.infos: list[tuple[str, str]] = []
 
     def pushWarning(self, title: str, message: str) -> None:  # noqa: N802
         """Record a warning."""
         self.warnings.append((title, message))
+
+    def pushInfo(self, title: str, message: str) -> None:  # noqa: N802
+        """Record an informational message."""
+        self.infos.append((title, message))
 
 
 class FakeDialog:

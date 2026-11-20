@@ -11,6 +11,7 @@ from qgis.PyQt.QtGui import QColor
 
 from ..core.constants import LOG_TAG, PLUGIN_NAME
 from ..core.geometry_rules import (
+    KIND_LINE,
     KIND_POLYGON,
     KIND_UNKNOWN,
     geometry_kind,
@@ -29,6 +30,9 @@ from .qt_compat import (
     SNAP_VERTEX,
 )
 
+MODE_CREATE = "create"
+MODE_RESHAPE = "reshape"
+
 
 class FreehandTool(QgsMapTool):
     """Drag-to-draw tool for line and polygon layers.
@@ -45,16 +49,24 @@ class FreehandTool(QgsMapTool):
 
     geometryFinished = pyqtSignal(object, object)
 
-    def __init__(self, canvas: Any, iface: Any = None) -> None:
+    def __init__(
+        self,
+        canvas: Any,
+        iface: Any = None,
+        mode: str = MODE_CREATE,
+    ) -> None:
         """Create the tool.
 
         Args:
             canvas: Map canvas the tool draws on.
             iface: Optional QGIS interface used for messages and active layer.
+            mode: ``MODE_CREATE`` for new features or ``MODE_RESHAPE`` for an
+                open line stroke used to reshape existing geometries.
         """
         super().__init__(canvas)
         self.canvas = canvas
         self.iface = iface
+        self.mode = mode if mode in (MODE_CREATE, MODE_RESHAPE) else MODE_CREATE
         self._recorder = StrokeRecorder()
         self._rubber: QgsRubberBand | None = None
         self._layer: Any = None
@@ -125,16 +137,13 @@ class FreehandTool(QgsMapTool):
                 )
             )
             return
-        if not layer.isEditable() and not layer.startEditing():
-            self._warn(
-                QCoreApplication.translate(
-                    "FreehandDigitize", "No se pudo poner «{name}» en edición."
-                ).format(name=layer.name())
-            )
+        if not self._ensure_editable(layer):
             return
 
         self._layer = layer
-        self._kind = geometry_kind(int(layer.geometryType()))
+        self._kind = (
+            KIND_LINE if self.mode == MODE_RESHAPE else geometry_kind(int(layer.geometryType()))
+        )
         self._drawing = True
         self._recorder.reset()
 
@@ -223,6 +232,19 @@ class FreehandTool(QgsMapTool):
         super().keyReleaseEvent(event)
 
     # -- helpers ----------------------------------------------------------
+    def _ensure_editable(self, layer: Any) -> bool:
+        """Return whether the layer is editable, starting the session if needed."""
+        if layer.isEditable():
+            return True
+        if layer.startEditing():
+            return True
+        self._warn(
+            QCoreApplication.translate(
+                "FreehandDigitize", "No se pudo poner «{name}» en edición."
+            ).format(name=layer.name())
+        )
+        return False
+
     def _active_layer(self) -> Any:
         """Return the layer the user is drawing on, if any."""
         if self.iface is not None:

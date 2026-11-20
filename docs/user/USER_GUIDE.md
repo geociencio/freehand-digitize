@@ -12,6 +12,7 @@
 2. [Requirements](#2-requirements)
 3. [Installation](#3-installation)
 4. [Drawing a feature](#4-drawing-a-feature)
+   1. [Reshaping an existing feature](#41-reshaping-an-existing-feature)
 5. [The digitize toolbar](#5-the-digitize-toolbar)
 6. [Snapping with Ctrl](#6-snapping-with-ctrl)
 7. [Attribute form and defaults](#7-attribute-form-and-defaults)
@@ -87,6 +88,26 @@ After installation, the action appears in the **Digitize** toolbar and in
 
 A polygon is closed automatically: you only need three distinct points, and the
 first point is repeated to build the ring. A line needs at least two points.
+
+### 4.1 Reshaping an existing feature
+
+The reshape action modifies existing geometries instead of creating new ones:
+
+1. Select the **line or polygon layer** that contains the geometry.
+2. Optional: select one or more features to restrict the operation. If nothing
+   is selected, every feature under the stroke is considered.
+3. Click **Reformar geometría** (English: **Reshape feature**) in the Digitize
+   toolbar or choose **Vector → Freehand Digitize**.
+4. Draw a stroke across the geometry you want to change. For a line or a polygon
+   boundary the stroke must cross it at least twice; a stroke that crosses once
+   is ignored.
+5. Release to apply. The action is one undo command: `Ctrl+Z` restores every
+   reshaped feature.
+
+If a selection exists, only selected features that also intersect the stroke are
+reshaped. A warning is shown when the stroke crosses no feature or when no
+candidate could be reshaped. `Esc` cancels the stroke, and `Ctrl` snapping works
+on the first and last vertex exactly as in the creation tool.
 
 If the stroke is too short (fewer points than the geometry needs), nothing is
 created and the tool stays active.

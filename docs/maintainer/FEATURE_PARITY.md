@@ -40,9 +40,13 @@ Comparación entre el plugin original
 | 23 | `Esc` cancela el trazo | ❌ | ✅ | ✅ | `gui/freehand_tool.py` |
 | 24 | Auto-inicio de edición | ❌ | ✅ | ✅ (decisión) | `freehand_plugin.py` |
 | 25 | Mensajes de error robustos | parcial | ✅ | ✅ | `freehand_tool.py`, `feature_creator.py` |
+| 26 | Reshape freehand de geometrías existentes | ❌ | ❌ | ✅ (nueva) | `gui/reshape_creator.py` |
 
 Leyenda: ✅ implementado · ❌ ausente · “mejora/decisión” = desviación
 deliberada documentada abajo.
+
+La fila 26 es una **función nueva**, no una capacidad de `freehandEditing`: se
+añadió en 2.0.0 para reformar geometrías existentes con un trazo freehand.
 
 ---
 
@@ -113,7 +117,9 @@ Los comportamientos de la matriz están cubiertos por:
   formulario aceptado/cancelado, geometría inválida (sí/no), simplificación,
   geometría vacía, inicio de edición.
 - `tests/integration/test_plugin.py` — habilitación por capa, CRS geográfico vs
-  proyectado, activación, extremo a extremo y descarga.
+  proyectado, activación, reshape extremo a extremo y descarga.
+- `tests/integration/test_reshape_creator.py` — detección bajo el trazo, filtro
+  por selección, múltiples entidades, deshacer y casos de fallo.
 - `tests/core/` — reglas de geometría, muestreo, tolerancia, settings, sintaxis
   Python 3.9.
 

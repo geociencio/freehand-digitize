@@ -1,14 +1,16 @@
 # Implementation Plan — Freehand Reshape
 
-> **Status: PROPOSED (revision 2)** — no code changes until the user explicitly
-> approves this plan.
+> **Status: IMPLEMENTED (revision 2)** — approved by the user on 2026-11-19 for
+> **v2.0.0** (no version bump) and implemented on 2026-11-19.
 >
-> Version: 2.1.0 (recommended; see §9) | Date: 2026-11-19
+> Version: 2.0.0 | Date: 2026-11-19
 > Procedure: [CHANGE_PROCEDURE.md](CHANGE_PROCEDURE.md)
 >
 > **Revision 2 (2026-11-19):** the target is no longer “one preselected feature”.
 > The reshape is applied to the geometries **under the drawn stroke**; a
 > selection, when present, restricts the operation to the selected features.
+>
+> **Approval:** revision 2 approved for v2.0.0 on 2026-11-19.
 
 ---
 
@@ -300,22 +302,16 @@ reshape action string to `tests/test_i18n_catalogs.py` required strings.
 
 ## 9. Versioning
 
-**Decision required.** Recommended: **2.1.0** (new user-facing feature, backwards
-compatible). Alternative: fold into **2.0.0** if v2.0.0 has not been tagged or
-published yet (currently no `v2.0.0` tag exists).
+**Decision: fold into 2.0.0** (approved 2026-11-19). There is no `v2.0.0` tag or
+published release yet, so no version bump is needed.
 
-Files to bump for 2.1.0:
+Files to update:
 
-- `metadata.txt` (`version`, `changelog`, `about` feature list)
-- `pyproject.toml` (`version`)
-- `CHANGELOG.md` (new `## 2.1.0` section)
-- `tests/test_metadata.py` (expected version)
-- version headers in `docs/ARCHITECTURE_EN.md`, `docs/user/USER_GUIDE.md`,
-  `docs/maintainer/DOCS_STYLE_GUIDE.md`, `docs/maintainer/COMMIT_GUIDELINES.md`
-  (if updated in the same change)
-- `AI_CONTEXT.md` and `.agent-state/memory/agent_metrics.json`
-
-If folded into 2.0.0, only the changelog/about and tests need the new bullet.
+- `metadata.txt` (`changelog`, `about` feature list; version stays `2.0.0`)
+- `CHANGELOG.md` (new bullet in the 2.0.0 section)
+- `README.md`, `docs/user/USER_GUIDE.md`, `docs/ARCHITECTURE_EN.md`
+- `AI_CONTEXT.md`, `.agent-state/task.md`, `next_steps.md`,
+  `docs/maintenance/DEVELOPMENT_LOG.md` and `agent_metrics.json`
 
 ---
 
@@ -406,14 +402,26 @@ make agent-validate
 
 ---
 
-## 15. Approval
+## 15. Results
 
-The plan is **PROPOSED (revision 2)**. Implementation starts only after the user
-confirms:
+- `gui/reshape_creator.py` added; `FreehandTool` supports `MODE_RESHAPE`; the
+  plugin exposes a second action/tool.
+- 8 new Spanish→English catalog entries (22 messages total); catalog tests pass.
+- Tests: 97 total (49 unit + 48 integration), green in QGIS 4.2.2 and the
+  Qt5/QGIS 3.99 container; reshape creator, tool and plugin covered.
+- `make pre-release`, `make zip`, `make security-scan`, `make qt6-check` and
+  `make docker-test` pass; deployed smoke test in QGIS 4 passes.
+- **Commit:** to be filled by the integration commit.
+
+---
+
+## 16. Approval
+
+**APPROVED (revision 2) — 2026-11-19 — for v2.0.0.** The user approved:
 
 1. **Targeting**: no selection → all features under the stroke; with selection →
-   only selected features under the stroke (recommended). Is that correct?
-2. **Version**: **2.1.0** or fold into 2.0.0?
-3. **Tolerance**: raw stroke, no simplification (recommended)?
-4. **Label**: **Reformar geometría** / **Reshape feature** (or another)?
-5. **Scope**: line + polygon, single-part and multi-part best effort?
+   only selected features under the stroke.
+2. **Version**: fold into **2.0.0** (no bump).
+3. **Tolerance**: raw stroke, no simplification.
+4. **Label**: **Reformar geometría** / **Reshape feature**.
+5. **Scope**: line + polygon, single-part and multi-part best effort.

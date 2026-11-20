@@ -35,6 +35,8 @@ active vector layer. It is a modernized derivative of the classic
 ### Key features
 
 - Freehand line/polygon digitizing with a pencil cursor and a live rubber band.
+- Freehand reshape of existing geometries under the stroke, with optional
+  selection filtering and one undo command.
 - Configurable, persisted simplification tolerance (0–5 layer units).
 - Geographic-CRS policy (tolerance forced to 0).
 - CTRL snapping of the first and last vertex through the QGIS snapping engine.
@@ -60,7 +62,8 @@ freehand_digitize/
 ├── gui/                         # PyQGIS/Qt
 │   ├── cursor.py                # pencil XPM
 │   ├── feature_creator.py       # simplify/validate/form/defaults/undo
-│   ├── freehand_tool.py         # QgsMapTool, snapping, rubber band
+│   ├── freehand_tool.py         # QgsMapTool, snapping, rubber band, modes
+│   ├── reshape_creator.py       # target detection + reshapeGeometry + undo
 │   ├── geometry_factory.py      # stroke points -> QgsGeometry
 │   └── qt_compat.py             # PyQt5/PyQt6 + QGIS enum shims
 ├── tests/
@@ -213,6 +216,8 @@ Builds a `QgsGeometry` from stroke points:
 - snaps the start and release points when CTRL is held
   (`snapToCurrentLayer`, then `snapToMap`, then free point);
 - draws a polygon/line rubber band in canvas coordinates;
+- in `MODE_RESHAPE` builds an open line even on a polygon layer (the stroke is
+  used as the reshape guide, not as a new feature);
 - ignores presses while drawing and during a modal form (`setIgnoreClick`);
 - finishes on **any** button release (upstream secondary-click semantics);
 - `Esc` cancels the stroke; a second `Esc` deactivates the tool;
@@ -236,6 +241,24 @@ Builds a `QgsGeometry` from stroke points:
 
 `_exec_dialog` supports both `exec()` (PyQt6) and `exec_()` (PyQt5).
 
+### `reshape_creator.py`
+
+`ReshapeCreator` modifies existing features:
+
+1. `_candidates`: if features are selected, use only those; otherwise query the
+   stroke bounding box (`QgsFeatureRequest.setFilterRect`) and keep the features
+   whose geometry intersects the stroke.
+2. Build a `QgsLineString` in layer coordinates and call
+   `QgsGeometry.reshapeGeometry` on each candidate.
+3. Keep only `Qgis.GeometryOperationResult.Success` results with valid,
+   non-empty geometry.
+4. Apply all results in one `beginEditCommand`/`changeGeometry`/
+   `endEditCommand` block; roll back prior changes if the provider rejects one.
+5. Repaint the canvas and report the count when more than one feature changed.
+
+The native `QgsMapToolReshape` is not exposed to Python, so the freehand stroke
+is the reshape guide.
+
 ---
 
 ## 🔌 Plugin wiring and lifecycle
@@ -243,9 +266,10 @@ Builds a `QgsGeometry` from stroke points:
 `FreehandDigitizePlugin` is the QGIS entry point:
 
 - `initGui()`:
-  - creates `ToleranceStore`, `FeatureCreator` and `FreehandTool`;
-  - creates the checkable action with the theme icon;
-  - adds the action to the digitize toolbar (or a fallback toolbar) and the
+  - creates `ToleranceStore`, `FeatureCreator`, `ReshapeCreator`, the creation
+    `FreehandTool` and the reshape `FreehandTool(mode=MODE_RESHAPE)`;
+  - creates two checkable actions (create and reshape) with theme icons;
+  - adds both actions to the digitize toolbar (or a fallback toolbar) and the
     Vector menu;
   - creates the tolerance `QDoubleSpinBox` and adds it to the toolbar;
   - connects `iface.currentLayerChanged` and `canvas.mapToolSet`;
@@ -255,11 +279,14 @@ Builds a `QgsGeometry` from stroke points:
 - `_update_ui_state()`: enables the action and the spinbox; disables the
   spinbox for geographic CRS; deactivates the tool if the layer becomes
   unsupported.
-- `_activate_tool()`: validates, starts editing if needed, installs the tool.
+- `_activate_tool()` / `_activate_reshape_tool()`: validate, start editing if
+  needed and install the corresponding tool. Reshape does not require a
+  preselection.
 - `_on_geometry_finished()`: computes the effective tolerance and delegates to
   `FeatureCreator`.
-- `unload()`: disconnects signals, unsets the tool, removes the spinbox and the
-  action, deletes the fallback toolbar if it was created.
+- `_on_reshape_finished()`: delegates the stroke to `ReshapeCreator`.
+- `unload()`: disconnects signals, unsets the active tool, removes both actions
+  and the spinbox, and deletes the fallback toolbar if it was created.
 
 ---
 
@@ -278,6 +305,15 @@ Builds a `QgsGeometry` from stroke points:
 5. `FeatureCreator.create` simplifies, validates, starts editing, creates the
    feature with defaults, shows the form and adds it inside an undo command.
 6. The layer is repainted; the user can undo the feature as one operation.
+
+### Reshape branch
+
+1. The user activates **Reformar geometría**; no preselection is required.
+2. The reshape `FreehandTool` records the stroke and emits the open line.
+3. `ReshapeCreator` finds the features under the stroke (selection acts as a
+   filter), applies `reshapeGeometry` to each and commits all successful results
+   in one undo command.
+4. The layer is repainted; `Ctrl+Z` restores every reshaped feature.
 
 ---
 
@@ -423,6 +459,9 @@ value; the GUI must not duplicate the geographic-CRS rule.
   the operations are interactive.
 - **Qt6 static checker**: dead flat-enum fallbacks must use `getattr` so the
   portal checker stays clean.
+- **Reshape** uses the raw stroke and the QGIS rule that the stroke must cross
+  the geometry at least twice. It is not the native click-based QGIS reshape
+  tool (that map tool is not exposed to Python).
 
 ---
 

@@ -74,6 +74,7 @@ class TestTranslationCatalogs(unittest.TestCase):
         """The strings a user sees first must be translated, not copied."""
         required = {
             "Dibujo a mano alzada": "Freehand digitize",
+            "Reformar geometría": "Reshape feature",
             "Entidad no válida": "Invalid feature",
             "Selecciona una capa vectorial de línea o polígono editable antes de dibujar.": (
                 "Select an editable line or polygon vector layer before drawing."

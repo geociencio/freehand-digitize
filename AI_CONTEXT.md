@@ -17,6 +17,8 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
   policy, CTRL snapping (first/last vertex), pencil cursor, layer-CRS geometry,
   attribute form, provider defaults, undo command, invalid-geometry prompt,
   layer enablement, secondary-button finish, ESC cancel.
+- Freehand reshape (new in 2.0.0): a stroke reshapes the geometries under it;
+  a selection filters the targets; one undo command per operation.
 - Tests: `tests/core/` (no QGIS) + `tests/integration/` (real QGIS 4.2.2);
   the suite is green in both environments.
 - QA: `pyproject.toml`/`uv.lock`, Makefile, ruff, flake8, mypy, analyzer,
@@ -35,14 +37,15 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
 
 ```
 core/     pure Python: constants, geometry rules, stroke sampling, settings
-gui/      PyQGIS/Qt: freehand tool, feature creator, cursor, geometry factory, compat
+gui/      PyQGIS/Qt: freehand tool, feature creator, reshape creator, cursor, geometry factory, compat
 freehand_plugin.py   wiring: action, spinbox, signals, lifecycle
 ```
 
 - `core/` has no QGIS/Qt imports.
 - `gui/qt_compat.py` centralizes PyQt5/PyQt6 and QGIS enum differences.
 - The tool captures the layer at press time and emits
-  `geometryFinished(geometry, layer)`; `FeatureCreator` persists the feature.
+  `geometryFinished(geometry, layer)`; `FeatureCreator` persists the feature and
+  `ReshapeCreator` modifies the features under a reshape stroke.
 
 ## Commands
 
@@ -63,14 +66,13 @@ make zip             # package + validate ZIP
 - **Auto-start editing** on activation (kept from 1.0.0; original required an
   explicit edit session).
 - **Lines allow 2 points**; polygons require 3 distinct points before closing.
+- **Reshape target**: features under the stroke; a selection restricts the set;
+  the raw stroke is used (no tolerance) and the operation is one undo command.
 - **`supportsQt6` is not used**: deprecated by qgis-manage 0.17; QGIS 4 Ready is
   `qgisMaximumVersion = 4.99`.
 - Repository: <https://github.com/geociencio/freehand-digitize>; metadata URLs point there.
 
 ## Pending
 
-- Review and approve (or adjust) `docs/maintainer/PLAN_RESHAPE.md` revision 2
-  (target = geometry under the stroke); no reshape code is written yet.
-
-
-- Commit the 2.0.0 implementation (baseline commit already exists).
+- Tag `v2.0.0` and publish the ZIP.
+- Real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

@@ -5,6 +5,31 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-19] - Freehand reshape implementado (23:05)
+
+### Resumen
+Se implementó la revisión 2 del plan de reshape: el trazo reforma las geometrías
+que quedan bajo él, con selección opcional como filtro y una sola operación de
+deshacer.
+
+### Logros
+- `gui/reshape_creator.py` con detección por bounding box + intersección,
+  `QgsGeometry.reshapeGeometry`, filtro por selección y edición atómica.
+- `FreehandTool` con `MODE_CREATE`/`MODE_RESHAPE` y trazo de línea abierta.
+- Segunda acción/tool en `freehand_plugin.py`; limpieza y ciclo de vida
+  refactorizados.
+- Traducciones español→inglés (22 mensajes), tests de catálogo y de integración.
+- Tests: 97 totales (49 unitarios, 48 integración) en QGIS 4.2.2 y en el
+  contenedor Qt5/QGIS 3.99.
+- `make pre-release`, `make zip`, `make security-scan`, `make qt6-check` verdes;
+  smoke test del plugin desplegado en QGIS 4.
+
+### Documentación
+- README, guía de usuario, arquitectura, CHANGELOG, metadata y paridad.
+- [Plan de reshape](../maintainer/PLAN_RESHAPE.md) marcado como implementado.
+
+---
+
 ## [2026-11-19] - Proceso plan-first y plan de reshape (22:35)
 
 ### Resumen

@@ -6,7 +6,9 @@ plugin and adapting them to **QGIS 3.28–4.x** (Qt5 and Qt6).
 
 Drag with the left mouse button over the map and release to create the feature
 on the active layer. The stroke is stored in the **layer CRS** (on-the-fly
-reprojection safe) and simplified with the configurable tolerance.
+reprojection safe) and simplified with the configurable tolerance. The same
+freehand workflow can also **reshape** existing line/polygon geometries: draw a
+stroke across them and release.
 
 ---
 
@@ -15,6 +17,8 @@ reprojection safe) and simplified with the configurable tolerance.
 | Feature | Detail |
 | :--- | :--- |
 | Freehand drawing | Lines and polygons; polygons close automatically. |
+| Reshape | Draw a stroke across existing line/polygon geometries to reshape them; a selection narrows the targets. |
+| Multi-feature reshape | Every geometry under the stroke changes in one undo command. |
 | Simplification tolerance | `QDoubleSpinBox` 0–5, 3 decimals, step 0.1; persisted between sessions. |
 | Geographic CRS | The tolerance is disabled and 0 is applied (degrees are not metres). |
 | `Ctrl` snapping | Snaps the first and last vertex to existing vertices (QGIS snapping engine). |
@@ -35,7 +39,7 @@ The full comparison is in
 [`docs/maintainer/FEATURE_PARITY.md`](docs/maintainer/FEATURE_PARITY.md).
 Restored: persistent tolerance, `Ctrl` snapping, pencil cursor, attribute form,
 provider defaults, undo commands, invalid-geometry prompt, layer CRS and
-per-layer enablement.
+per-layer enablement. Reshape is a new feature, not part of the upstream plugin.
 
 ---
 
@@ -75,6 +79,17 @@ You can also copy this folder to
    before the feature is added.
 5. Adjust the **tolerance** in the digitize toolbar spin box (0 = no
    simplification).
+
+### Reshaping an existing feature
+
+1. Select a **line or polygon layer** and start editing if needed.
+2. Optional: select one or more features to restrict the reshape to them.
+3. Click **Reformar geometría** (English: **Reshape feature**) in the digitize
+   toolbar or choose **Vector → Freehand Digitize**.
+4. Draw a stroke that crosses the geometry; for lines and polygon boundaries the
+   stroke must cross at least twice.
+5. Release to apply. All features under the stroke are reshaped in one undo
+   command; with a selection, only selected features are considered.
 
 The full user guide is in [`docs/user/USER_GUIDE.md`](docs/user/USER_GUIDE.md).
 
@@ -161,7 +176,7 @@ The `uv` modernization guide is in
 - [User guide](docs/user/USER_GUIDE.md)
 - [Architecture](docs/ARCHITECTURE_EN.md)
 - [Change procedure (plan first)](docs/maintainer/CHANGE_PROCEDURE.md)
-- [Reshape implementation plan (proposed)](docs/maintainer/PLAN_RESHAPE.md)
+- [Reshape implementation plan](docs/maintainer/PLAN_RESHAPE.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)
