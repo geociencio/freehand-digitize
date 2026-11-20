@@ -23,6 +23,8 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
   distances, geographic-CRS warning; the tool recovers the options at press.
 - Edit-session gating: create/reshape are enabled only while the layer is in
   edit mode; stopping editing cancels the stroke and deactivates the tool.
+- Feature difference: subtract a selected or mouse-picked cutter from a target;
+  same-layer only, cutter untouched, one undo; empty/invalid results rejected.
 - Tests: `tests/core/` (no QGIS) + `tests/integration/` (real QGIS 4.2.2);
   the suite is green in both environments.
 - QA: `pyproject.toml`/`uv.lock`, Makefile, ruff, flake8, mypy, analyzer,
@@ -48,6 +50,8 @@ freehand_plugin.py   wiring: action, spinbox, signals, lifecycle
 - `core/` has no QGIS/Qt imports.
 - `core/settings.py` stores tolerance and sampling options; `core/stroke.py`
   implements pixel/layer thinning.
+- `gui/difference_creator.py` applies `QgsGeometry.difference`; the dialog and
+  pick tool choose the target/cutter.
 - `gui/qt_compat.py` centralizes PyQt5/PyQt6 and QGIS enum differences.
 - The tool captures the layer at press time and emits
   `geometryFinished(geometry, layer)`; `FeatureCreator` persists the feature and
@@ -76,6 +80,8 @@ make zip             # package + validate ZIP
   the raw stroke is used (no tolerance) and the operation is one undo command.
 - **Sampling**: pixels (default 1.5) or layer units (separate distances);
   geographic CRS warns that degrees are latitude-dependent.
+- **Difference**: same-layer target/cutter only; the target is updated, the
+  cutter is not, and empty/invalid results leave the target unchanged.
 - **`supportsQt6` is not used**: deprecated by qgis-manage 0.17; QGIS 4 Ready is
   `qgisMaximumVersion = 4.99`.
 - Repository: <https://github.com/geociencio/freehand-digitize>; metadata URLs point there.

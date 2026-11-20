@@ -174,6 +174,7 @@ freehand_plugin.py   wiring: action, tolerance spinbox, signals, lifecycle
    the feature inside an undo command. In reshape mode, `ReshapeCreator` applies
    the stroke to the features under it (selection acts as a filter). Sampling is
    rebuilt from `SamplingStore` at press; tools require an active edit session.
+   Feature difference updates the selected or mouse-picked target only.
 4. `FreehandDigitizePlugin` owns the action, spinbox, layer enablement and
    lifecycle.
 
@@ -322,6 +323,7 @@ Load only the relevant `SKILL.md` on demand.
 - **Reshape plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_RESHAPE.md`
 - **Edit-session plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_EDIT_SESSION.md`
 - **Vertex sampling plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_VERTEX_SAMPLING.md`
+- **Feature-difference plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_FEATURE_DIFFERENCE.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`

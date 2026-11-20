@@ -21,6 +21,7 @@ stroke across them and release.
 | Multi-feature reshape | Every geometry under the stroke changes in one undo command. |
 | Sampling settings | One vertex every N **pixels** or N **layer units**; a geographic CRS warns that layer units are degrees. |
 | Edit-session aware | Create/reshape are enabled only while the layer is in edit mode; stopping editing cancels the stroke. |
+| Feature difference | Select two features, or click the target and cutter, to subtract one from the other; one undo command. |
 | Simplification tolerance | `QDoubleSpinBox` 0–5, 3 decimals, step 0.1; persisted between sessions. |
 | Geographic CRS | The tolerance is disabled and 0 is applied (degrees are not metres). |
 | `Ctrl` snapping | Snaps the first and last vertex to existing vertices (QGIS snapping engine). |
@@ -96,6 +97,22 @@ The two units keep separate distances, so switching units does not reinterpret
 `1.5` as `1.5°`. For a geographic layer the dialog warns that a degree of
 longitude is not a constant length (it depends on latitude); use pixels for a
 uniform on-screen density.
+
+### Feature difference (cut)
+
+1. Select the line/polygon layer and start editing.
+2. Select exactly two features, **or** leave the selection as is and use the
+   mouse pick flow.
+3. Click **Diferencia de entidades** (English: **Feature difference**).
+4. If two features are selected, the dialog opens; otherwise click the **target**
+   and then the **cutter** on the map.
+5. Choose/confirm target and cutter; press **Aplicar**.
+6. The target becomes `target − cutter`; the cutter is untouched. One `Ctrl+Z`
+   restores the target.
+
+With a geographic CRS or mixed geometry types, the operation follows QGIS
+`QgsGeometry.difference`; cross-layer difference is not supported in this
+version.
 
 ### Reshaping an existing feature
 
@@ -196,6 +213,7 @@ The `uv` modernization guide is in
 - [Reshape implementation plan](docs/maintainer/PLAN_RESHAPE.md)
 - [Vertex sampling plan (proposed)](docs/maintainer/PLAN_VERTEX_SAMPLING.md)
 - [Edit-session gating plan (proposed)](docs/maintainer/PLAN_EDIT_SESSION.md)
+- [Feature-difference plan (proposed)](docs/maintainer/PLAN_FEATURE_DIFFERENCE.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

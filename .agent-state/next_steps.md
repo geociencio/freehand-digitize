@@ -6,13 +6,13 @@
 ## ✅ Current state
 
 - **Plugin 2.0.0** implemented with full `freehandEditing` parity plus freehand
-  reshape, sampling and edit-session gating: tolerance spinbox/persistence,
-  geographic-CRS policy, pixel/layer-unit sampling, CTRL snapping, pencil
-  cursor, layer-CRS geometry, attribute form, provider defaults, undo, validity
-  prompt, layer enablement, secondary-release finish and ESC cancel.
+  reshape, sampling, edit-session gating and feature difference: tolerance
+  spinbox/persistence, geographic-CRS policy, pixel/layer-unit sampling, CTRL
+  snapping, pencil cursor, layer-CRS geometry, attribute form, provider defaults,
+  undo, validity prompt, layer enablement, secondary-release finish and ESC cancel.
 - **Architecture**: `core/` (no QGIS/Qt) + `gui/` (PyQGIS) +
   `freehand_plugin.py` (wiring); Qt5/Qt6 shims in `gui/qt_compat.py`.
-- **Tests**: 117 total — 57 unit (no QGIS) and 60 integration, green against both
+- **Tests**: 134 total — 57 unit (no QGIS) and 77 integration, green against both
   QGIS 4.2.2 (host, Qt6) and the QGIS container (Qt5); `make test` reports the
   integration layer as skipped when QGIS is absent.
 - **QA**: ruff, flake8, mypy (core), qgis-analyzer (`--max-cc 10`),

@@ -14,6 +14,7 @@
 4. [Drawing a feature](#4-drawing-a-feature)
    1. [Reshaping an existing feature](#41-reshaping-an-existing-feature)
    2. [Sampling settings](#42-sampling-settings)
+   3. [Feature difference](#43-feature-difference)
 5. [The digitize toolbar](#5-the-digitize-toolbar)
 6. [Snapping with Ctrl](#6-snapping-with-ctrl)
 7. [Attribute form and defaults](#7-attribute-form-and-defaults)
@@ -130,6 +131,25 @@ on-screen density or a projected CRS for metric sampling.
 
 The edit-session rule applies to the map tools, not to this dialog: sampling can
 be configured even when no layer is being edited.
+
+### 4.3 Feature difference
+
+The difference action subtracts one existing feature from another:
+
+1. Start editing the line/polygon layer.
+2. Select exactly two features, or leave the selection as is and use the mouse
+   pick flow.
+3. Click **Diferencia de entidades** (English: **Feature difference**).
+4. If two features are selected, choose the target and cutter in the dialog.
+   Otherwise click the **target** feature and then the **cutter** feature on the
+   map; the dialog opens with those two.
+5. Press **Aplicar**. The target becomes `target − cutter`; the cutter is not
+   modified. One `Ctrl+Z` restores the target.
+
+The target keeps its attributes. If the result is empty (the cutter covers it)
+or invalid, the target is left unchanged and a warning is shown. This is a
+difference, not a split: the result remains one feature, possibly multipart.
+Cross-layer difference is not supported in this version.
 
 If the stroke is too short (fewer points than the geometry needs), nothing is
 created and the tool stays active.

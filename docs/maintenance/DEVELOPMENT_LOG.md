@@ -5,6 +5,28 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-20] - Diferencia de entidades (00:30)
+
+### Resumen
+Se añadió la diferencia objetivo − corte, con dos entidades seleccionadas o
+selección por mouse (clic objetivo, clic corte) y diálogo de confirmación.
+
+### Logros
+- `DifferenceDialog`, `DifferencePickTool` y `DifferenceCreator`.
+- `QgsGeometry.difference` con rechazo de resultados vacíos/no válidos; la
+  entidad de corte no se modifica; una sola operación de deshacer.
+- Acción habilitada en edición; sin par seleccionado se activa el pick tool.
+- Traducciones ES→EN (48 mensajes) y tests de creador, diálogo, pick tool y
+  plugin.
+- Tests: 134 totales (57 unitarios, 77 integración) en QGIS 4.2.2 y contenedor
+  Qt5/QGIS 3.99.
+
+### Documentación
+- README, guía de usuario, arquitectura, CHANGELOG, metadata y paridad.
+- [Plan de diferencia](../maintainer/PLAN_FEATURE_DIFFERENCE.md) implementado.
+
+---
+
 ## [2026-11-19] - Muestreo configurable y gating de edición (23:38)
 
 ### Resumen

@@ -12,23 +12,23 @@
     },
     "summary": {
         "total_sessions": 1,
-        "tasks_completed": 7,
+        "tasks_completed": 8,
         "overall_effectiveness_score": 1.0,
         "task_completion_rate": 1.0,
         "avg_retries_per_session": 1.0,
-        "tests_ok": 117,
-        "tests_static": 117,
-        "tests_executed": 117,
-        "test_count": 117,
-        "quality_score_latest": 56.4,
+        "tests_ok": 134,
+        "tests_static": 134,
+        "tests_executed": 134,
+        "test_count": 134,
+        "quality_score_latest": 55.6,
         "maintainability_score": 99.9,
         "security_score": 100.0,
-        "type_hint_coverage_params": 86.9,
+        "type_hint_coverage_params": 87.5,
         "type_hint_coverage_returns": 100.0,
         "docstring_coverage": 100.0,
         "cyclomatic_complexity_gate": "PASS",
         "module_size_gate": "PASS",
-        "i18n_hygiene_gate": "PASS (en catalog; 34 messages; make i18n-check)",
+        "i18n_hygiene_gate": "PASS (en catalog; 48 messages; make i18n-check)",
         "total_issues": 4,
         "issue_breakdown": {
             "GOD_OBJECT": 4,
@@ -38,7 +38,7 @@
             "MISSING_TYPE_HINTS": 0
         },
         "tests_unit": 57,
-        "tests_integration": 60,
+        "tests_integration": 77,
         "i18n_catalogs": [
             "en"
         ]
@@ -49,7 +49,7 @@
             "command": "uv run --frozen qgis-analyzer analyze . --max-cc 10",
             "output": "analysis_results/",
             "scores": {
-                "module_stability": 56.4,
+                "module_stability": 55.6,
                 "maintainability": 99.9,
                 "security": 100.0
             },
@@ -61,17 +61,17 @@
         "tests_local": {
             "date": "2026-11-19",
             "command": "PYTHONPATH=.. uv run --frozen python -m unittest discover tests",
-            "result": "117 ran, 60 skipped (integration), OK"
+            "result": "134 ran, 77 skipped (integration), OK"
         },
         "tests_qgis": {
             "date": "2026-11-19",
             "command": "make test-qgis",
-            "result": "60 ran, OK (QGIS 4.2.2, Qt6)"
+            "result": "77 ran, OK (QGIS 4.2.2, Qt6)"
         },
         "tests_container": {
             "date": "2026-11-19",
             "command": "make docker-test",
-            "result": "60 ran, OK (qgis/qgis:latest, Qt5)"
+            "result": "77 ran, OK (qgis/qgis:latest, Qt5)"
         },
         "packaging": {
             "date": "2026-11-19",
@@ -82,12 +82,12 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "18 documentation files, relative links OK"
+            "result": "19 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
             "command": "make i18n-check",
-            "result": "7 catalog tests OK; 34 messages translated; en.qm present"
+            "result": "7 catalog tests OK; 48 messages translated; en.qm present"
         }
     },
     "retries": {
@@ -100,8 +100,8 @@
     "last_session": {
         "date": "2026-11-19",
         "topic": "parity_2_0_0_agentic_qa",
-        "tests_ok": 117,
-        "quality_score": 56.4,
+        "tests_ok": 134,
+        "quality_score": 55.6,
         "task_completion_rate": 1.0,
         "retries": 1,
         "stop_conditions_triggered": 0,
@@ -112,7 +112,8 @@
             "Add uv/QA/CI/tests and validate the 2.0.0 ZIP",
             "Add QCoreApplication.translate integration and the English catalog",
             "Implement and verify freehand reshape (stroke targets, selection filter, one undo)",
-            "Add vertex sampling settings and edit-session gating"
+            "Add vertex sampling settings and edit-session gating",
+            "Add feature difference with selection and mouse picking"
         ],
         "status": "SUCCESS"
     },

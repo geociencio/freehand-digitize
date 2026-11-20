@@ -41,12 +41,14 @@ Comparación entre el plugin original
 | 24 | Auto-inicio de edición | ❌ | ✅ | ✅ (decisión) | `freehand_plugin.py` |
 | 25 | Mensajes de error robustos | parcial | ✅ | ✅ | `freehand_tool.py`, `feature_creator.py` |
 | 26 | Reshape freehand de geometrías existentes | ❌ | ❌ | ✅ (nueva) | `gui/reshape_creator.py` |
+| 27 | Diferencia entre entidades (con selección o mouse) | ❌ | ❌ | ✅ (nueva) | `gui/difference_creator.py` |
 
 Leyenda: ✅ implementado · ❌ ausente · “mejora/decisión” = desviación
 deliberada documentada abajo.
 
-La fila 26 es una **función nueva**, no una capacidad de `freehandEditing`: se
-añadió en 2.0.0 para reformar geometrías existentes con un trazo freehand.
+Las filas 26 y 27 son **funciones nuevas**, no capacidades de `freehandEditing`:
+se añadieron en 2.0.0 para reformar geometrías con un trazo y para restar una
+entidad de otra.
 
 ---
 
@@ -120,6 +122,8 @@ Los comportamientos de la matriz están cubiertos por:
   proyectado, activación, reshape extremo a extremo y descarga.
 - `tests/integration/test_reshape_creator.py` — detección bajo el trazo, filtro
   por selección, múltiples entidades, deshacer y casos de fallo.
+- `tests/integration/test_difference_creator.py`, `test_difference_dialog.py` y
+  `test_difference_pick_tool.py` — diferencia, selección objetivo/corte y mouse.
 - `tests/core/` — reglas de geometría, muestreo, tolerancia, settings, sintaxis
   Python 3.9.
 

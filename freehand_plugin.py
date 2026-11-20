@@ -36,6 +36,9 @@ from .core.constants import (
 )
 from .core.geometry_rules import effective_tolerance, is_supported_geometry
 from .core.settings import SamplingStore, ToleranceStore
+from .gui.difference_creator import DifferenceCreator
+from .gui.difference_dialog import DifferenceDialog
+from .gui.difference_pick_tool import DifferencePickTool
 from .gui.feature_creator import FeatureCreator
 from .gui.freehand_tool import MODE_RESHAPE, FreehandTool
 from .gui.i18n import install_translations, remove_translations
@@ -45,6 +48,11 @@ from .gui.sampling_dialog import SamplingDialog
 from .gui.texts import (
     action_text,
     action_tooltip,
+    difference_action_text,
+    difference_action_tooltip,
+    difference_pick_cutter_text,
+    difference_pick_target_text,
+    difference_same_feature_text,
     edit_mode_required_text,
     reshape_action_text,
     reshape_action_tooltip,
@@ -71,12 +79,16 @@ class FreehandDigitizePlugin:
         self.action = None
         self.reshape_action = None
         self.sampling_action = None
+        self.difference_action = None
         self.spinbox = None
         self.spinbox_action = None
         self.tool = None
         self.reshape_tool = None
         self._creator = None
         self._reshape_creator = None
+        self._difference_creator = None
+        self._difference_pick_tool = None
+        self._difference_pick_layer = None
         self._toolbar = None
         self._own_toolbar = False
         self._settings = None
@@ -96,6 +108,7 @@ class FreehandDigitizePlugin:
         self._sampling_store = SamplingStore(self._settings)
         self._creator = FeatureCreator(self.iface, self._settings)
         self._reshape_creator = ReshapeCreator(self.iface)
+        self._difference_creator = DifferenceCreator(self.iface)
 
         self.tool = FreehandTool(self.canvas, self.iface, sampling_store=self._sampling_store)
         self.tool.geometryFinished.connect(self._on_geometry_finished)
@@ -125,9 +138,16 @@ class FreehandDigitizePlugin:
             sampling_action_tooltip(),
             "freehandDigitizeSamplingAction",
         )
+        self.difference_action = self._make_action(
+            "mActionEditCut.svg",
+            difference_action_text(),
+            difference_action_tooltip(),
+            "freehandDigitizeDifferenceAction",
+        )
         self.action.triggered.connect(self._on_action_triggered)
         self.reshape_action.triggered.connect(self._on_reshape_triggered)
         self.sampling_action.triggered.connect(self._on_sampling_settings)
+        self.difference_action.triggered.connect(self._on_difference_triggered)
         self.tool.setAction(self.action)
         self.reshape_tool.setAction(self.reshape_action)
 
@@ -139,9 +159,11 @@ class FreehandDigitizePlugin:
         self._toolbar.addAction(self.action)
         self._toolbar.addAction(self.reshape_action)
         self._toolbar.addAction(self.sampling_action)
+        self._toolbar.addAction(self.difference_action)
         self.iface.addPluginToVectorMenu(MENU_NAME, self.action)
         self.iface.addPluginToVectorMenu(MENU_NAME, self.reshape_action)
         self.iface.addPluginToVectorMenu(MENU_NAME, self.sampling_action)
+        self.iface.addPluginToVectorMenu(MENU_NAME, self.difference_action)
 
         self._create_spinbox()
         self.iface.currentLayerChanged.connect(self._on_current_layer_changed)
@@ -152,6 +174,7 @@ class FreehandDigitizePlugin:
         """Remove every widget, action and signal connection."""
         self._disconnect_signals()
         self._deactivate_tool()
+        self._deactivate_difference()
         self._cleanup_tools()
         self._cleanup_actions()
         self._remove_translator()
@@ -184,7 +207,12 @@ class FreehandDigitizePlugin:
             self.spinbox.deleteLater()
             self.spinbox = None
 
-        for action in (self.action, self.reshape_action, self.sampling_action):
+        for action in (
+            self.action,
+            self.reshape_action,
+            self.sampling_action,
+            self.difference_action,
+        ):
             if action is not None:
                 self.iface.removePluginVectorMenu(MENU_NAME, action)
                 if self._toolbar is not None:
@@ -193,6 +221,7 @@ class FreehandDigitizePlugin:
         self.action = None
         self.reshape_action = None
         self.sampling_action = None
+        self.difference_action = None
 
         if self._own_toolbar and self._toolbar is not None:
             self._toolbar.deleteLater()
@@ -267,6 +296,8 @@ class FreehandDigitizePlugin:
             self.action.setChecked(new_tool is self.tool)
         if self.reshape_action is not None:
             self.reshape_action.setChecked(new_tool is self.reshape_tool)
+        if self.difference_action is not None:
+            self.difference_action.setChecked(new_tool is self._difference_pick_tool)
 
     def _on_geometry_finished(self, geometry, layer) -> None:
         """Create the feature for a finished creation stroke."""
@@ -293,6 +324,95 @@ class FreehandDigitizePlugin:
             self.iface.mainWindow(),
         )
         exec_dialog(dialog)
+
+    # -- feature difference -----------------------------------------------
+    def _on_difference_triggered(self, checked: bool) -> None:
+        """Start the difference dialog or the mouse pick tool."""
+        if checked:
+            self._activate_difference()
+        else:
+            self._deactivate_difference()
+
+    def _activate_difference(self) -> None:
+        """Use the selected pair or activate the pick tool."""
+        layer = self.iface.activeLayer()
+        if not self._is_drawable(layer):
+            self._set_checked(self.difference_action, False)
+            self._warn(self._activation_warning(layer))
+            self._update_ui_state()
+            return
+        selected = layer.selectedFeatureIds()
+        if len(selected) == 2:
+            self._open_difference_dialog(layer, selected)
+            self._set_checked(self.difference_action, False)
+            return
+        self._start_difference_pick(layer)
+
+    def _start_difference_pick(self, layer) -> None:
+        """Activate the two-click pick tool for target and cutter."""
+        self._deactivate_difference_pick()
+        tool = DifferencePickTool(self.canvas, layer)
+        tool.targetPicked.connect(self._on_difference_target_picked)
+        tool.featuresPicked.connect(self._on_difference_features_picked)
+        tool.duplicateTarget.connect(self._on_difference_duplicate)
+        tool.pickCancelled.connect(self._on_difference_cancelled)
+        self._difference_pick_tool = tool
+        self._difference_pick_layer = layer
+        self.canvas.setMapTool(tool)
+        self._set_checked(self.difference_action, True)
+        self._info(difference_pick_target_text())
+
+    def _on_difference_target_picked(self, _feature_id: int) -> None:
+        """Ask for the cutter after the target click."""
+        self._info(difference_pick_cutter_text())
+
+    def _on_difference_features_picked(self, target_id: int, cutter_id: int) -> None:
+        """Open the confirmation dialog for the two picked features."""
+        layer = self._difference_pick_layer
+        if layer is None:
+            self._deactivate_difference()
+            return
+        self._open_difference_dialog(layer, [target_id, cutter_id])
+        self._deactivate_difference()
+
+    def _on_difference_duplicate(self) -> None:
+        """Warn when the cutter click repeats the target."""
+        self._warn(difference_same_feature_text())
+
+    def _on_difference_cancelled(self) -> None:
+        """Cancel the pick tool from Esc."""
+        self._deactivate_difference()
+
+    def _open_difference_dialog(self, layer, feature_ids: list[int]) -> None:
+        """Show the target/cutter dialog and apply the difference."""
+        if self._difference_creator is None:
+            return
+        dialog = DifferenceDialog(layer, feature_ids, self.iface.mainWindow())
+        if exec_dialog(dialog) and dialog.target_id is not None:
+            self._difference_creator.apply(layer, dialog.target_id, dialog.cutter_id or 0)
+
+    def _deactivate_difference(self) -> None:
+        """Cancel the pick tool and uncheck the difference action."""
+        self._deactivate_difference_pick()
+        self._set_checked(self.difference_action, False)
+
+    def _deactivate_difference_pick(self) -> None:
+        """Release the pick tool and its signal connections."""
+        tool = self._difference_pick_tool
+        if tool is not None:
+            tool.reset()
+            self._disconnect(tool.targetPicked, self._on_difference_target_picked)
+            self._disconnect(tool.featuresPicked, self._on_difference_features_picked)
+            self._disconnect(tool.duplicateTarget, self._on_difference_duplicate)
+            self._disconnect(tool.pickCancelled, self._on_difference_cancelled)
+            try:
+                if self.canvas.mapTool() is tool:
+                    self.canvas.unsetMapTool(tool)
+            except (AttributeError, RuntimeError):
+                pass
+            tool.deleteLater()
+        self._difference_pick_tool = None
+        self._difference_pick_layer = None
 
     # -- tolerance spinbox ------------------------------------------------
     def _make_action(
@@ -347,6 +467,8 @@ class FreehandDigitizePlugin:
     def _on_current_layer_changed(self, *_args) -> None:
         """Reconnect the active layer's editing signals and refresh the UI."""
         layer = self.iface.activeLayer()
+        if self._difference_pick_tool is not None and layer is not self._difference_pick_layer:
+            self._deactivate_difference()
         if layer is not self._editing_layer:
             self._disconnect_editing_signals()
             self._editing_layer = layer
@@ -372,6 +494,7 @@ class FreehandDigitizePlugin:
 
     def _on_editing_stopped(self, *_args) -> None:
         """Deactivate the tools when the active layer leaves edit mode."""
+        self._deactivate_difference()
         self._deactivate_tool()
         self._update_ui_state()
 
@@ -385,6 +508,8 @@ class FreehandDigitizePlugin:
         self.action.setEnabled(drawable)
         if self.reshape_action is not None:
             self.reshape_action.setEnabled(drawable)
+        if self.difference_action is not None:
+            self.difference_action.setEnabled(drawable)
 
         geographic = self._is_geographic(layer)
         tolerance_enabled = drawable and not geographic
@@ -396,8 +521,10 @@ class FreehandDigitizePlugin:
                 tolerance_tooltip_geographic() if geographic else tolerance_tooltip()
             )
 
-        if not drawable and self._any_action_checked():
-            self._deactivate_tool()
+        if not drawable:
+            self._deactivate_difference()
+            if self._any_action_checked():
+                self._deactivate_tool()
 
     def _activation_warning(self, layer) -> str:
         """Return the appropriate warning for an unavailable layer."""
@@ -470,6 +597,13 @@ class FreehandDigitizePlugin:
         self._log(message)
         try:
             self.iface.messageBar().pushWarning(PLUGIN_NAME, message)
+        except (AttributeError, RuntimeError):
+            pass
+
+    def _info(self, message: str) -> None:
+        """Show an informational message in the QGIS message bar."""
+        try:
+            self.iface.messageBar().pushInfo(PLUGIN_NAME, message)
         except (AttributeError, RuntimeError):
             pass
 

@@ -76,6 +76,7 @@ class TestTranslationCatalogs(unittest.TestCase):
             "Dibujo a mano alzada": "Freehand digitize",
             "Reformar geometría": "Reshape feature",
             "Configuración de muestreo": "Sampling settings",
+            "Diferencia de entidades": "Feature difference",
             "Activa la edición de la capa «{name}» antes de dibujar.": (
                 "Start editing layer “{name}” before drawing."
             ),

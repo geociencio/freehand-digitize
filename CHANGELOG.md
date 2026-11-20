@@ -12,6 +12,8 @@ QGIS 3.28–4.x (Qt5/Qt6).
   optional selection filter, multi-feature support and a single undo command.
 - **Vertex sampling settings**: choose one vertex every N device pixels or N
   layer units, with separate per-unit distances and a geographic-CRS warning.
+- **Feature difference**: subtract a selected or mouse-picked cutter from a target
+  feature in one undo command (same layer; cutter untouched).
 - Adjustable simplification tolerance (0–5, 3 decimals) in the digitize toolbar,
   persisted in `QgsSettings` with migration of the legacy
   `/freehandEdit/tolerance` key.

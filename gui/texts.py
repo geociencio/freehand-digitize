@@ -184,3 +184,96 @@ def sampling_cancel_text() -> str:
 def sampling_reset_text() -> str:
     """Return the dialog Reset button text."""
     return QCoreApplication.translate("FreehandDigitize", "Restablecer")
+
+
+def difference_action_text() -> str:
+    """Return the feature-difference action text."""
+    return QCoreApplication.translate("FreehandDigitize", "Diferencia de entidades")
+
+
+def difference_action_tooltip() -> str:
+    """Return the feature-difference action tooltip."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "Resta una entidad de otra. Con dos entidades seleccionadas abre el "
+        "diálogo; si no, haz clic en la objetivo y luego en la de corte.",
+    )
+
+
+def difference_dialog_title() -> str:
+    """Return the difference dialog title."""
+    return QCoreApplication.translate("FreehandDigitize", "Diferencia de entidades")
+
+
+def difference_target_label() -> str:
+    """Return the target-feature field label."""
+    return QCoreApplication.translate("FreehandDigitize", "Entidad objetivo:")
+
+
+def difference_cutter_label() -> str:
+    """Return the cutter-feature field label."""
+    return QCoreApplication.translate("FreehandDigitize", "Entidad de corte:")
+
+
+def difference_help_text() -> str:
+    """Return the difference dialog explanation."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "La entidad objetivo se actualiza; la de corte no se modifica.",
+    )
+
+
+def difference_pick_target_text() -> str:
+    """Return the first pick-tool instruction."""
+    return QCoreApplication.translate("FreehandDigitize", "Haz clic en la entidad objetivo.")
+
+
+def difference_pick_cutter_text() -> str:
+    """Return the second pick-tool instruction."""
+    return QCoreApplication.translate("FreehandDigitize", "Haz clic en la entidad de corte.")
+
+
+def difference_same_feature_text() -> str:
+    """Return the warning for picking the same feature twice."""
+    return QCoreApplication.translate(
+        "FreehandDigitize", "La entidad de corte debe ser distinta de la objetivo."
+    )
+
+
+def difference_empty_text() -> str:
+    """Return the warning for an empty difference."""
+    return QCoreApplication.translate(
+        "FreehandDigitize", "La diferencia está vacía; no se modificó la entidad."
+    )
+
+
+def difference_invalid_text() -> str:
+    """Return the warning for an invalid difference."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "La geometría resultante no es válida; no se modificó la entidad.",
+    )
+
+
+def difference_rejected_text(name: str) -> str:
+    """Return the warning for a provider-rejected difference."""
+    return QCoreApplication.translate(
+        "FreehandDigitize", "La capa «{name}» rechazó la diferencia."
+    ).format(name=name)
+
+
+def difference_edit_command_text() -> str:
+    """Return the undo-stack label for a difference operation."""
+    return QCoreApplication.translate(
+        "FreehandDigitize", "Freehand Digitize: diferencia de entidades"
+    )
+
+
+def difference_apply_text() -> str:
+    """Return the difference dialog Apply button text."""
+    return QCoreApplication.translate("FreehandDigitize", "Aplicar")
+
+
+def difference_applied_text() -> str:
+    """Return the information message after a successful difference."""
+    return QCoreApplication.translate("FreehandDigitize", "Diferencia aplicada.")

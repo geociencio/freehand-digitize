@@ -39,6 +39,8 @@ active vector layer. It is a modernized derivative of the classic
   selection filtering and one undo command.
 - Sampling in device pixels or layer units (with a geographic-CRS warning) and
   edit-session-aware actions.
+- Feature-level difference: target minus cutter, with selected or mouse-picked
+  features and one undo command.
 - Configurable, persisted simplification tolerance (0–5 layer units).
 - Geographic-CRS policy (tolerance forced to 0).
 - CTRL snapping of the first and last vertex through the QGIS snapping engine.
@@ -67,6 +69,9 @@ freehand_digitize/
 │   ├── freehand_tool.py         # QgsMapTool, snapping, rubber band, modes
 │   ├── reshape_creator.py       # target detection + reshapeGeometry + undo
 │   ├── sampling_dialog.py       # pixels/layer units + geographic warning
+│   ├── difference_dialog.py     # target/cutter selection
+│   ├── difference_pick_tool.py  # click target, then cutter
+│   ├── difference_creator.py    # QgsGeometry.difference + undo
 │   ├── geometry_factory.py      # stroke points -> QgsGeometry
 │   └── qt_compat.py             # PyQt5/PyQt6 + QGIS enum shims
 ├── tests/
@@ -292,7 +297,11 @@ is the reshape guide.
   `FeatureCreator`.
 - `_on_reshape_finished()`: delegates the stroke to `ReshapeCreator`.
 - `_on_sampling_settings()`: opens `SamplingDialog`.
-- `unload()`: disconnects signals, unsets the active tool, removes the three
+- `_on_difference_triggered()`: opens the target/cutter dialog for two selected
+  features, or installs `DifferencePickTool` for two mouse clicks.
+- `_on_difference_features_picked()`: opens the dialog with the picked ids and
+  delegates to `DifferenceCreator`.
+- `unload()`: disconnects signals, unsets the active tools, removes the four
   actions and the spinbox, and deletes the fallback toolbar if it was created.
 
 ---
@@ -332,6 +341,15 @@ is the reshape guide.
    a geographic CRS turns layer units into degrees.
 4. The edit-session gate applies to the map tools; the sampling dialog remains
    available outside edit mode.
+
+### Difference
+
+1. The user starts editing, selects two features (or activates the difference
+   action with no pair and clicks target/cutter on the map).
+2. `DifferenceDialog` collects/confirms the two ids.
+3. `DifferenceCreator.apply` computes `QgsGeometry.difference`, rejects empty or
+   invalid results and updates only the target in one edit command.
+4. The cutter is not modified; `Ctrl+Z` restores the target.
 
 ---
 

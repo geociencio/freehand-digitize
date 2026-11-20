@@ -175,7 +175,78 @@ Disabled for geographic CRS, where simplification always uses 0.</translation>
             <translation>Reset</translation>
         </message>
         <message>
-            <location filename="../freehand_plugin.py" line="484" />
+            <location filename="../gui/texts.py" line="205" />
+            <location filename="../gui/texts.py" line="191" />
+            <source>Diferencia de entidades</source>
+            <translation>Feature difference</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="196" />
+            <source>Resta una entidad de otra. Con dos entidades seleccionadas abre el diálogo; si no, haz clic en la objetivo y luego en la de corte.</source>
+            <translation>Subtract one feature from another. With two selected features the dialog opens; otherwise click the target and then the cutter.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="210" />
+            <source>Entidad objetivo:</source>
+            <translation>Target feature:</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="215" />
+            <source>Entidad de corte:</source>
+            <translation>Cutter feature:</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="220" />
+            <source>La entidad objetivo se actualiza; la de corte no se modifica.</source>
+            <translation>The target feature is updated; the cutter is not modified.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="228" />
+            <source>Haz clic en la entidad objetivo.</source>
+            <translation>Click the target feature.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="233" />
+            <source>Haz clic en la entidad de corte.</source>
+            <translation>Click the cutter feature.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="238" />
+            <source>La entidad de corte debe ser distinta de la objetivo.</source>
+            <translation>The cutter feature must be different from the target.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="245" />
+            <source>La diferencia está vacía; no se modificó la entidad.</source>
+            <translation>The difference is empty; the feature was not changed.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="252" />
+            <source>La geometría resultante no es válida; no se modificó la entidad.</source>
+            <translation>The resulting geometry is not valid; the feature was not changed.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="260" />
+            <source>La capa «{name}» rechazó la diferencia.</source>
+            <translation>Layer “{name}” rejected the difference.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="267" />
+            <source>Freehand Digitize: diferencia de entidades</source>
+            <translation>Freehand Digitize: feature difference</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="274" />
+            <source>Aplicar</source>
+            <translation>Apply</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="279" />
+            <source>Diferencia aplicada.</source>
+            <translation>Difference applied.</translation>
+        </message>
+        <message>
+            <location filename="../freehand_plugin.py" line="618" />
             <source>Selecciona una capa vectorial de línea o polígono editable antes de dibujar.</source>
             <translation>Select an editable line or polygon vector layer before drawing.</translation>
         </message>

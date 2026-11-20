@@ -73,6 +73,20 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertTrue(self.plugin.action.isEnabled())
         self.assertTrue(self.plugin.reshape_action.isEnabled())
 
+    def test_difference_action_requires_editing(self) -> None:
+        """Difference is disabled outside edit mode and enabled inside it."""
+        self.assertFalse(self.plugin.difference_action.isEnabled())
+        self.layer.startEditing()
+        self.assertTrue(self.plugin.difference_action.isEnabled())
+
+    def test_difference_pick_activation(self) -> None:
+        """Without a selected pair, the pick tool is installed."""
+        self.layer.startEditing()
+        self.plugin._on_difference_triggered(True)
+        self.assertIs(self.canvas.mapTool(), self.plugin._difference_pick_tool)
+        self.assertTrue(self.plugin.difference_action.isChecked())
+        self.assertTrue(self.iface.messages.infos)
+
     def test_sampling_action_exists_without_editing(self) -> None:
         """Sampling settings stay available outside an edit session."""
         self.assertIsNotNone(self.plugin.sampling_action)
@@ -194,6 +208,8 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertIsNone(self.plugin.reshape_tool)
         self.assertIsNone(self.plugin.reshape_action)
         self.assertIsNone(self.plugin.sampling_action)
+        self.assertIsNone(self.plugin.difference_action)
+        self.assertIsNone(self.plugin._difference_pick_tool)
         self.assertIsNone(self.plugin.spinbox)
         self.assertIsNot(self.canvas.mapTool(), tool)
 
