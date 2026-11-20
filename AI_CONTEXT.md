@@ -88,12 +88,11 @@ make zip             # package + validate ZIP
 
 ## Release
 
-- Tag `v2.0.0` created and pushed; GitHub Release is a draft with the ZIP and
+- Tag `v2.0.0` created and pushed; GitHub Release published with the ZIP and
   SHA256 assets.
 
 ## Pending
 
-- Upload the ZIP to plugins.qgis.org; after validation, publish the GitHub
-  Release.
+- Upload the ZIP to plugins.qgis.org and complete portal validation.
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

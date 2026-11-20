@@ -42,8 +42,8 @@ make zip
 
 ## 📌 Remaining
 
-1. Upload `dist/freehand_digitize.2.0.0.zip` to plugins.qgis.org; after portal
-   validation, publish the draft GitHub Release (tag `v2.0.0`).
+1. Upload `dist/freehand_digitize.2.0.0.zip` to plugins.qgis.org and complete
+   portal validation. The GitHub Release `v2.0.0` is already published.
 2. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
 3. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.

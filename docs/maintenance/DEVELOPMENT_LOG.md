@@ -16,11 +16,12 @@ Se ejecutó `/release-plugin` hasta la preparación de la publicación.
 - ZIP `dist/freehand_digitize.2.0.0.zip` validado; SHA256
   `2faa4a4542f8bb041e1c1823e5eff7f22227671bb6b000a06bb297c60ef37b5d`.
 - Tag anotado `v2.0.0` creado y subido a `origin`.
-- GitHub Release **draft** con el ZIP y el SHA256 adjuntos.
+- GitHub Release **publicado** con el ZIP y el SHA256 adjuntos:
+  <https://github.com/geociencio/freehand-digitize/releases/tag/v2.0.0>.
 - CI verde en `main` (run 44684907873).
 
 ### Pendiente
-- Subir el ZIP a plugins.qgis.org y, tras la validación, publicar el release.
+- Subir el ZIP a plugins.qgis.org y completar la validación del portal.
 - Smoke test real en QGIS 3.28 (el ZIP declara 3.28 como mínimo).
 
 ---

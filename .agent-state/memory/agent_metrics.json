@@ -142,8 +142,10 @@
         "commit": "f35f090",
         "artifact": "dist/freehand_digitize.2.0.0.zip",
         "sha256": "2faa4a4542f8bb041e1c1823e5eff7f22227671bb6b000a06bb297c60ef37b5d",
-        "github_release": "draft",
+        "github_release": "published",
         "portal": "pending manual upload",
-        "ci_run": "44684907873"
+        "ci_run": "44684907873",
+        "github_release_url": "https://github.com/geociencio/freehand-digitize/releases/tag/v2.0.0",
+        "published_at": "2026-11-20T06:11:27Z"
     }
 }
