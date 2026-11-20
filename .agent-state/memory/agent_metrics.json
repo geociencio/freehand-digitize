@@ -82,12 +82,19 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "19 documentation files, relative links OK"
+            "result": "20 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
             "command": "make i18n-check",
             "result": "7 catalog tests OK; 48 messages translated; en.qm present"
+        },
+        "github_actions": {
+            "date": "2026-11-20",
+            "run": "44682503490",
+            "branch": "main",
+            "commit": "99adabe",
+            "result": "quality, unit, Qt6 and QGIS integration green"
         }
     },
     "retries": {
@@ -113,7 +120,8 @@
             "Add QCoreApplication.translate integration and the English catalog",
             "Implement and verify freehand reshape (stroke targets, selection filter, one undo)",
             "Add vertex sampling settings and edit-session gating",
-            "Add feature difference with selection and mouse picking"
+            "Add feature difference with selection and mouse picking",
+            "Fix GitHub Actions on the hyphenated checkout"
         ],
         "status": "SUCCESS"
     },

@@ -44,8 +44,8 @@
       warning) and edit-session gating (tools only while editing).
 - [x] Implement feature difference with selected pair or mouse target/cutter
       and confirmation dialog.
-- [ ] CI checkout fix (`docs/maintainer/PLAN_CI_CHECKOUT.md`) proposed; GitHub
-      Actions is red on the hyphenated checkout.
+- [x] CI checkout fix implemented; GitHub Actions run 44682503490 green
+      (quality, unit, Qt6, QGIS integration).
 
 ### Internationalization
 

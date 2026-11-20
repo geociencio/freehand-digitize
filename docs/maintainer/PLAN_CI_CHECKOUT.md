@@ -1,7 +1,7 @@
 # Implementation Plan — Green CI on the Hyphenated Checkout
 
-> **Status: IMPLEMENTED** — approved by the user on 2026-11-20; CI verification
-> pending. No tag is created until GitHub Actions is green.
+> **Status: IMPLEMENTED** — approved by the user on 2026-11-20. GitHub Actions
+> is green on `main` (run 44682503490). No tag is created yet.
 >
 > Version: 2.0.0 (release blocker fix) | Date: 2026-11-20
 > Procedure: [CHANGE_PROCEDURE.md](CHANGE_PROCEDURE.md)
@@ -209,8 +209,10 @@ The release proceeds only when all GitHub Actions jobs are green.
 - Release workflow updated for `i18n/*.qm` and CI-green as a gate.
 - Local hyphenated-checkout simulation: Ruff and 134 unit tests pass.
 - `make pre-release` passes.
-- Remote GitHub Actions verification pending.
-- **Commit:** to be filled by the CI-fix commit.
+- GitHub Actions run 44682503490: quality, unit, Qt6 and QGIS integration all
+  green.
+- **Commits:** `0d6e0ae` (symlink/Makefile/Ruff) and `99adabe` (mypy explicit
+  package bases).
 
 ---
 

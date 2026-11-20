@@ -5,6 +5,26 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-20] - CI verde en checkout con guion (05:45)
+
+### Resumen
+Se corrigió el layout de CI: el repositorio se clona como `freehand-digitize`,
+pero el paquete es `freehand_digitize`. Se expone el paquete con un symlink en
+`RUNNER_TEMP`, se configuró Ruff para imports first-party y `mypy` usa
+`--explicit-package-bases`.
+
+### Resultados
+- GitHub Actions run 44682503490: quality, unitarias, Qt6 e integración QGIS
+  verdes.
+- `make pre-release` local sigue verde.
+- Sin cambios de código de producto; solo CI/Makefile/Ruff y documentación.
+
+### Documentación
+- [Plan de CI](../maintainer/PLAN_CI_CHECKOUT.md) implementado.
+- Workflow de release actualizado para catálogos `.qm` y CI verde.
+
+---
+
 ## [2026-11-20] - Diferencia de entidades (00:30)
 
 ### Resumen

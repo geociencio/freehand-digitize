@@ -42,12 +42,11 @@ make zip
 
 ## 📌 Remaining
 
-1. **CI blocker**: approve/fix `docs/maintainer/PLAN_CI_CHECKOUT.md`; GitHub
-   Actions must be green before tagging.
-2. Tag `v2.0.0` and publish the ZIP after the final review.
-3. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion` if 3.28 is
+1. Tag `v2.0.0` and publish the ZIP after the final review. CI is green on
+   `main` (run 44682503490).
+2. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion` if 3.28 is
    not available).
-4. Optional: add `ai-context-core` and `make context` if the team wants the
+3. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## 📎 Key files

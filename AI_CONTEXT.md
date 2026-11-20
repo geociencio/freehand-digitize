@@ -88,8 +88,6 @@ make zip             # package + validate ZIP
 
 ## Pending
 
-- Fix the CI checkout layout (`docs/maintainer/PLAN_CI_CHECKOUT.md`): GitHub
-  Actions fails because the repo directory is `freehand-digitize` while the
-  package is `freehand_digitize`.
-- Tag `v2.0.0` and publish the ZIP.
+- Tag `v2.0.0` and publish the ZIP. GitHub Actions is green on `main`
+  (run 44682503490).
 - Real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

@@ -214,7 +214,7 @@ The `uv` modernization guide is in
 - [Vertex sampling plan (proposed)](docs/maintainer/PLAN_VERTEX_SAMPLING.md)
 - [Edit-session gating plan (proposed)](docs/maintainer/PLAN_EDIT_SESSION.md)
 - [Feature-difference plan](docs/maintainer/PLAN_FEATURE_DIFFERENCE.md)
-- [CI checkout fix plan (proposed)](docs/maintainer/PLAN_CI_CHECKOUT.md)
+- [CI checkout fix plan](docs/maintainer/PLAN_CI_CHECKOUT.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)
