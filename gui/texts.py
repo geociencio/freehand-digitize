@@ -98,3 +98,89 @@ def reshaped_count_text(count: int) -> str:
     return QCoreApplication.translate(
         "FreehandDigitize", "{count} entidad(es) reformada(s)."
     ).format(count=count)
+
+
+def edit_mode_required_text(name: str) -> str:
+    """Return the warning shown when the layer is not in edit mode."""
+    return QCoreApplication.translate(
+        "FreehandDigitize", "Activa la edición de la capa «{name}» antes de dibujar."
+    ).format(name=name)
+
+
+def sampling_action_text() -> str:
+    """Return the sampling-settings action text."""
+    return QCoreApplication.translate("FreehandDigitize", "Configuración de muestreo")
+
+
+def sampling_action_tooltip() -> str:
+    """Return the sampling-settings action tooltip."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "Elige la unidad y la distancia mínima entre vértices del trazo.",
+    )
+
+
+def sampling_dialog_title() -> str:
+    """Return the sampling dialog title."""
+    return QCoreApplication.translate("FreehandDigitize", "Configuración de muestreo")
+
+
+def sampling_unit_label() -> str:
+    """Return the sampling-unit field label."""
+    return QCoreApplication.translate("FreehandDigitize", "Unidad de muestreo:")
+
+
+def sampling_pixels_text() -> str:
+    """Return the pixels unit label."""
+    return QCoreApplication.translate("FreehandDigitize", "Píxeles")
+
+
+def sampling_layer_units_text() -> str:
+    """Return the layer-units unit label."""
+    return QCoreApplication.translate("FreehandDigitize", "Unidades de la capa")
+
+
+def sampling_distance_label() -> str:
+    """Return the minimum-distance field label."""
+    return QCoreApplication.translate("FreehandDigitize", "Distancia mínima:")
+
+
+def sampling_distance_tooltip() -> str:
+    """Return the minimum-distance tooltip."""
+    return QCoreApplication.translate(
+        "FreehandDigitize", "Distancia mínima entre vértices del trazo."
+    )
+
+
+def sampling_help_text() -> str:
+    """Return the general sampling explanation."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "Píxeles: independiente del CRS y del zoom. Unidades de capa: depende del CRS.",
+    )
+
+
+def sampling_geographic_warning_text() -> str:
+    """Return the geographic-CRS warning."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "La capa activa usa un CRS geográfico. En unidades de capa la distancia se "
+        "mide en grados; un grado de longitud no tiene una longitud constante "
+        "(depende de la latitud). Usa píxeles si quieres una densidad uniforme en "
+        "pantalla.",
+    )
+
+
+def sampling_ok_text() -> str:
+    """Return the dialog OK button text."""
+    return QCoreApplication.translate("FreehandDigitize", "Aceptar")
+
+
+def sampling_cancel_text() -> str:
+    """Return the dialog Cancel button text."""
+    return QCoreApplication.translate("FreehandDigitize", "Cancelar")
+
+
+def sampling_reset_text() -> str:
+    """Return the dialog Reset button text."""
+    return QCoreApplication.translate("FreehandDigitize", "Restablecer")

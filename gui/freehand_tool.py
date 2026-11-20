@@ -18,7 +18,7 @@ from ..core.geometry_rules import (
     has_enough_points,
     is_supported_geometry,
 )
-from ..core.stroke import StrokeRecorder
+from ..core.stroke import SamplingOptions, StrokeRecorder
 from .cursor import build_pencil_cursor
 from .geometry_factory import build_geometry
 from .qt_compat import (
@@ -29,6 +29,7 @@ from .qt_compat import (
     RUBBERBAND_POLYGON,
     SNAP_VERTEX,
 )
+from .texts import edit_mode_required_text
 
 MODE_CREATE = "create"
 MODE_RESHAPE = "reshape"
@@ -54,6 +55,7 @@ class FreehandTool(QgsMapTool):
         canvas: Any,
         iface: Any = None,
         mode: str = MODE_CREATE,
+        sampling_store: Any = None,
     ) -> None:
         """Create the tool.
 
@@ -62,11 +64,14 @@ class FreehandTool(QgsMapTool):
             iface: Optional QGIS interface used for messages and active layer.
             mode: ``MODE_CREATE`` for new features or ``MODE_RESHAPE`` for an
                 open line stroke used to reshape existing geometries.
+            sampling_store: Optional ``SamplingStore`` used to rebuild the
+                recorder at the start of every stroke.
         """
         super().__init__(canvas)
         self.canvas = canvas
         self.iface = iface
         self.mode = mode if mode in (MODE_CREATE, MODE_RESHAPE) else MODE_CREATE
+        self._sampling_store = sampling_store
         self._recorder = StrokeRecorder()
         self._rubber: QgsRubberBand | None = None
         self._layer: Any = None
@@ -137,7 +142,7 @@ class FreehandTool(QgsMapTool):
                 )
             )
             return
-        if not self._ensure_editable(layer):
+        if not self._require_editable(layer):
             return
 
         self._layer = layer
@@ -145,7 +150,7 @@ class FreehandTool(QgsMapTool):
             KIND_LINE if self.mode == MODE_RESHAPE else geometry_kind(int(layer.geometryType()))
         )
         self._drawing = True
-        self._recorder.reset()
+        self._recorder = self._new_recorder()
 
         device = event.pos()
         map_point = event.mapPoint()
@@ -232,17 +237,21 @@ class FreehandTool(QgsMapTool):
         super().keyReleaseEvent(event)
 
     # -- helpers ----------------------------------------------------------
-    def _ensure_editable(self, layer: Any) -> bool:
-        """Return whether the layer is editable, starting the session if needed."""
+    def _new_recorder(self) -> StrokeRecorder:
+        """Build a recorder from the current sampling options."""
+        options = SamplingOptions()
+        if self._sampling_store is not None:
+            try:
+                options = self._sampling_store.load()
+            except (AttributeError, RuntimeError, TypeError, ValueError):
+                pass
+        return StrokeRecorder(options)
+
+    def _require_editable(self, layer: Any) -> bool:
+        """Return whether the layer is already in edit mode."""
         if layer.isEditable():
             return True
-        if layer.startEditing():
-            return True
-        self._warn(
-            QCoreApplication.translate(
-                "FreehandDigitize", "No se pudo poner «{name}» en edición."
-            ).format(name=layer.name())
-        )
+        self._warn(edit_mode_required_text(layer.name()))
         return False
 
     def _active_layer(self) -> Any:

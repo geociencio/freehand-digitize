@@ -7,7 +7,7 @@ general_description=Supported languages: Spanish, English
 version=2.0.0
 author=Chito
 email=juanbernales@gmail.com
-about=Freehand Digitize lets you draw lines and polygons freehand by dragging over the map. It restores the features of the classic freehandEditing plugin: adjustable and persistent simplification tolerance, Ctrl snapping of the first and last vertex, pencil cursor, attribute form, provider default values, undo commands, freehand reshape of existing geometries and a prompt for invalid geometries. Strokes are stored in the layer CRS (on-the-fly reprojection safe) and the plugin supports QGIS 3.28–4.x on Qt5/Qt6. It has no external Python dependencies and is released under GPL-2.0. The UI is available in Spanish (source language) and English; additional catalogs can be added. Derived from the original freehandEditing plugin by Pavol Kapusta.
+about=Freehand Digitize lets you draw lines and polygons freehand by dragging over the map. It restores the features of the classic freehandEditing plugin: adjustable and persistent simplification tolerance, Ctrl snapping of the first and last vertex, pencil cursor, attribute form, provider default values, undo commands, freehand reshape of existing geometries, sampling in pixels or layer units and a prompt for invalid geometries. Strokes are stored in the layer CRS (on-the-fly reprojection safe) and the plugin supports QGIS 3.28–4.x on Qt5/Qt6. It has no external Python dependencies and is released under GPL-2.0. The UI is available in Spanish (source language) and English; additional catalogs can be added. Derived from the original freehandEditing plugin by Pavol Kapusta.
 homepage=https://github.com/geociencio/freehand-digitize
 tracker=https://github.com/geociencio/freehand-digitize/issues
 repository=https://github.com/geociencio/freehand-digitize
@@ -18,8 +18,10 @@ changelog=
     * New core/gui architecture with no QGIS dependency in the core.
     * Agentic system (Agentic Forge) and reproducible QA with uv, tests and CI.
     * Freehand reshape: draw a stroke over existing geometries, optionally filtered by selection, with one undo command per operation.
+    * Sampling settings: one vertex every N pixels or N layer units, with a geographic-CRS warning.
+    * Edit-session aware: create/reshape actions are enabled only while the layer is being edited.
     * i18n: QCoreApplication.translate integration and an English catalog (Spanish is the source language).
-tags=freehand,digitize,pencil,draw,digitizing,line,polygon,reshape
+tags=freehand,digitize,pencil,draw,digitizing,line,polygon,reshape,sampling
 icon=icon.png
 experimental=False
 deprecated=False

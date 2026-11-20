@@ -41,7 +41,7 @@ has no runtime dependencies.
 ## Expected output
 
 ```
-Ran 48 tests in ~1s
+Ran 60 tests in ~1s
 OK
 ```
 

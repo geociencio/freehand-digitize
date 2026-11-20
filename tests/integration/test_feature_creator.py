@@ -32,6 +32,7 @@ class TestFeatureCreator(unittest.TestCase):
     def setUp(self) -> None:
         """Create a layer, a fake interface and a creator."""
         self.layer = self.make_layer("LineString")
+        self.layer.startEditing()
         self.iface = self.FakeIface()
         self.settings = FakeSettings(
             {"qgis/digitizing/disable_enter_attribute_values_dialog": True}
@@ -99,6 +100,7 @@ class TestFeatureCreator(unittest.TestCase):
         )
         self.assertFalse(bowtie.isGeosValid())
         polygon_layer = self.make_layer("Polygon")
+        polygon_layer.startEditing()
         with patch(
             "freehand_digitize.gui.feature_creator.QMessageBox.question",
             return_value=QMessageBox.StandardButton.No,
@@ -124,6 +126,7 @@ class TestFeatureCreator(unittest.TestCase):
             ]
         )
         polygon_layer = self.make_layer("Polygon")
+        polygon_layer.startEditing()
         with patch(
             "freehand_digitize.gui.feature_creator.QMessageBox.question",
             return_value=QMessageBox.StandardButton.Yes,
@@ -146,11 +149,13 @@ class TestFeatureCreator(unittest.TestCase):
         self.assertFalse(created)
         self.assertEqual(self.layer.featureCount(), 0)
 
-    def test_starts_editing_when_needed(self) -> None:
-        """A non-editable layer is put in edit mode automatically."""
+    def test_rejects_non_editable_layer(self) -> None:
+        """Creation requires an active edit session."""
+        self.layer.rollBack()
         self.assertFalse(self.layer.isEditable())
-        self.assertTrue(self.creator.create(self.layer, self.line([(0, 0), (1, 1)]), 0.0))
-        self.assertTrue(self.layer.isEditable())
+        self.assertFalse(self.creator.create(self.layer, self.line([(0, 0), (1, 1)]), 0.0))
+        self.assertFalse(self.layer.isEditable())
+        self.assertEqual(self.layer.featureCount(), 0)
 
 
 if __name__ == "__main__":

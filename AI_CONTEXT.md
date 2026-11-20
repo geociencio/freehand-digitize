@@ -19,6 +19,10 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
   layer enablement, secondary-button finish, ESC cancel.
 - Freehand reshape (new in 2.0.0): a stroke reshapes the geometries under it;
   a selection filters the targets; one undo command per operation.
+- Sampling settings: pixels or layer units (metres/degrees), separate per-unit
+  distances, geographic-CRS warning; the tool recovers the options at press.
+- Edit-session gating: create/reshape are enabled only while the layer is in
+  edit mode; stopping editing cancels the stroke and deactivates the tool.
 - Tests: `tests/core/` (no QGIS) + `tests/integration/` (real QGIS 4.2.2);
   the suite is green in both environments.
 - QA: `pyproject.toml`/`uv.lock`, Makefile, ruff, flake8, mypy, analyzer,
@@ -37,11 +41,13 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
 
 ```
 core/     pure Python: constants, geometry rules, stroke sampling, settings
-gui/      PyQGIS/Qt: freehand tool, feature creator, reshape creator, cursor, geometry factory, compat
+gui/      PyQGIS/Qt: freehand tool, creators, sampling dialog, cursor, geometry factory, compat
 freehand_plugin.py   wiring: action, spinbox, signals, lifecycle
 ```
 
 - `core/` has no QGIS/Qt imports.
+- `core/settings.py` stores tolerance and sampling options; `core/stroke.py`
+  implements pixel/layer thinning.
 - `gui/qt_compat.py` centralizes PyQt5/PyQt6 and QGIS enum differences.
 - The tool captures the layer at press time and emits
   `geometryFinished(geometry, layer)`; `FeatureCreator` persists the feature and
@@ -63,11 +69,13 @@ make zip             # package + validate ZIP
   code/docs are English; internal plans, parity reports and logs may stay
   Spanish. The analyzer `MISSING_I18N` rule stays disabled because catalogs are
   maintained through `make transup`/`make i18n-check`.
-- **Auto-start editing** on activation (kept from 1.0.0; original required an
-  explicit edit session).
+- **Edit-session gating**: create/reshape require an active edit session; the
+  plugin never calls `startEditing()` and deactivates on `editingStopped`.
 - **Lines allow 2 points**; polygons require 3 distinct points before closing.
 - **Reshape target**: features under the stroke; a selection restricts the set;
   the raw stroke is used (no tolerance) and the operation is one undo command.
+- **Sampling**: pixels (default 1.5) or layer units (separate distances);
+  geographic CRS warns that degrees are latitude-dependent.
 - **`supportsQt6` is not used**: deprecated by qgis-manage 0.17; QGIS 4 Ready is
   `qgisMaximumVersion = 4.99`.
 - Repository: <https://github.com/geociencio/freehand-digitize>; metadata URLs point there.

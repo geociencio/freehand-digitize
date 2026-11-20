@@ -35,17 +35,21 @@ from .core.constants import (
     TOLERANCE_STEP,
 )
 from .core.geometry_rules import effective_tolerance, is_supported_geometry
-from .core.settings import ToleranceStore
+from .core.settings import SamplingStore, ToleranceStore
 from .gui.feature_creator import FeatureCreator
 from .gui.freehand_tool import MODE_RESHAPE, FreehandTool
 from .gui.i18n import install_translations, remove_translations
-from .gui.qt_compat import QAction
+from .gui.qt_compat import QAction, exec_dialog
 from .gui.reshape_creator import ReshapeCreator
+from .gui.sampling_dialog import SamplingDialog
 from .gui.texts import (
     action_text,
     action_tooltip,
+    edit_mode_required_text,
     reshape_action_text,
     reshape_action_tooltip,
+    sampling_action_text,
+    sampling_action_tooltip,
     tolerance_tooltip,
     tolerance_tooltip_geographic,
 )
@@ -66,6 +70,7 @@ class FreehandDigitizePlugin:
         self.canvas = iface.mapCanvas()
         self.action = None
         self.reshape_action = None
+        self.sampling_action = None
         self.spinbox = None
         self.spinbox_action = None
         self.tool = None
@@ -76,7 +81,9 @@ class FreehandDigitizePlugin:
         self._own_toolbar = False
         self._settings = None
         self._store = None
+        self._sampling_store = None
         self._translator = None
+        self._editing_layer = None
 
     # -- QGIS lifecycle ---------------------------------------------------
     def initGui(self) -> None:
@@ -86,12 +93,18 @@ class FreehandDigitizePlugin:
             remove_translations(self._translator)
         self._translator = install_translations(self._settings)
         self._store = ToleranceStore(self._settings)
+        self._sampling_store = SamplingStore(self._settings)
         self._creator = FeatureCreator(self.iface, self._settings)
         self._reshape_creator = ReshapeCreator(self.iface)
 
-        self.tool = FreehandTool(self.canvas, self.iface)
+        self.tool = FreehandTool(self.canvas, self.iface, sampling_store=self._sampling_store)
         self.tool.geometryFinished.connect(self._on_geometry_finished)
-        self.reshape_tool = FreehandTool(self.canvas, self.iface, mode=MODE_RESHAPE)
+        self.reshape_tool = FreehandTool(
+            self.canvas,
+            self.iface,
+            mode=MODE_RESHAPE,
+            sampling_store=self._sampling_store,
+        )
         self.reshape_tool.geometryFinished.connect(self._on_reshape_finished)
 
         self.action = self._make_action(
@@ -106,8 +119,15 @@ class FreehandDigitizePlugin:
             reshape_action_tooltip(),
             "freehandDigitizeReshapeAction",
         )
+        self.sampling_action = self._make_action(
+            "mActionOptions.svg",
+            sampling_action_text(),
+            sampling_action_tooltip(),
+            "freehandDigitizeSamplingAction",
+        )
         self.action.triggered.connect(self._on_action_triggered)
         self.reshape_action.triggered.connect(self._on_reshape_triggered)
+        self.sampling_action.triggered.connect(self._on_sampling_settings)
         self.tool.setAction(self.action)
         self.reshape_tool.setAction(self.reshape_action)
 
@@ -118,13 +138,15 @@ class FreehandDigitizePlugin:
             self._own_toolbar = True
         self._toolbar.addAction(self.action)
         self._toolbar.addAction(self.reshape_action)
+        self._toolbar.addAction(self.sampling_action)
         self.iface.addPluginToVectorMenu(MENU_NAME, self.action)
         self.iface.addPluginToVectorMenu(MENU_NAME, self.reshape_action)
+        self.iface.addPluginToVectorMenu(MENU_NAME, self.sampling_action)
 
         self._create_spinbox()
-        self.iface.currentLayerChanged.connect(self._update_ui_state)
+        self.iface.currentLayerChanged.connect(self._on_current_layer_changed)
         self.canvas.mapToolSet.connect(self._on_map_tool_set)
-        self._update_ui_state()
+        self._on_current_layer_changed()
 
     def unload(self) -> None:
         """Remove every widget, action and signal connection."""
@@ -137,8 +159,9 @@ class FreehandDigitizePlugin:
     # -- cleanup helpers --------------------------------------------------
     def _disconnect_signals(self) -> None:
         """Disconnect interface, canvas and tool signals."""
-        self._disconnect(self.iface.currentLayerChanged, self._update_ui_state)
+        self._disconnect(self.iface.currentLayerChanged, self._on_current_layer_changed)
         self._disconnect(self.canvas.mapToolSet, self._on_map_tool_set)
+        self._disconnect_editing_signals()
         if self.tool is not None:
             self._disconnect(self.tool.geometryFinished, self._on_geometry_finished)
         if self.reshape_tool is not None:
@@ -161,7 +184,7 @@ class FreehandDigitizePlugin:
             self.spinbox.deleteLater()
             self.spinbox = None
 
-        for action in (self.action, self.reshape_action):
+        for action in (self.action, self.reshape_action, self.sampling_action):
             if action is not None:
                 self.iface.removePluginVectorMenu(MENU_NAME, action)
                 if self._toolbar is not None:
@@ -169,6 +192,7 @@ class FreehandDigitizePlugin:
                 action.deleteLater()
         self.action = None
         self.reshape_action = None
+        self.sampling_action = None
 
         if self._own_toolbar and self._toolbar is not None:
             self._toolbar.deleteLater()
@@ -179,6 +203,7 @@ class FreehandDigitizePlugin:
         if self._translator is not None:
             remove_translations(self._translator)
             self._translator = None
+        self._editing_layer = None
 
     # -- actions and tools ------------------------------------------------
     def _on_action_triggered(self, checked: bool) -> None:
@@ -202,11 +227,8 @@ class FreehandDigitizePlugin:
         layer = self.iface.activeLayer()
         if not self._is_drawable(layer):
             self._set_checked(self.action, False)
-            self._warn(_invalid_layer_text())
+            self._warn(self._activation_warning(layer))
             self._update_ui_state()
-            return
-        if not self._start_editing(layer):
-            self._set_checked(self.action, False)
             return
         self.canvas.setMapTool(self.tool)
         self._set_checked(self.action, True)
@@ -219,36 +241,18 @@ class FreehandDigitizePlugin:
         layer = self.iface.activeLayer()
         if not self._is_drawable(layer):
             self._set_checked(self.reshape_action, False)
-            self._warn(_invalid_layer_text())
+            self._warn(self._activation_warning(layer))
             self._update_ui_state()
-            return
-        if not self._start_editing(layer):
-            self._set_checked(self.reshape_action, False)
             return
         self.canvas.setMapTool(self.reshape_tool)
         self._set_checked(self.reshape_action, True)
         self._update_ui_state()
 
-    def _start_editing(self, layer) -> bool:
-        """Return whether *layer* is editable, starting the session if needed."""
-        if layer.isEditable():
-            return True
-        try:
-            if layer.startEditing():
-                return True
-        except (AttributeError, RuntimeError) as exc:
-            self._log(f"startEditing failed: {exc}")
-        self._warn(
-            QCoreApplication.translate(
-                "FreehandDigitize", "No se pudo poner «{name}» en edición."
-            ).format(name=layer.name())
-        )
-        return False
-
     def _deactivate_tool(self) -> None:
-        """Unset the active map tool and uncheck both actions."""
+        """Cancel strokes, unset the active map tool and uncheck both actions."""
         for tool in (self.tool, self.reshape_tool):
             if tool is not None:
+                tool.cancel_stroke()
                 try:
                     if self.canvas.mapTool() is tool:
                         self.canvas.unsetMapTool(tool)
@@ -280,6 +284,15 @@ class FreehandDigitizePlugin:
         """Reshape the geometries under a finished reshape stroke."""
         if self._reshape_creator is not None:
             self._reshape_creator.reshape(layer, geometry)
+
+    def _on_sampling_settings(self, _checked: bool = False) -> None:
+        """Open the sampling settings dialog."""
+        dialog = SamplingDialog(
+            self.iface.activeLayer(),
+            self._sampling_store,
+            self.iface.mainWindow(),
+        )
+        exec_dialog(dialog)
 
     # -- tolerance spinbox ------------------------------------------------
     def _make_action(
@@ -330,6 +343,38 @@ class FreehandDigitizePlugin:
             pass
         return effective_tolerance(self.spinbox.value(), geographic)
 
+    # -- editing session --------------------------------------------------
+    def _on_current_layer_changed(self, *_args) -> None:
+        """Reconnect the active layer's editing signals and refresh the UI."""
+        layer = self.iface.activeLayer()
+        if layer is not self._editing_layer:
+            self._disconnect_editing_signals()
+            self._editing_layer = layer
+            if isinstance(layer, QgsVectorLayer):
+                try:
+                    layer.editingStarted.connect(self._on_editing_started)
+                    layer.editingStopped.connect(self._on_editing_stopped)
+                except (AttributeError, RuntimeError, TypeError) as exc:
+                    self._log(f"editing signal connection failed: {exc}")
+        self._update_ui_state()
+
+    def _disconnect_editing_signals(self) -> None:
+        """Disconnect the stored layer's editing signals."""
+        layer = self._editing_layer
+        if layer is not None:
+            self._disconnect(layer.editingStarted, self._on_editing_started)
+            self._disconnect(layer.editingStopped, self._on_editing_stopped)
+            self._editing_layer = None
+
+    def _on_editing_started(self, *_args) -> None:
+        """Enable the tools when the active layer enters edit mode."""
+        self._update_ui_state()
+
+    def _on_editing_stopped(self, *_args) -> None:
+        """Deactivate the tools when the active layer leaves edit mode."""
+        self._deactivate_tool()
+        self._update_ui_state()
+
     # -- UI state ---------------------------------------------------------
     def _update_ui_state(self, *_args) -> None:
         """Enable the actions and spinbox according to the active layer."""
@@ -353,6 +398,21 @@ class FreehandDigitizePlugin:
 
         if not drawable and self._any_action_checked():
             self._deactivate_tool()
+
+    def _activation_warning(self, layer) -> str:
+        """Return the appropriate warning for an unavailable layer."""
+        if layer is not None and isinstance(layer, QgsVectorLayer):
+            try:
+                if (
+                    layer.isValid()
+                    and is_supported_geometry(int(layer.geometryType()))
+                    and layer.supportsEditing()
+                    and not layer.isEditable()
+                ):
+                    return edit_mode_required_text(layer.name())
+            except (AttributeError, RuntimeError, TypeError):
+                pass
+        return _invalid_layer_text()
 
     def _any_action_checked(self) -> bool:
         """Return whether either toolbar action is checked."""
@@ -382,8 +442,10 @@ class FreehandDigitizePlugin:
             if not is_supported_geometry(int(layer.geometryType())):
                 return False
             supports_editing = getattr(layer, "supportsEditing", None)
-            if callable(supports_editing):
-                return bool(supports_editing())
+            if callable(supports_editing) and not bool(supports_editing()):
+                return False
+            if not layer.isEditable():
+                return False
         except (AttributeError, RuntimeError, TypeError):
             return False
         return True

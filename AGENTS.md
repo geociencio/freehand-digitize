@@ -172,7 +172,8 @@ freehand_plugin.py   wiring: action, tolerance spinbox, signals, lifecycle
 2. On release it emits `geometryFinished(QgsGeometry, QgsVectorLayer)`.
 3. `FeatureCreator` simplifies, validates, opens the attribute form and inserts
    the feature inside an undo command. In reshape mode, `ReshapeCreator` applies
-   the stroke to the features under it (selection acts as a filter).
+   the stroke to the features under it (selection acts as a filter). Sampling is
+   rebuilt from `SamplingStore` at press; tools require an active edit session.
 4. `FreehandDigitizePlugin` owns the action, spinbox, layer enablement and
    lifecycle.
 
@@ -319,6 +320,8 @@ Load only the relevant `SKILL.md` on demand.
 
 - **Change procedure**: `docs/maintainer/CHANGE_PROCEDURE.md`
 - **Reshape plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_RESHAPE.md`
+- **Edit-session plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_EDIT_SESSION.md`
+- **Vertex sampling plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_VERTEX_SAMPLING.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`

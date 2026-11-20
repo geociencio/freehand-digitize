@@ -19,6 +19,8 @@ stroke across them and release.
 | Freehand drawing | Lines and polygons; polygons close automatically. |
 | Reshape | Draw a stroke across existing line/polygon geometries to reshape them; a selection narrows the targets. |
 | Multi-feature reshape | Every geometry under the stroke changes in one undo command. |
+| Sampling settings | One vertex every N **pixels** or N **layer units**; a geographic CRS warns that layer units are degrees. |
+| Edit-session aware | Create/reshape are enabled only while the layer is in edit mode; stopping editing cancels the stroke. |
 | Simplification tolerance | `QDoubleSpinBox` 0–5, 3 decimals, step 0.1; persisted between sessions. |
 | Geographic CRS | The tolerance is disabled and 0 is applied (degrees are not metres). |
 | `Ctrl` snapping | Snaps the first and last vertex to existing vertices (QGIS snapping engine). |
@@ -70,8 +72,8 @@ You can also copy this folder to
 
 ## Usage
 
-1. Select a **line or polygon layer** and start editing (the tool can also start
-   the edit session).
+1. Select a **line or polygon layer** and start editing. The actions are
+   disabled until the layer is in edit mode.
 2. Click **Dibujo a mano alzada** in the digitize toolbar or
    **Vector → Freehand Digitize**.
 3. Drag with the left mouse button to draw.
@@ -79,6 +81,21 @@ You can also copy this folder to
    before the feature is added.
 5. Adjust the **tolerance** in the digitize toolbar spin box (0 = no
    simplification).
+
+### Sampling settings
+
+Open **Configuración de muestreo** (English: **Sampling settings**) from the
+Digitize toolbar gear or **Vector → Freehand Digitize**. The dialog offers:
+
+- **Pixels**: one vertex every N device pixels (the default, 1.5 px; independent
+  of CRS and zoom).
+- **Layer units**: one vertex every N layer units (metres/feet in projected CRS,
+  **degrees** in geographic CRS).
+
+The two units keep separate distances, so switching units does not reinterpret
+`1.5` as `1.5°`. For a geographic layer the dialog warns that a degree of
+longitude is not a constant length (it depends on latitude); use pixels for a
+uniform on-screen density.
 
 ### Reshaping an existing feature
 
@@ -177,6 +194,8 @@ The `uv` modernization guide is in
 - [Architecture](docs/ARCHITECTURE_EN.md)
 - [Change procedure (plan first)](docs/maintainer/CHANGE_PROCEDURE.md)
 - [Reshape implementation plan](docs/maintainer/PLAN_RESHAPE.md)
+- [Vertex sampling plan (proposed)](docs/maintainer/PLAN_VERTEX_SAMPLING.md)
+- [Edit-session gating plan (proposed)](docs/maintainer/PLAN_EDIT_SESSION.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

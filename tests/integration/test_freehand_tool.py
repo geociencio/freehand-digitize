@@ -52,6 +52,7 @@ class TestFreehandTool(unittest.TestCase):
     def setUp(self) -> None:
         """Create a line layer, canvas, fake interface and tool."""
         self.layer = self.make_layer("LineString")
+        self.layer.startEditing()
         self.canvas = self.make_canvas(self.layer)
         self.iface = self.FakeIface(self.canvas, self.layer)
         self.tool = self.FreehandTool(self.canvas, self.iface)
@@ -100,6 +101,7 @@ class TestFreehandTool(unittest.TestCase):
     def test_polygon_stroke_is_closed(self) -> None:
         """A polygon stroke closes the ring before emitting."""
         polygon_layer = self.make_layer("Polygon")
+        polygon_layer.startEditing()
         self.iface.setActiveLayer(polygon_layer)
         self.tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
         self.tool.canvasMoveEvent(self.mouse_event(self.canvas, self.MOVE, 200, 100))
@@ -110,9 +112,46 @@ class TestFreehandTool(unittest.TestCase):
         self.assertEqual(len(rings[0]), 4)
         self.assertEqual(rings[0][0], rings[0][-1])
 
+    def test_tool_uses_the_layer_sampling_store(self) -> None:
+        """A layer-unit threshold thins points even when the screen delta is large."""
+        from freehand_digitize.core.constants import (
+            SAMPLE_UNIT_LAYER,
+            SAMPLING_LAYER_KEY,
+            SAMPLING_UNIT_KEY,
+        )
+        from freehand_digitize.core.settings import SamplingStore
+        from tests.mocks.settings import FakeSettings
+
+        store = SamplingStore(
+            FakeSettings(
+                {
+                    SAMPLING_UNIT_KEY: SAMPLE_UNIT_LAYER,
+                    SAMPLING_LAYER_KEY: 1000.0,
+                }
+            )
+        )
+        tool = self.FreehandTool(self.canvas, self.iface, sampling_store=store)
+        emitted = []
+        tool.geometryFinished.connect(lambda geometry, layer: emitted.append(geometry))
+        tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
+        tool.canvasMoveEvent(self.mouse_event(self.canvas, self.MOVE, 200, 200))
+        tool.canvasReleaseEvent(self.mouse_event(self.canvas, self.RELEASE, 200, 200))
+        self.assertFalse(emitted)
+
+    def test_press_without_edit_session_warns_and_emits_nothing(self) -> None:
+        """The tool never starts editing on its own."""
+        self.layer.rollBack()
+        self.tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
+        self.tool.canvasMoveEvent(self.mouse_event(self.canvas, self.MOVE, 150, 150))
+        self.tool.canvasReleaseEvent(self.mouse_event(self.canvas, self.RELEASE, 150, 150))
+        self.assertFalse(self.emitted)
+        self.assertFalse(self.layer.isEditable())
+        self.assertTrue(self.iface.messages.warnings)
+
     def test_reshape_mode_emits_an_open_line(self) -> None:
         """Reshape mode emits a line even on a polygon layer."""
         polygon_layer = self.make_layer("Polygon")
+        polygon_layer.startEditing()
         self.iface.setActiveLayer(polygon_layer)
         tool = self.FreehandTool(self.canvas, self.iface, mode=self.MODE_RESHAPE)
         emitted = []
@@ -126,6 +165,7 @@ class TestFreehandTool(unittest.TestCase):
     def test_short_stroke_is_ignored(self) -> None:
         """A polygon with fewer than three points emits nothing."""
         polygon_layer = self.make_layer("Polygon")
+        polygon_layer.startEditing()
         self.iface.setActiveLayer(polygon_layer)
         self._draw([(100, 100), (150, 150)])
         self.assertEqual(self.emitted, [])

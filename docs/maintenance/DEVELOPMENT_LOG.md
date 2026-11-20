@@ -5,6 +5,32 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-19] - Muestreo configurable y gating de edición (23:38)
+
+### Resumen
+Se añadieron las opciones de muestreo (píxeles o unidades de capa) y el plugin
+pasó a respetar la sesión de edición de QGIS.
+
+### Logros
+- `SamplingOptions`/`StrokeRecorder` con thinning por píxeles o por unidades de
+  capa; distancias separadas por unidad.
+- `SamplingStore` y `SamplingDialog` con advertencia de CRS geográfico (grados y
+  latitud).
+- Las acciones de crear/reformar solo se habilitan con la capa en edición; al
+  detener la edición se cancela el trazo y se desactiva la herramienta.
+- Se eliminó el auto-inicio de edición del plugin, `FreehandTool`,
+  `FeatureCreator` y `ReshapeCreator`.
+- Tests: 117 totales (57 unitarios, 60 integración); `make test-qgis` y
+  `make docker-test` verdes.
+- Catálogo inglés: 34 mensajes.
+
+### Documentación
+- README, guía de usuario, arquitectura, CHANGELOG, metadata y paridad.
+- Planes [edit-session](../maintainer/PLAN_EDIT_SESSION.md) y
+  [vertex sampling](../maintainer/PLAN_VERTEX_SAMPLING.md) implementados.
+
+---
+
 ## [2026-11-19] - Freehand reshape implementado (23:05)
 
 ### Resumen

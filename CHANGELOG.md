@@ -10,6 +10,8 @@ QGIS 3.28–4.x (Qt5/Qt6).
 
 - **Freehand reshape** of existing line/polygon features under the stroke, with an
   optional selection filter, multi-feature support and a single undo command.
+- **Vertex sampling settings**: choose one vertex every N device pixels or N
+  layer units, with separate per-unit distances and a geographic-CRS warning.
 - Adjustable simplification tolerance (0–5, 3 decimals) in the digitize toolbar,
   persisted in `QgsSettings` with migration of the legacy
   `/freehandEdit/tolerance` key.
@@ -34,6 +36,9 @@ QGIS 3.28–4.x (Qt5/Qt6).
 
 ### Changed
 
+- Create/reshape actions are enabled only while the active layer is in edit
+  mode; stopping editing cancels an in-progress stroke. The plugin no longer
+  starts edit sessions automatically.
 - The stroke is stored in layer coordinates (`toLayerCoordinates`), not in the
   project CRS; the risk of geometries in the wrong CRS is removed.
 - Stroke sampling uses device-pixel distance, not `mapUnitsPerPixel` over layer

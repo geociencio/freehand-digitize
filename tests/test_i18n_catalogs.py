@@ -75,6 +75,10 @@ class TestTranslationCatalogs(unittest.TestCase):
         required = {
             "Dibujo a mano alzada": "Freehand digitize",
             "Reformar geometría": "Reshape feature",
+            "Configuración de muestreo": "Sampling settings",
+            "Activa la edición de la capa «{name}» antes de dibujar.": (
+                "Start editing layer “{name}” before drawing."
+            ),
             "Entidad no válida": "Invalid feature",
             "Selecciona una capa vectorial de línea o polígono editable antes de dibujar.": (
                 "Select an editable line or polygon vector layer before drawing."

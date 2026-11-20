@@ -37,6 +37,8 @@ active vector layer. It is a modernized derivative of the classic
 - Freehand line/polygon digitizing with a pencil cursor and a live rubber band.
 - Freehand reshape of existing geometries under the stroke, with optional
   selection filtering and one undo command.
+- Sampling in device pixels or layer units (with a geographic-CRS warning) and
+  edit-session-aware actions.
 - Configurable, persisted simplification tolerance (0–5 layer units).
 - Geographic-CRS policy (tolerance forced to 0).
 - CTRL snapping of the first and last vertex through the QGIS snapping engine.
@@ -64,6 +66,7 @@ freehand_digitize/
 │   ├── feature_creator.py       # simplify/validate/form/defaults/undo
 │   ├── freehand_tool.py         # QgsMapTool, snapping, rubber band, modes
 │   ├── reshape_creator.py       # target detection + reshapeGeometry + undo
+│   ├── sampling_dialog.py       # pixels/layer units + geographic warning
 │   ├── geometry_factory.py      # stroke points -> QgsGeometry
 │   └── qt_compat.py             # PyQt5/PyQt6 + QGIS enum shims
 ├── tests/
@@ -266,34 +269,38 @@ is the reshape guide.
 `FreehandDigitizePlugin` is the QGIS entry point:
 
 - `initGui()`:
-  - creates `ToleranceStore`, `FeatureCreator`, `ReshapeCreator`, the creation
-    `FreehandTool` and the reshape `FreehandTool(mode=MODE_RESHAPE)`;
-  - creates two checkable actions (create and reshape) with theme icons;
-  - adds both actions to the digitize toolbar (or a fallback toolbar) and the
+  - creates `ToleranceStore`, `SamplingStore`, `FeatureCreator`,
+    `ReshapeCreator`, the creation `FreehandTool` and the reshape
+    `FreehandTool(mode=MODE_RESHAPE)`;
+  - creates three actions (create, reshape, sampling settings) with theme icons;
+  - adds all three to the digitize toolbar (or a fallback toolbar) and the
     Vector menu;
   - creates the tolerance `QDoubleSpinBox` and adds it to the toolbar;
-  - connects `iface.currentLayerChanged` and `canvas.mapToolSet`;
+  - connects `iface.currentLayerChanged`, `canvas.mapToolSet` and the active
+    layer's `editingStarted`/`editingStopped`;
   - updates the UI state.
 - `_is_drawable(layer)`: valid `QgsVectorLayer`, line/polygon geometry,
-  `supportsEditing()`.
-- `_update_ui_state()`: enables the action and the spinbox; disables the
-  spinbox for geographic CRS; deactivates the tool if the layer becomes
-  unsupported.
-- `_activate_tool()` / `_activate_reshape_tool()`: validate, start editing if
-  needed and install the corresponding tool. Reshape does not require a
-  preselection.
+  `supportsEditing()` **and** `isEditable()`.
+- `_update_ui_state()`: enables create/reshape and the spinbox only in edit
+  mode; disables the spinbox for geographic CRS; samples settings stay enabled.
+- `_activate_tool()` / `_activate_reshape_tool()`: validate the edit session and
+  install the tool; they never call `startEditing()`. Reshape does not require
+  a preselection.
+- `_on_editing_started()` / `_on_editing_stopped()`: enable the actions or cancel
+  the stroke, unset the tool and uncheck the actions.
 - `_on_geometry_finished()`: computes the effective tolerance and delegates to
   `FeatureCreator`.
 - `_on_reshape_finished()`: delegates the stroke to `ReshapeCreator`.
-- `unload()`: disconnects signals, unsets the active tool, removes both actions
-  and the spinbox, and deletes the fallback toolbar if it was created.
+- `_on_sampling_settings()`: opens `SamplingDialog`.
+- `unload()`: disconnects signals, unsets the active tool, removes the three
+  actions and the spinbox, and deletes the fallback toolbar if it was created.
 
 ---
 
 ## 🔄 Data flow
 
-1. The user activates **Dibujo a mano alzada** on an editable line/polygon
-   layer.
+1. The user starts editing a line/polygon layer and activates **Dibujo a mano
+   alzada**.
 2. `canvasPressEvent` captures the layer, converts the pointer to layer
    coordinates, snaps with CTRL if requested, and starts the recorder and
    rubber band.
@@ -302,8 +309,9 @@ is the reshape guide.
 4. `canvasReleaseEvent` optionally snaps the last point, builds the geometry in
    layer coordinates, clears the rubber band and emits
    `geometryFinished(geometry, layer)`.
-5. `FeatureCreator.create` simplifies, validates, starts editing, creates the
-   feature with defaults, shows the form and adds it inside an undo command.
+5. `FeatureCreator.create` simplifies, validates, creates the feature with
+   defaults inside the active edit session, shows the form and adds it inside an
+   undo command.
 6. The layer is repainted; the user can undo the feature as one operation.
 
 ### Reshape branch
@@ -314,6 +322,16 @@ is the reshape guide.
    filter), applies `reshapeGeometry` to each and commits all successful results
    in one undo command.
 4. The layer is repainted; `Ctrl+Z` restores every reshaped feature.
+
+### Sampling
+
+1. `FreehandTool` builds a `StrokeRecorder` from `SamplingStore` at press time.
+2. In pixel mode it thins by device-pixel distance; in layer mode it thins by
+   layer-CRS distance.
+3. The sampling dialog stores separate pixel and layer distances and warns when
+   a geographic CRS turns layer units into degrees.
+4. The edit-session gate applies to the map tools; the sampling dialog remains
+   available outside edit mode.
 
 ---
 

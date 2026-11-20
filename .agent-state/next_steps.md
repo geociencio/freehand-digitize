@@ -6,12 +6,13 @@
 ## ✅ Current state
 
 - **Plugin 2.0.0** implemented with full `freehandEditing` parity plus freehand
-  reshape: tolerance spinbox/persistence, geographic-CRS policy, CTRL snapping,
-  pencil cursor, layer-CRS geometry, attribute form, provider defaults, undo,
-  validity prompt, layer enablement, secondary-release finish and ESC cancel.
+  reshape, sampling and edit-session gating: tolerance spinbox/persistence,
+  geographic-CRS policy, pixel/layer-unit sampling, CTRL snapping, pencil
+  cursor, layer-CRS geometry, attribute form, provider defaults, undo, validity
+  prompt, layer enablement, secondary-release finish and ESC cancel.
 - **Architecture**: `core/` (no QGIS/Qt) + `gui/` (PyQGIS) +
   `freehand_plugin.py` (wiring); Qt5/Qt6 shims in `gui/qt_compat.py`.
-- **Tests**: 97 total — 49 unit (no QGIS) and 48 integration, green against both
+- **Tests**: 117 total — 57 unit (no QGIS) and 60 integration, green against both
   QGIS 4.2.2 (host, Qt6) and the QGIS container (Qt5); `make test` reports the
   integration layer as skipped when QGIS is absent.
 - **QA**: ruff, flake8, mypy (core), qgis-analyzer (`--max-cc 10`),
@@ -44,7 +45,6 @@ make zip
 1. Tag `v2.0.0` and publish the ZIP after the final review.
 2. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion` if 3.28 is
    not available).
-
 3. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 

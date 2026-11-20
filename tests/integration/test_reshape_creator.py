@@ -56,12 +56,14 @@ class TestReshapeCreator(unittest.TestCase):
         """Return a line layer with a simple horizontal feature."""
         layer = self.make_layer("LineString")
         feature_id = self._add(layer, self._line([(0, 0), (5, 0), (10, 0)]))
+        layer.startEditing()
         return layer, feature_id
 
     def _polygon_layer(self):
         """Return a polygon layer with one square feature."""
         layer = self.make_layer("Polygon")
         feature_id = self._add(layer, self._polygon(SQUARE_A))
+        layer.startEditing()
         return layer, feature_id
 
     def _stacked_polygons(self):
@@ -69,6 +71,7 @@ class TestReshapeCreator(unittest.TestCase):
         layer = self.make_layer("Polygon")
         first = self._add(layer, self._polygon(SQUARE_A))
         second = self._add(layer, self._polygon(SQUARE_B))
+        layer.startEditing()
         return layer, first, second
 
     # -- tests ------------------------------------------------------------
@@ -145,13 +148,16 @@ class TestReshapeCreator(unittest.TestCase):
         self.assertTrue(self.iface.messages.warnings)
         self.assertEqual(layer.getFeature(feature_id).geometry().asWkt(), original)
 
-    def test_starts_editing_when_needed(self) -> None:
-        """A non-editable layer is put in edit mode automatically."""
-        layer, _ = self._polygon_layer()
+    def test_rejects_non_editable_layer(self) -> None:
+        """Reshape requires an active edit session."""
+        layer = self.make_layer("Polygon")
+        feature_id = self._add(layer, self._polygon(SQUARE_A))
+        original = layer.getFeature(feature_id).geometry().asWkt()
         self.assertFalse(layer.isEditable())
         created = self.creator.reshape(layer, self._line([(5, -2), (5, 12)]))
-        self.assertTrue(created)
-        self.assertTrue(layer.isEditable())
+        self.assertFalse(created)
+        self.assertFalse(layer.isEditable())
+        self.assertEqual(layer.getFeature(feature_id).geometry().asWkt(), original)
 
 
 if __name__ == "__main__":

@@ -28,7 +28,7 @@
 
 - [x] `pyproject.toml`, `uv.lock`, `.python-version`, Makefile.
 - [x] ruff / flake8 / mypy / qgis-analyzer gates green.
-- [x] 97 tests (49 unit + 48 QGIS 4.2.2 integration) green.
+- [x] 117 tests (57 unit + 60 QGIS 4.2.2 integration) green.
 - [x] `qgis-manage validate --strict` and ZIP validated.
 - [x] CI, pre-commit, Dockerfile, devcontainer, detect-secrets baseline.
 - [x] Python 3.9 syntax compatibility test.
@@ -40,6 +40,8 @@
 - [x] Reshape plan revision 2 approved for v2.0.0 (target = geometry under the
       stroke; optional selection filter).
 - [x] Implement and verify reshape; plan marked IMPLEMENTED.
+- [x] Implement vertex sampling settings (pixels/layer units, geographic
+      warning) and edit-session gating (tools only while editing).
 
 ### Internationalization
 
@@ -70,7 +72,7 @@
 
 - [x] Run `make pre-release` and `make security-scan` end to end.
 - [x] Run `make qt6-check` (packaged ZIP, no enum errors).
-- [x] Run `make docker-test` (QGIS/Qt5 container: 48 tests OK).
+- [x] Run `make docker-test` (QGIS/Qt5 container: 60 tests OK).
 - [x] Metadata points to the dedicated repository (https://github.com/geociencio/freehand-digitize).
 - [x] Implement freehand reshape (features under the stroke, optional selection
       filter, multi-feature single undo) and deploy it to QGIS 4.

@@ -8,6 +8,8 @@ use stable names.
 
 from __future__ import annotations
 
+from typing import Any
+
 from qgis.core import Qgis, QgsPointLocator
 from qgis.PyQt.QtCore import Qt
 
@@ -41,3 +43,14 @@ try:
     SNAP_VERTEX = QgsPointLocator.Type.Vertex
 except AttributeError:  # pragma: no cover - QGIS 3.28 without scoped enums
     SNAP_VERTEX = getattr(QgsPointLocator, "Vertex")
+
+
+def exec_dialog(dialog: Any) -> bool:
+    """Execute a QGIS dialog and return whether it was accepted.
+
+    PyQt6 uses ``exec()``; PyQt5 also provides ``exec_()``.
+    """
+    execute = getattr(dialog, "exec", None) or getattr(dialog, "exec_", None)
+    if execute is None:
+        return True
+    return bool(execute())

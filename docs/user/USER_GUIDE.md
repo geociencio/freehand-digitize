@@ -13,6 +13,7 @@
 3. [Installation](#3-installation)
 4. [Drawing a feature](#4-drawing-a-feature)
    1. [Reshaping an existing feature](#41-reshaping-an-existing-feature)
+   2. [Sampling settings](#42-sampling-settings)
 5. [The digitize toolbar](#5-the-digitize-toolbar)
 6. [Snapping with Ctrl](#6-snapping-with-ctrl)
 7. [Attribute form and defaults](#7-attribute-form-and-defaults)
@@ -79,8 +80,8 @@ After installation, the action appears in the **Digitize** toolbar and in
 ## 4. Drawing a feature
 
 1. Select the **line or polygon layer** where the feature must be created.
-2. Start editing if needed; the tool also starts the edit session when it is
-   activated.
+2. Start editing. The actions are disabled until the layer is in edit mode, and
+   they are disabled again when editing stops.
 3. Click **Freehand digitize** (Spanish: **Dibujo a mano alzada**) in the Digitize
    toolbar or choose **Vector → Freehand Digitize**.
 4. Drag with the **left mouse button** to draw the stroke.
@@ -108,6 +109,27 @@ If a selection exists, only selected features that also intersect the stroke are
 reshaped. A warning is shown when the stroke crosses no feature or when no
 candidate could be reshaped. `Esc` cancels the stroke, and `Ctrl` snapping works
 on the first and last vertex exactly as in the creation tool.
+
+### 4.2 Sampling settings
+
+The gear action **Configuración de muestreo** (English: **Sampling settings**)
+controls how many vertices are captured:
+
+1. Choose **Píxeles** or **Unidades de la capa**.
+2. Set the **minimum distance** between vertices.
+3. Press **Aceptar**; the setting applies to the next stroke in both creation and
+   reshape.
+
+Defaults are 1.5 px and 0.5 layer units. The layer-unit default becomes 0.0001°
+when the active layer uses a geographic CRS. Each unit keeps its own distance.
+
+**Geographic CRS warning:** in a geographic layer, layer units are degrees. One
+degree of longitude is not a constant length (it shrinks with latitude), so
+layer-unit sampling is not a uniform ground distance. Use pixels for a uniform
+on-screen density or a projected CRS for metric sampling.
+
+The edit-session rule applies to the map tools, not to this dialog: sampling can
+be configured even when no layer is being edited.
 
 If the stroke is too short (fewer points than the geometry needs), nothing is
 created and the tool stays active.
@@ -225,10 +247,10 @@ be meaningless.
 
 | Symptom | Cause / fix |
 | :--- | :--- |
-| The action is disabled | The active layer is not a valid, editable line/polygon layer. Select one or start editing. |
+| The action is disabled | The active layer is not a line/polygon layer in edit mode. Select one and start editing. |
 | “Select the layer where you want to draw first.” | No active layer. Select the target layer first. |
 | “This tool only draws on line or polygon layers.” | Point layers are not supported. |
-| “Layer ‘…’ could not be put in edit mode.” | The layer is read-only or the provider rejected the edit session. |
+| “Start editing layer ‘…’ before drawing.” | Activate edit mode on the layer; the plugin no longer starts it automatically. |
 | The tolerance spin box is disabled | The layer uses a geographic CRS; tolerance is forced to 0. |
 | The attribute form does not open | QGIS is configured to skip the form, or the layer has no editable fields. |
 | The feature is not where expected | Check the layer CRS and that you used the layer, not the project, as the target. |

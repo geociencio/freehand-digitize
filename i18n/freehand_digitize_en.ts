@@ -3,47 +3,39 @@
     <context>
         <name>FreehandDigitize</name>
         <message>
-            <location filename="../gui/feature_creator.py" line="87" />
+            <location filename="../gui/feature_creator.py" line="80" />
             <source>La geometría resultante está vacía; no se añadió nada.</source>
             <translation>The resulting geometry is empty; nothing was added.</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="133" />
+            <location filename="../gui/feature_creator.py" line="126" />
             <source>No se pudo crear la entidad: {error}</source>
             <translation>Could not create the feature: {error}</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="148" />
+            <location filename="../gui/feature_creator.py" line="141" />
             <source>La capa «{name}» rechazó la entidad.</source>
             <translation>Layer “{name}” rejected the feature.</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="184" />
+            <location filename="../gui/feature_creator.py" line="177" />
             <source>Entidad no válida</source>
             <translation>Invalid feature</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="185" />
+            <location filename="../gui/feature_creator.py" line="178" />
             <source>La geometría de la entidad que acabas de dibujar no es válida.
 ¿Quieres usarla de todos modos?</source>
             <translation>The geometry of the feature you just drew is not valid.
 Do you want to use it anyway?</translation>
         </message>
         <message>
-            <location filename="../freehand_plugin.py" line="242" />
-            <location filename="../gui/reshape_creator.py" line="176" />
-            <location filename="../gui/freehand_tool.py" line="242" />
-            <location filename="../gui/feature_creator.py" line="208" />
-            <source>No se pudo poner «{name}» en edición.</source>
-            <translation>Layer “{name}” could not be put in edit mode.</translation>
-        </message>
-        <message>
-            <location filename="../gui/freehand_tool.py" line="128" />
+            <location filename="../gui/freehand_tool.py" line="133" />
             <source>Selecciona primero la capa donde quieres dibujar.</source>
             <translation>Select the layer where you want to draw first.</translation>
         </message>
         <message>
-            <location filename="../gui/freehand_tool.py" line="135" />
+            <location filename="../gui/freehand_tool.py" line="140" />
             <source>Esta herramienta solo dibuja en capas de línea o polígono.</source>
             <translation>This tool only draws on line or polygon layers.</translation>
         </message>
@@ -117,7 +109,73 @@ Disabled for geographic CRS, where simplification always uses 0.</translation>
             <translation>{count} feature(s) reshaped.</translation>
         </message>
         <message>
-            <location filename="../freehand_plugin.py" line="422" />
+            <location filename="../gui/texts.py" line="105" />
+            <source>Activa la edición de la capa «{name}» antes de dibujar.</source>
+            <translation>Start editing layer “{name}” before drawing.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="125" />
+            <location filename="../gui/texts.py" line="112" />
+            <source>Configuración de muestreo</source>
+            <translation>Sampling settings</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="117" />
+            <source>Elige la unidad y la distancia mínima entre vértices del trazo.</source>
+            <translation>Choose the unit and the minimum distance between stroke vertices.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="130" />
+            <source>Unidad de muestreo:</source>
+            <translation>Sampling unit:</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="135" />
+            <source>Píxeles</source>
+            <translation>Pixels</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="140" />
+            <source>Unidades de la capa</source>
+            <translation>Layer units</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="145" />
+            <source>Distancia mínima:</source>
+            <translation>Minimum distance:</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="150" />
+            <source>Distancia mínima entre vértices del trazo.</source>
+            <translation>Minimum distance between stroke vertices.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="157" />
+            <source>Píxeles: independiente del CRS y del zoom. Unidades de capa: depende del CRS.</source>
+            <translation>Pixels: independent of CRS and zoom. Layer units: depends on the CRS.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="165" />
+            <source>La capa activa usa un CRS geográfico. En unidades de capa la distancia se mide en grados; un grado de longitud no tiene una longitud constante (depende de la latitud). Usa píxeles si quieres una densidad uniforme en pantalla.</source>
+            <translation>The active layer uses a geographic CRS. In layer units the distance is measured in degrees; one degree of longitude is not a constant length (it depends on latitude). Use pixels for a uniform on-screen density.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="176" />
+            <source>Aceptar</source>
+            <translation>OK</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="181" />
+            <source>Cancelar</source>
+            <translation>Cancel</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="186" />
+            <source>Restablecer</source>
+            <translation>Reset</translation>
+        </message>
+        <message>
+            <location filename="../freehand_plugin.py" line="484" />
             <source>Selecciona una capa vectorial de línea o polígono editable antes de dibujar.</source>
             <translation>Select an editable line or polygon vector layer before drawing.</translation>
         </message>

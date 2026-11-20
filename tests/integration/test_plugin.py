@@ -63,17 +63,31 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertIsNotNone(self.plugin.action)
         self.assertIsNotNone(self.plugin.spinbox)
         self.assertIsNotNone(self.plugin.tool)
-        self.assertTrue(self.plugin.action.isEnabled())
+        self.assertFalse(self.plugin.action.isEnabled())
         self.assertTrue(self.plugin.action.isCheckable())
 
+    def test_actions_enabled_when_editing_starts(self) -> None:
+        """Starting the edit session enables both actions and the spinbox."""
+        self.assertFalse(self.plugin.action.isEnabled())
+        self.layer.startEditing()
+        self.assertTrue(self.plugin.action.isEnabled())
+        self.assertTrue(self.plugin.reshape_action.isEnabled())
+
+    def test_sampling_action_exists_without_editing(self) -> None:
+        """Sampling settings stay available outside an edit session."""
+        self.assertIsNotNone(self.plugin.sampling_action)
+        self.assertTrue(self.plugin.sampling_action.isEnabled())
+
     def test_reshape_action_exists(self) -> None:
-        """The reshape action and tool are created and enabled."""
+        """The reshape action and tool are created."""
         self.assertIsNotNone(self.plugin.reshape_action)
         self.assertIsNotNone(self.plugin.reshape_tool)
+        self.layer.startEditing()
         self.assertTrue(self.plugin.reshape_action.isEnabled())
 
     def test_activate_reshape_without_selection(self) -> None:
         """Reshape activation does not require a preselected feature."""
+        self.layer.startEditing()
         self.plugin._on_reshape_triggered(True)
         self.assertIs(self.canvas.mapTool(), self.plugin.reshape_tool)
         self.assertTrue(self.plugin.reshape_action.isChecked())
@@ -87,6 +101,7 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         )
         self.layer.dataProvider().addFeature(feature)
         original = self.layer.getFeature(feature.id()).geometry().asWkt()
+        self.layer.startEditing()
         self.plugin._on_reshape_triggered(True)
         tool = self.plugin.reshape_tool
 
@@ -113,9 +128,11 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertFalse(self.plugin.action.isEnabled())
 
     def test_spinbox_disabled_for_geographic_crs(self) -> None:
-        """Geographic layers disable the tolerance spinbox."""
+        """Geographic layers disable the tolerance spinbox while editing."""
+        self.layer.startEditing()
         self.assertFalse(self.plugin.spinbox.isEnabled())
         projected = self.make_layer("LineString", crs="EPSG:3857")
+        projected.startEditing()
         self.iface.setActiveLayer(projected)
         self.assertTrue(self.plugin.spinbox.isEnabled())
 
@@ -134,15 +151,30 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.plugin.spinbox.blockSignals(False)
         self.assertEqual(self.plugin._effective_tolerance(projected), 1.5)
 
-    def test_activate_tool_starts_editing(self) -> None:
-        """Activating the action installs the tool and starts editing."""
+    def test_activation_requires_an_edit_session(self) -> None:
+        """Activating the action does not start editing on its own."""
         self.plugin._on_action_triggered(True)
-        self.assertIs(self.canvas.mapTool(), self.plugin.tool)
-        self.assertTrue(self.layer.isEditable())
-        self.assertTrue(self.plugin.action.isChecked())
+        self.assertIsNot(self.canvas.mapTool(), self.plugin.tool)
+        self.assertFalse(self.layer.isEditable())
+        self.assertFalse(self.plugin.action.isChecked())
+        self.assertTrue(self.iface.messages.warnings)
+
+    def test_editing_stopped_deactivates_tool_and_cancels_stroke(self) -> None:
+        """Stopping editing cancels a stroke and unchecks the action."""
+        self.layer.startEditing()
+        self.plugin._on_action_triggered(True)
+        tool = self.plugin.tool
+        tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
+        tool.canvasMoveEvent(self.mouse_event(self.canvas, self.MOVE, 150, 150))
+        self.layer.commitChanges()
+        self.assertFalse(self.layer.isEditable())
+        self.assertIsNot(self.canvas.mapTool(), tool)
+        self.assertFalse(self.plugin.action.isChecked())
+        self.assertEqual(self.layer.featureCount(), 0)
 
     def test_end_to_end_stroke_creates_a_feature(self) -> None:
         """A stroke through the tool is stored in the active layer."""
+        self.layer.startEditing()
         self.plugin._on_action_triggered(True)
         tool = self.plugin.tool
         tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
@@ -161,6 +193,7 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertIsNone(self.plugin.tool)
         self.assertIsNone(self.plugin.reshape_tool)
         self.assertIsNone(self.plugin.reshape_action)
+        self.assertIsNone(self.plugin.sampling_action)
         self.assertIsNone(self.plugin.spinbox)
         self.assertIsNot(self.canvas.mapTool(), tool)
 

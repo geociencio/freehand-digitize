@@ -16,7 +16,8 @@ from qgis.PyQt.QtWidgets import QMessageBox
 
 from ..core.constants import LOG_TAG, PLUGIN_NAME
 from ..core.settings import SettingsBackend, show_attribute_form
-from .texts import edit_command_text
+from .qt_compat import exec_dialog
+from .texts import edit_command_text, edit_mode_required_text
 
 IgnoreClicks = Optional[Callable[[bool], None]]
 
@@ -27,14 +28,6 @@ def _yes_no_buttons() -> tuple[Any, Any]:
         return QMessageBox.StandardButton.Yes, QMessageBox.StandardButton.No
     except AttributeError:  # pragma: no cover - PyQt5 only
         return getattr(QMessageBox, "Yes"), getattr(QMessageBox, "No")
-
-
-def _exec_dialog(dialog: Any) -> bool:
-    """Execute a QGIS dialog and return whether it was accepted."""
-    execute = getattr(dialog, "exec", None) or getattr(dialog, "exec_", None)
-    if execute is None:
-        return True
-    return bool(execute())
 
 
 class FeatureCreator:
@@ -196,19 +189,10 @@ class FeatureCreator:
         return reply == yes
 
     def _ensure_editable(self, layer: Any) -> bool:
-        """Start an edit session when the layer is not editable yet."""
+        """Return whether the layer is already in edit mode."""
         if layer.isEditable():
             return True
-        try:
-            if layer.startEditing():
-                return True
-        except (RuntimeError, AttributeError) as exc:
-            self._log(f"startEditing failed: {exc}")
-        self._warn(
-            QCoreApplication.translate(
-                "FreehandDigitize", "No se pudo poner «{name}» en edición."
-            ).format(name=layer.name())
-        )
+        self._warn(edit_mode_required_text(layer.name()))
         return False
 
     def _edit_attributes(
@@ -228,7 +212,7 @@ class FeatureCreator:
         if ignore_clicks is not None:
             ignore_clicks(True)
         try:
-            return _exec_dialog(dialog)
+            return exec_dialog(dialog)
         except (AttributeError, RuntimeError, TypeError) as exc:
             self._log(f"attribute dialog failed: {exc}")
             return True

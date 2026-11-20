@@ -17,10 +17,10 @@ from qgis.core import (
     QgsMessageLog,
     QgsPoint,
 )
-from qgis.PyQt.QtCore import QCoreApplication
 
 from ..core.constants import LOG_TAG, PLUGIN_NAME
 from .texts import (
+    edit_mode_required_text,
     invalid_reshaped_geometry_text,
     no_feature_under_stroke_text,
     no_reshape_happened_text,
@@ -164,19 +164,10 @@ class ReshapeCreator:
                 self._log(f"rollback failed for feature {feature_id}: {exc}")
 
     def _ensure_editable(self, layer: Any) -> bool:
-        """Start an edit session when the layer is not editable yet."""
+        """Return whether the layer is already in edit mode."""
         if layer.isEditable():
             return True
-        try:
-            if layer.startEditing():
-                return True
-        except (AttributeError, RuntimeError) as exc:
-            self._log(f"startEditing failed: {exc}")
-        self._warn(
-            QCoreApplication.translate(
-                "FreehandDigitize", "No se pudo poner «{name}» en edición."
-            ).format(name=layer.name())
-        )
+        self._warn(edit_mode_required_text(layer.name()))
         return False
 
     # -- messages ---------------------------------------------------------
