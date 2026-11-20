@@ -73,9 +73,8 @@ make portal-check     # qgis-manage validate --zip
 `qgis-manage validate --zip`, which checks the ZIP root folder, required metadata,
 LICENSE, size, prohibited binaries/dev files, version, permissions and icon; warnings
 (e.g. small icon) are reported but do not block, matching the portal. `make zip` uses
-`package --repo-check`, which normalizes modes to 0644/0755 before auditing. The
-untracked `freehandEditing/` reference clone and every dev directory are excluded by
-`.qgisignore`.
+`package --repo-check`, which normalizes modes to 0644/0755 before auditing. Every
+development directory is excluded by `.qgisignore`; the upstream is not vendored.
 
 ## Upload flow
 

@@ -64,8 +64,8 @@ make portal-check
 - one `freehand_digitize/` root folder;
 - `metadata.txt`, `__init__.py`, `LICENSE`, `icon.png`, the plugin code and
   `i18n/freehand_digitize_en.qm`;
-- no `tests/`, `docs/`, `.agent`, `.agent-state`, `.ai-context`,
-  `freehandEditing/`, caches, `uv.lock` or `i18n/*.ts` (ship `.qm`, not `.ts`).
+- no `tests/`, `docs/`, `.agent`, `.agent-state`, `.ai-context`, caches,
+  `uv.lock` or `i18n/*.ts` (ship `.qm`, not `.ts`).
 
 Audit the artifact:
 

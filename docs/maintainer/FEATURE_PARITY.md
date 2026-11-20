@@ -5,8 +5,8 @@ Comparación entre el plugin original
 `e550544`, GPL-2.0, 2010–2012 Pavol Kapusta / 2013 Larry Shaffer) y esta versión
 2.0.0 para QGIS 3.28–4.x.
 
-- Fuente original conservada como referencia en `freehandEditing/` (sin
-  seguimiento en git y excluida del ZIP).
+- Fuente original: [vinayan/freehandEditing](https://github.com/vinayan/freehandEditing)
+  (commit `e550544`); no se mantiene una copia local.
 - Implementación nueva: `core/`, `gui/` y `freehand_plugin.py`.
 
 ---

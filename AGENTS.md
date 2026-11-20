@@ -339,7 +339,7 @@ Load only the relevant `SKILL.md` on demand.
 - **Development log**: `docs/maintenance/DEVELOPMENT_LOG.md`
 - **Architecture notes**: `.ai-context/architecture_notes.md`
 - **Agent state**: `.agent-state/` (`task.md`, `next_steps.md`, memory)
-- **Upstream reference**: `freehandEditing/` (GPL-2, untracked, excluded from ZIP)
+- **Upstream reference**: <https://github.com/vinayan/freehandEditing> (GPL-2; not vendored)
 
 ---
 

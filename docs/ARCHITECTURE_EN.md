@@ -456,7 +456,7 @@ Two layers, both `unittest`:
 
 Packaging uses `qgis-manage package --repo-check`; `.qgisignore` excludes tests,
 docs, scripts, `.agent`, `.agent-state`, `.ai-context`, `.uvcache`, caches,
-`dist` and the untracked `freehandEditing/` reference clone.
+`dist` and other development artifacts; the upstream is referenced by URL.
 
 ---
 

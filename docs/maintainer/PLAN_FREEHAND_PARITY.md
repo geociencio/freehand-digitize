@@ -72,8 +72,7 @@ compatibilidad con **QGIS 3.28+ y QGIS 4.x (PyQt5 y PyQt6)**. Además:
 freehand_digitize/
 ├── __init__.py               # classFactory -> FreehandDigitizePlugin
 ├── freehand_plugin.py        # tool + plugin (224 líneas originales)
-├── metadata.txt              # QGIS 3.28–4.99 (sin supportsQt6)
-└── freehandEditing/          # clon del upstream como referencia (GPL-2)
+└── metadata.txt              # QGIS 3.28–4.99 (sin supportsQt6)
 ```
 
 ### 2.2 Defectos y carencias detectados en la versión actual
@@ -109,8 +108,8 @@ freehand_digitize/
 
 ## 3. Inventario funcional del upstream
 
-Referencias: `freehandEditing/freehandediting.py` (216 líneas) y
-`freehandEditing/freehandeditingtool.py` (147 líneas).
+Referencias: [freehandediting.py](https://github.com/vinayan/freehandEditing/blob/e550544/freehandediting.py) (216 líneas) y
+[freehandeditingtool.py](https://github.com/vinayan/freehandEditing/blob/e550544/freehandeditingtool.py) (147 líneas).
 
 | ID | Capacidad | Implementación upstream | API obsoleta (QGIS 2) | Equivalente moderno |
 | :-- | :--- | :--- | :--- | :--- |
@@ -227,8 +226,7 @@ freehand_digitize/                      # raíz = carpeta del plugin en QGIS
 │   ├── integration/   # QGIS real (skip si no está)
 │   └── mocks/         # stubs mínimos para tests GUI mock-first
 ├── .github/workflows/test.yml
-├── Dockerfile  .devcontainer/devcontainer.json
-└── freehandEditing/                    # upstream de referencia (excluido del ZIP)
+└── Dockerfile  .devcontainer/devcontainer.json
 ```
 
 ### 5.3 Flujo de datos
@@ -507,8 +505,7 @@ Se copia la guía de `../sec_interp/docs/maintainer/uv_modernization_guide.md`
 6. **CI:** workflow real del repo (setup-uv pinned, `--frozen`, matriz
    Python 3.11/3.12; el runtime 3.9 se protege con el test de sintaxis, contenedor QGIS).
 7. **Empaquetado:** `qgis-manage package --repo-check` y
-   `validate --zip`; advertencia sobre `freehandEditing/` y archivos de
-   desarrollo.
+   `validate --zip`; advertencia sobre archivos de desarrollo.
 8. **Troubleshooting:** casos reales de este entorno (caché `uv` de solo
    lectura, QGIS 4 con `QgsRubberBand` en `qgis.gui`, `QgsSnappingUtils` en
    `qgis.core`, `QAction` en `QtGui`).
@@ -616,7 +613,8 @@ consume antes; el `deactivate()` cancela el trazo en cualquier caso.
   Shaffer (2013) en el `README` y en la cabecera de los módulos derivados
   (cursor XPM, semántica de eventos).
 - El framework `.agent/` conserva su `LICENSE` original.
-- `freehandEditing/` se mantiene como referencia y **se excluye del ZIP**.
+- El upstream se consulta en GitHub (commit `e550544`); no se mantiene una
+  copia local.
 
 ---
 
@@ -647,7 +645,7 @@ consume antes; el `deactivate()` cancela el trazo en cualquier caso.
 - [ ] `ruff`, `flake8`, `mypy`, `analyzer` verdes.
 - [ ] `forge validate` verde con `strict_agent_system=true`.
 - [ ] `qgis-manage validate --strict --repo` verde.
-- [ ] `make zip` genera un ZIP sin `.agent`, tests, docs ni `freehandEditing/`.
+- [ ] `make zip` genera un ZIP sin `.agent`, tests ni docs.
 - [ ] `make portal-check` valida el ZIP.
 - [ ] `make security-scan` sin críticos.
 
@@ -695,12 +693,12 @@ consume antes; el `deactivate()` cancela el trazo en cualquier caso.
 
 ### A. Referencias del upstream
 
-- `freehandEditing/freehandediting.py:59-90` — spinbox y tolerancia.
-- `freehandEditing/freehandediting.py:105-140` — habilitación por capa.
-- `freehandEditing/freehandediting.py:142-206` — creación de entidad.
-- `freehandEditing/freehandeditingtool.py:21-40` — cursor XPM.
-- `freehandEditing/freehandeditingtool.py:50-120` — eventos y rubber band.
-- `freehandEditing/freehandeditingtool.py:128-147` — activación.
+- [freehandediting.py:59-90](https://github.com/vinayan/freehandEditing/blob/e550544/freehandediting.py#L59-L90) — spinbox y tolerancia.
+- [freehandediting.py:105-140](https://github.com/vinayan/freehandEditing/blob/e550544/freehandediting.py#L105-L140) — habilitación por capa.
+- [freehandediting.py:142-206](https://github.com/vinayan/freehandEditing/blob/e550544/freehandediting.py#L142-L206) — creación de entidad.
+- [freehandeditingtool.py:21-40](https://github.com/vinayan/freehandEditing/blob/e550544/freehandeditingtool.py#L21-L40) — cursor XPM.
+- [freehandeditingtool.py:50-120](https://github.com/vinayan/freehandEditing/blob/e550544/freehandeditingtool.py#L50-L120) — eventos y rubber band.
+- [freehandeditingtool.py:128-147](https://github.com/vinayan/freehandEditing/blob/e550544/freehandeditingtool.py#L128-L147) — activación.
 
 ### B. APIs verificadas en este entorno
 

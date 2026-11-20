@@ -400,8 +400,8 @@ the artifact.
 2. **Icon**: use a PNG/JPEG referenced by `icon`; SVG is **not** a valid
    `metadata.txt` icon (keep SVG as the editable master and export a PNG).
 3. **Exclusions**: `.qgisignore` must exclude `.venv`, `tests`, `docs`, `scripts`,
-   `.agent`, `.agent-state`, `.ai-context`, `.uvcache`, caches, `dist`, local
-   configuration and the untracked upstream reference clone (`freehandEditing/`).
+   `.agent`, `.agent-state`, `.ai-context`, `.uvcache`, caches, `dist` and local
+   configuration. The upstream source is referenced by URL, not vendored.
 4. **Build and audit**:
    ```bash
    uv run qgis-manage package --repo-check
