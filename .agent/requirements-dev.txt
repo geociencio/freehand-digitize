@@ -1,0 +1,7 @@
+# Development requirements for the Agentic Forge tooling.
+-r requirements.txt
+pytest>=8
+ruff>=0.17,<0.18
+mypy>=1.10,<2
+types-PyYAML>=6.0
+tomli>=2.0

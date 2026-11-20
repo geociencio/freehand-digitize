@@ -1,0 +1,20 @@
+[general]
+name=Freehand Digitize
+qgisMinimumVersion=3.28
+qgisMaximumVersion=4.99
+supportsQt6=True
+description=Dibuja lineas y poligonos a mano alzada directamente en la capa activa.
+version=1.0.0
+author=Chito / asistente
+email=
+about=Herramienta de digitalizacion libre (tipo freehandEditing) compatible con QGIS 3.28+ y QGIS 4.x (PyQt6).
+
+Arrastra con el boton izquierdo sobre el mapa para dibujar; al soltar se crea la entidad en la capa activa. ESC o clic derecho cancela.
+tracker=
+repository=
+tags=freehand,digitize,pencil,draw,digitalizar,mano alzada
+category=Vector
+icon=
+experimental=False
+deprecated=False
+hasProcessingProvider=no
