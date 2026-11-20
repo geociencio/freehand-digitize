@@ -105,7 +105,7 @@ flake8:
 	$(UV_RUN) flake8 $(FLAKE8_TARGETS) --config .flake8
 
 mypy:
-	$(UV_RUN) mypy --config-file pyproject.toml --follow-imports=silent core
+	$(UV_RUN) mypy --config-file pyproject.toml --follow-imports=silent --explicit-package-bases core
 
 analyzer:
 	$(UV_RUN) qgis-analyzer analyze . --max-cc 10

@@ -201,7 +201,9 @@ The release proceeds only when all GitHub Actions jobs are green.
 
 - Ruff: `known-first-party = ["freehand_digitize"]`; `N999` ignored only for
   `__init__.py`.
-- Makefile: `TEST_PYTHONPATH ?= ..`; `test`/`test-qgis` use it.
+- Makefile: `TEST_PYTHONPATH ?= ..`; `test`/`test-qgis` use it. `mypy` uses
+  `--explicit-package-bases` so the hyphenated checkout root is not treated as a
+  package.
 - CI unit job exposes `$RUNNER_TEMP/plugin-root/freehand_digitize` and sets
   `PYTHONPATH` to that root.
 - Release workflow updated for `i18n/*.qm` and CI-green as a gate.
