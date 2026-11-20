@@ -32,3 +32,4 @@ logs/
 *.log
 pyqt6_checker.log
 .DS_Store
+.gh-cache/

@@ -65,3 +65,6 @@ pyqt6_checker.log
 
 # Translations: ship compiled catalogs, exclude Qt sources
 *.ts
+
+# GitHub CLI cache created during release checks
+.gh-cache/
