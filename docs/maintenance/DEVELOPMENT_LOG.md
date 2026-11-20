@@ -5,6 +5,26 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-20] - Release v2.0.0 (01:05)
+
+### Resumen
+Se ejecutó `/release-plugin` hasta la preparación de la publicación.
+
+### Resultados
+- Gates: `make pre-release`, `make security-scan`, `make qt6-check`,
+  `make zip`, `make portal-check` verdes.
+- ZIP `dist/freehand_digitize.2.0.0.zip` validado; SHA256
+  `2faa4a4542f8bb041e1c1823e5eff7f22227671bb6b000a06bb297c60ef37b5d`.
+- Tag anotado `v2.0.0` creado y subido a `origin`.
+- GitHub Release **draft** con el ZIP y el SHA256 adjuntos.
+- CI verde en `main` (run 44684907873).
+
+### Pendiente
+- Subir el ZIP a plugins.qgis.org y, tras la validación, publicar el release.
+- Smoke test real en QGIS 3.28 (el ZIP declara 3.28 como mínimo).
+
+---
+
 ## [2026-11-20] - CI verde en checkout con guion (05:45)
 
 ### Resumen

@@ -135,5 +135,15 @@
             ],
             "status": "SUCCESS"
         }
-    ]
+    ],
+    "release": {
+        "version": "2.0.0",
+        "tag": "v2.0.0",
+        "commit": "f35f090",
+        "artifact": "dist/freehand_digitize.2.0.0.zip",
+        "sha256": "2faa4a4542f8bb041e1c1823e5eff7f22227671bb6b000a06bb297c60ef37b5d",
+        "github_release": "draft",
+        "portal": "pending manual upload",
+        "ci_run": "44684907873"
+    }
 }

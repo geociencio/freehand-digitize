@@ -86,8 +86,14 @@ make zip             # package + validate ZIP
   `qgisMaximumVersion = 4.99`.
 - Repository: <https://github.com/geociencio/freehand-digitize>; metadata URLs point there.
 
+## Release
+
+- Tag `v2.0.0` created and pushed; GitHub Release is a draft with the ZIP and
+  SHA256 assets.
+
 ## Pending
 
-- Tag `v2.0.0` and publish the ZIP. GitHub Actions is green on `main`
-  (run 44682503490).
+- Upload the ZIP to plugins.qgis.org; after validation, publish the GitHub
+  Release.
+- Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

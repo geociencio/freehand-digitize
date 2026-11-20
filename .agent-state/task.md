@@ -44,8 +44,10 @@
       warning) and edit-session gating (tools only while editing).
 - [x] Implement feature difference with selected pair or mouse target/cutter
       and confirmation dialog.
-- [x] CI checkout fix implemented; GitHub Actions run 44682503490 green
-      (quality, unit, Qt6, QGIS integration).
+- [x] CI checkout fix implemented; GitHub Actions run 44684907873 green.
+- [x] Tag `v2.0.0` created and pushed; draft GitHub Release with ZIP assets.
+- [ ] Upload the ZIP to plugins.qgis.org and publish the GitHub Release after
+      portal validation.
 
 ### Internationalization
 
