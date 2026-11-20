@@ -417,8 +417,8 @@ value; the GUI must not duplicate the geographic-CRS rule.
   included. More catalogs can be added under `i18n/` (see the i18n README).
 - **CTRL snapping depends on the QGIS snapping configuration** (mode, tolerance
   and layers). If the engine finds no match, the free point is used.
-- **Metadata URLs** point to the upstream `freehandEditing` repository until a
-  dedicated repository is created.
+- **Repository** is <https://github.com/geociencio/freehand-digitize>; upstream `freehandEditing` is credited as
+  the origin.
 - **No background processing**: the plugin is intentionally synchronous because
   the operations are interactive.
 - **Qt6 static checker**: dead flat-enum fallbacks must use `getattr` so the

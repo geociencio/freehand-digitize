@@ -12,8 +12,9 @@ authors = [{ name = "Freehand Digitize contributors" }]
 dependencies = []
 
 [project.urls]
-Source = "https://github.com/vinayan/freehandEditing"
-Tracker = "https://github.com/vinayan/freehandEditing/issues"
+Homepage = "https://github.com/geociencio/freehand-digitize"
+Source = "https://github.com/geociencio/freehand-digitize"
+Tracker = "https://github.com/geociencio/freehand-digitize/issues"
 
 [tool.uv]
 package = false

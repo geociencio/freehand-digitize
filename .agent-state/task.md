@@ -63,5 +63,4 @@
 - [x] Run `make pre-release` and `make security-scan` end to end.
 - [x] Run `make qt6-check` (packaged ZIP, no enum errors).
 - [x] Run `make docker-test` (QGIS/Qt5 container: 32 tests OK).
-- [ ] Replace `homepage`/`repository`/`tracker` if a dedicated repository is
-      created (currently the upstream `freehandEditing` URLs).
+- [x] Metadata points to the dedicated repository (https://github.com/geociencio/freehand-digitize).

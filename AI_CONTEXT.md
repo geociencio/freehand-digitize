@@ -65,10 +65,8 @@ make zip             # package + validate ZIP
 - **Lines allow 2 points**; polygons require 3 distinct points before closing.
 - **`supportsQt6` is not used**: deprecated by qgis-manage 0.17; QGIS 4 Ready is
   `qgisMaximumVersion = 4.99`.
-- Metadata URLs currently point to the upstream `freehandEditing` repository;
-  update them before publishing this fork to plugins.qgis.org.
+- Repository: <https://github.com/geociencio/freehand-digitize>; metadata URLs point there.
 
 ## Pending
 
-- Update `homepage`/`repository`/`tracker` if a dedicated repository is created.
 - Commit the 2.0.0 implementation (baseline commit already exists).

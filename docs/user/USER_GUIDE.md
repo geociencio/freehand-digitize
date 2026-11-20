@@ -224,8 +224,8 @@ Technical messages are written to the QGIS message log with the
   included and additional catalogs can be added under `i18n/`.
 - **Snapping depends on QGIS settings**; the plugin does not override them.
 - **No background processing**: the drawing path is interactive and synchronous.
-- **Metadata URLs** currently point to the upstream `freehandEditing` repository
-  until a dedicated repository is created.
+- **Repository** is <https://github.com/geociencio/freehand-digitize>; the upstream `freehandEditing` project is
+  credited as the origin.
 - **No screenshots** are bundled with this guide yet; if you add them, follow the
   [user guide conventions](../maintainer/USER_GUIDE_CONVENTIONS.md).
 

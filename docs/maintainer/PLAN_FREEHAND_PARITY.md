@@ -678,8 +678,8 @@ consume antes; el `deactivate()` cancela el trazo en cualquier caso.
    inglés.
 3. **Auto-inicio de edición:** se mantiene por comodidad; la acción sigue
    deshabilitada para capas que no soportan edición.
-4. **Metadatos:** `homepage`, `repository` y `tracker` apuntan al repositorio
-   original `vinayan/freehandEditing` hasta que exista un repositorio propio.
+4. **Metadatos:** `homepage`, `repository` y `tracker` apuntan a
+   <https://github.com/geociencio/freehand-digitize>.
 5. **Git:** repositorio inicializado con un commit baseline (plugin original +
    framework + plan).
 6. **Versión:** `2.0.0`.

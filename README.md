@@ -175,7 +175,6 @@ GPL-2.0. The original **Freehand Editing** plugin is by Pavol Kapusta
 part of its behaviour (XPM cursor, event semantics, tolerance and form). See
 [`LICENSE`](LICENSE).
 
-The metadata currently points to the original `freehandEditing` repository; if
-you publish this version in a dedicated repository, update `homepage`,
-`repository` and `tracker` in `metadata.txt` before uploading it to
-<https://plugins.qgis.org/>.
+The plugin is maintained at <https://github.com/geociencio/freehand-digitize>; `homepage`, `repository` and `tracker` in
+`metadata.txt` point there. The original `freehandEditing` repository is kept as
+attribution only. See <https://github.com/geociencio/freehand-digitize/issues> for bug reports.

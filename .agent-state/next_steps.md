@@ -42,9 +42,7 @@ make zip
 ## 📌 Remaining
 
 1. Final commit of the 2.0.0 work (the baseline commit is already in place).
-4. Decide the final source URL (`homepage`/`repository`/`tracker` currently point
-   to the upstream `freehandEditing` repository).
-5. Optional: add `ai-context-core` and `make context` if the team wants the
+4. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## 📎 Key files
