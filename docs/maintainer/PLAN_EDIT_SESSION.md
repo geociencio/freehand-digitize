@@ -299,7 +299,7 @@ make agent-validate
 - Tests: 117 total (57 unit + 60 integration), including the new gating cases.
 - `make pre-release`, `make zip`, `make security-scan`, `make qt6-check` and
   `make docker-test` pass; deployed smoke test in QGIS 4 passes.
-- **Commit:** to be filled by the integration commit.
+- **Commit:** `dcfb191 feat: add sampling units and edit-session gating`.
 
 ---
 
