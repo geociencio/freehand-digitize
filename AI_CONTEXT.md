@@ -23,9 +23,12 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
   qgis-manage, pre-commit, CI, Docker, detect-secrets baseline.
 - Agentic system: Agentic Forge vendored in `.agent/`, project state in
   `.agent-state/`, roles in `opencode.json`, config in `forge.toml`.
-- Docs: `docs/maintainer/PLAN_FREEHAND_PARITY.md`,
+- Docs: `docs/ARCHITECTURE_EN.md`, `docs/maintainer/PLAN_FREEHAND_PARITY.md`,
   `docs/maintainer/FEATURE_PARITY.md`,
-  `docs/maintainer/uv_modernization_guide.md`.
+  `docs/maintainer/uv_modernization_guide.md`, the maintainer style/commit/
+  logging/user-guide conventions and `docs/maintenance/DEVELOPMENT_LOG.md`.
+- `make docs-check` validates relative Markdown links (script:
+  `scripts/check_docs.py`).
 
 ## Architecture
 

@@ -149,6 +149,16 @@ La guía de modernización con `uv` está en
 
 ---
 
+## Documentación
+
+- [Arquitectura](docs/ARCHITECTURE_EN.md)
+- [Guía de estilo de documentación](docs/maintainer/DOCS_STYLE_GUIDE.md)
+- [Convenciones de commit](docs/maintainer/COMMIT_GUIDELINES.md)
+- [Convenciones de la guía de usuario](docs/maintainer/USER_GUIDE_CONVENTIONS.md)
+- [Registro de desarrollo](docs/maintenance/DEVELOPMENT_LOG.md)
+- [Informe de paridad con freehandEditing](docs/maintainer/FEATURE_PARITY.md)
+- [Guía de modernización con uv](docs/maintainer/uv_modernization_guide.md)
+
 ## Licencia y atribución
 
 GPL-2.0. El plugin original **Freehand Editing** es obra de Pavol Kapusta

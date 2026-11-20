@@ -18,8 +18,9 @@
   `qgis-manage validate --strict`, `package --repo-check`, `validate --zip`,
   `security --portal` (0 findings) and `pyqgis4-checker` (0 enum errors) green;
   CI/pre-commit/Docker/detect-secrets configured.
-- **Docs**: plan, feature-parity report, adapted uv modernization guide, README
-  and CHANGELOG.
+- **Docs**: plan, feature-parity report, adapted uv modernization guide, README,
+  CHANGELOG, architecture, style/commit/logging/user-guide conventions, a
+  development log and `make docs-check`.
 - **Agentic**: framework vendored in `.agent/`, state in `.agent-state/`,
   roles in `opencode.json`, config in `forge.toml`.
 

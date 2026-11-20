@@ -24,6 +24,7 @@ jobs:
       - run: uv run --frozen ruff check .
       - run: uv run --frozen ruff format --check .
       - run: make flake8
+      - run: make docs-check
       - run: make mypy
       - run: uv run --frozen python .agent/tools/forge.py validate
       - run: uv run --frozen qgis-manage validate --strict

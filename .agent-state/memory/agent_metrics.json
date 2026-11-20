@@ -73,6 +73,11 @@
             "command": "uv run --frozen qgis-manage package && qgis-manage validate --zip",
             "artifact": "dist/freehand_digitize.2.0.0.zip",
             "result": "validated"
+        },
+        "docs_check": {
+            "date": "2026-11-19",
+            "command": "make docs-check",
+            "result": "13 documentation files, relative links OK"
         }
     },
     "retries": {

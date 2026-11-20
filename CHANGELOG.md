@@ -25,6 +25,8 @@ QGIS 3.28–4.x (Qt5/Qt6).
 - Arquitectura `core/` (sin QGIS) y `gui/` (PyQGIS), con shims PyQt5/PyQt6.
 - Sistema agéntico (Agentic Forge), tests unitarios y de integración, CI,
   pre-commit y empaquetado con `qgis-manage`.
+- Documentación de mantenimiento: arquitectura, guía de estilo, convenciones de
+  commit, registro de desarrollo y comprobador de enlaces (`make docs-check`).
 
 ### Cambiado
 

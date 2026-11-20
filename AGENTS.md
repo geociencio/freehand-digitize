@@ -100,6 +100,7 @@ make format                   # ruff format (writes)
 make flake8                   # QGIS portal scope (packaged code)
 make mypy                     # type-check core/ (follow-imports=silent)
 make analyzer                 # qgis-analyzer --max-cc 10
+make docs-check               # relative links in README/docs
 make agent-validate           # Agentic Forge validator
 make qgis-validate            # qgis-manage validate --strict
 make security-scan            # qgis-manage security --portal
@@ -176,9 +177,10 @@ point = self.toLayerCoordinates(layer, event.pos())
 - Ruff is the formatter and linter: 100 columns, double quotes, `py39` target
   syntax. `core/` is mypy-checked.
 - Naming: `PascalCase` classes, `snake_case` functions, `UPPER_SNAKE` constants.
-- **Language policy**: user-facing UI strings are Spanish (the plugin is
+- **Language policy**: the UI and user-facing docs are Spanish (the plugin is
   Spanish-only in 2.0.0, with `MISSING_I18N` disabled in the analyzer profile);
-  code, tests, docstrings, commits and technical docs are English.
+  code, tests, docstrings, commits, API/architecture docs and maintainer guides
+  are English; internal plans, parity reports and session logs are Spanish.
 - Errors in Qt callbacks are logged (`QgsMessageLog`) and surfaced via
   `iface.messageBar()`; never let an exception escape a canvas event.
 - Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`,
@@ -220,6 +222,7 @@ Naming: `test_*.py`, `Test[Module]`, `test_[behavior]`.
 Blocking (`make pre-release`):
 
 - `ruff check` and `ruff format --check`;
+- `make docs-check` (relative links in README/CHANGELOG/AGENTS/AI_CONTEXT/docs);
 - `flake8` on `core gui freehand_plugin.py __init__.py`;
 - `mypy` on `core/`;
 - `qgis-analyzer --max-cc 10` (no function > CC 10);
@@ -246,7 +249,7 @@ gui/                   # PyQGIS/Qt layer
 tests/core/            # unit tests (no QGIS)
 tests/integration/     # real QGIS tests
 tests/mocks/           # QGIS-free fakes
-docs/maintainer/       # plan, parity report, uv guide
+docs/                  # architecture, maintainer guides, dev log
 .agent/                # Agentic Forge framework (vendored)
 .agent-state/          # project state, overlay skills/workflows
 .github/workflows/     # CI
@@ -278,9 +281,15 @@ Load only the relevant `SKILL.md` on demand.
 
 ## 📚 Key Resources
 
+- **Architecture**: `docs/ARCHITECTURE_EN.md`
 - **Plan**: `docs/maintainer/PLAN_FREEHAND_PARITY.md`
 - **Parity report**: `docs/maintainer/FEATURE_PARITY.md`
 - **uv guide**: `docs/maintainer/uv_modernization_guide.md`
+- **Docs style**: `docs/maintainer/DOCS_STYLE_GUIDE.md`
+- **Commit rules**: `docs/maintainer/COMMIT_GUIDELINES.md`
+- **Logging rules**: `docs/maintainer/LOGGING_GUIDELINES.md`
+- **User-guide conventions**: `docs/maintainer/USER_GUIDE_CONVENTIONS.md`
+- **Development log**: `docs/maintenance/DEVELOPMENT_LOG.md`
 - **Architecture notes**: `.ai-context/architecture_notes.md`
 - **Agent state**: `.agent-state/` (`task.md`, `next_steps.md`, memory)
 - **Upstream reference**: `freehandEditing/` (GPL-2, untracked, excluded from ZIP)
@@ -295,5 +304,5 @@ Load only the relevant `SKILL.md` on demand.
 3. **ALWAYS** keep the Qt5/Qt6 shims in `gui/qt_compat.py`.
 4. **ALWAYS** test both environments: `make test` and `make test-qgis`.
 5. **NEVER** re-add `supportsQt6`; QGIS 4 Ready is `qgisMaximumVersion >= 4.0`.
-6. **KEEP** the UI in Spanish and the technical artifacts in English.
+6. **KEEP** the UI and user-facing docs in Spanish, code/commits/API docs in English, and internal plans/logs in Spanish.
 7. **RUN** `make pre-release` before claiming a task is complete.

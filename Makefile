@@ -22,7 +22,7 @@ PORTAL_ZIP ?= $(shell ls -t dist/*.zip 2>/dev/null | head -1)
 
 .PHONY: help sync test test-qgis test-all lint format format-check flake8 mypy \
         analyzer agent-validate qgis-validate zip portal-check security-scan \
-        qt6-check docker-build docker-test deploy pre-release clean
+        qt6-check docker-build docker-test deploy docs-check pre-release clean
 
 help:
 	@echo "Freehand Digitize targets:"
@@ -35,6 +35,7 @@ help:
 	@echo "  make flake8          # QGIS portal flake8 scope"
 	@echo "  make mypy            # type-check core/"
 	@echo "  make analyzer        # qgis-analyzer --max-cc 10"
+	@echo "  make docs-check      # relative links in README/docs"
 	@echo "  make agent-validate  # Agentic Forge validator"
 	@echo "  make qgis-validate   # qgis-manage validate --strict"
 	@echo "  make zip             # build and validate the plugin ZIP"
@@ -69,6 +70,9 @@ format:
 
 format-check:
 	$(UV_RUN) ruff format --check .
+
+docs-check:
+	$(UV_RUN) python scripts/check_docs.py
 
 flake8:
 	$(UV_RUN) flake8 $(FLAKE8_TARGETS) --config .flake8
@@ -124,7 +128,7 @@ docker-test:
 deploy:
 	$(UV_RUN) qgis-manage deploy --no-compile --qgis-version $(QGIS_VERSION)
 
-pre-release: format-check lint flake8 mypy analyzer agent-validate test test-qgis qgis-validate
+pre-release: format-check lint docs-check flake8 mypy analyzer agent-validate test test-qgis qgis-validate
 	@echo "✅ Pre-release validation complete"
 
 clean:

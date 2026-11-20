@@ -33,6 +33,14 @@
 - [x] CI, pre-commit, Dockerfile, devcontainer, detect-secrets baseline.
 - [x] Python 3.9 syntax compatibility test.
 
+### Documentation guides
+
+- [x] `docs/ARCHITECTURE_EN.md` adapted to the real core/gui design.
+- [x] `DOCS_STYLE_GUIDE`, `COMMIT_GUIDELINES`, `LOGGING_GUIDELINES` and
+      `USER_GUIDE_CONVENTIONS` adapted under `docs/maintainer/`.
+- [x] `docs/maintenance/DEVELOPMENT_LOG.md` created with the 2.0.0 session.
+- [x] `scripts/check_docs.py` + `make docs-check` wired into `pre-release` and CI.
+
 ### Agentic system and docs
 
 - [x] `AGENTS.md`, `AI_CONTEXT.md`, `forge.toml`, `opencode.json`.
