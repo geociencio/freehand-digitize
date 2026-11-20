@@ -46,7 +46,8 @@
       and confirmation dialog.
 - [x] CI checkout fix implemented; GitHub Actions run 44684907873 green.
 - [x] Tag `v2.0.0` created and pushed; GitHub Release published with ZIP assets.
-- [ ] Upload the ZIP to plugins.qgis.org and complete portal validation.
+- [x] ZIP uploaded to plugins.qgis.org; portal approval pending (not yet
+      validated).
 - [x] Feature roadmap approved (`docs/maintainer/PLAN_FEATURE_ROADMAP.md`);
       no stage started. Stage 1 awaits an explicit kickoff.
 
@@ -79,7 +80,7 @@
 
 - [x] Run `make pre-release` and `make security-scan` end to end.
 - [x] Run `make qt6-check` (packaged ZIP, no enum errors).
-- [x] Run `make docker-test` (QGIS/Qt5 container: 77 tests OK).
+- [x] Run `make docker-test` (QGIS/Qt5 container: 77 integration cases OK).
 - [x] Metadata points to the dedicated repository (https://github.com/geociencio/freehand-digitize).
 - [x] Implement freehand reshape (features under the stroke, optional selection
       filter, multi-feature single undo) and deploy it to QGIS 4.

@@ -5,6 +5,25 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-20] - ZIP subido al portal QGIS; aprobación pendiente (01:32)
+
+### Resumen
+El ZIP 2.0.0 se subió a plugins.qgis.org. El release de GitHub ya está publicado;
+queda esperar la aprobación del portal.
+
+### Estado
+- Portal: `uploaded; pending approval`.
+- GitHub Release: publicado con ZIP y SHA256.
+- Tag `v2.0.0`: creado y subido.
+- Roadmap 2.1.0/2.2.0/2.3.0 aprobado; ninguna etapa iniciada.
+
+### Pendiente
+- Aprobación del portal (externo).
+- Smoke test opcional en QGIS 3.28.
+- Iniciar Etapa 1 solo con una orden explícita.
+
+---
+
 ## [2026-11-20] - Roadmap de features aprobado (01:24)
 
 ### Resumen

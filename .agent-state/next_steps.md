@@ -1,7 +1,7 @@
 # Next Steps — Freehand Digitize 2.0.0
 
-**Updated:** 2026-11-19
-**Session:** parity 2.0.0 + Agentic Forge + QA
+**Updated:** 2026-11-20
+**Session:** release_2_0_0_portal
 
 ## ✅ Current state
 
@@ -42,13 +42,22 @@ make zip
 
 ## 📌 Remaining
 
-1. Upload `dist/freehand_digitize.2.0.0.zip` to plugins.qgis.org and complete
-   portal validation. The GitHub Release `v2.0.0` is already published.
+1. **Portal approval**: the ZIP is uploaded to plugins.qgis.org; wait for the
+   approval and record the result. GitHub Release `v2.0.0` is published.
 2. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
 3. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
 4. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
+
+## ▶️ How to resume
+
+```bash
+# from the repository root
+/start-session
+```
+
+Then check the portal approval and, if continuing development, ask for Stage 1.
 
 ## 📎 Key files
 
