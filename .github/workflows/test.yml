@@ -51,7 +51,13 @@ jobs:
 
       - run: uv python install
       - run: uv sync --frozen
-      - run: PYTHONPATH=.. uv run --frozen python -m unittest discover tests
+
+      - name: Expose the plugin package for the hyphenated checkout
+        run: |
+          mkdir -p "$RUNNER_TEMP/plugin-root"
+          ln -sfn "$GITHUB_WORKSPACE" "$RUNNER_TEMP/plugin-root/freehand_digitize"
+
+      - run: PYTHONPATH="$RUNNER_TEMP/plugin-root" uv run --frozen python -m unittest discover tests
 
   qt6:
     name: Qt6 / QGIS 4 enum check

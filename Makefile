@@ -18,6 +18,8 @@ UV ?= uv
 UV_RUN = $(UV) run --frozen
 PYTHON ?= python3
 PYLUPDATE ?= pylupdate6
+# Parent directory that exposes the plugin as ``freehand_digitize`` for tests.
+TEST_PYTHONPATH ?= ..
 LOCALES = en
 
 PORTAL_ZIP ?= $(shell ls -t dist/*.zip 2>/dev/null | head -1)
@@ -56,10 +58,10 @@ sync:
 	$(UV) sync --frozen
 
 test:
-	PYTHONPATH=.. $(UV_RUN) python -m unittest discover tests
+	PYTHONPATH=$(TEST_PYTHONPATH) $(UV_RUN) python -m unittest discover tests
 
 test-qgis:
-	@QT_QPA_PLATFORM=offscreen PYTHONPATH=.. $(PYTHON) -m unittest discover -s tests/integration -t . ; \
+	@QT_QPA_PLATFORM=offscreen PYTHONPATH=$(TEST_PYTHONPATH) $(PYTHON) -m unittest discover -s tests/integration -t . ; \
 	code=$$?; \
 	if [ $$code -eq 139 ]; then \
 		echo "⚠️  Tolerated QGIS teardown segfault (exit 139) after the tests."; \

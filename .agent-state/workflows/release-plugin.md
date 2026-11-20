@@ -18,7 +18,7 @@ validation: |
 # Workflow: Release Plugin
 
 Five-phase release for Freehand Digitize. The plugin has no runtime Python
-dependencies and no translation catalogs in 2.0.0.
+dependencies and ships compiled English translation catalogs (`i18n/*.qm`).
 
 ## Phase 1 — Quality and preparation
 
@@ -62,9 +62,10 @@ make portal-check
 `make zip` must produce `dist/freehand_digitize.X.Y.Z.zip` with:
 
 - one `freehand_digitize/` root folder;
-- `metadata.txt`, `__init__.py`, `LICENSE`, `icon.png` and the plugin code;
+- `metadata.txt`, `__init__.py`, `LICENSE`, `icon.png`, the plugin code and
+  `i18n/freehand_digitize_en.qm`;
 - no `tests/`, `docs/`, `.agent`, `.agent-state`, `.ai-context`,
-  `freehandEditing/`, caches or `uv.lock`.
+  `freehandEditing/`, caches, `uv.lock` or `i18n/*.ts` (ship `.qm`, not `.ts`).
 
 Audit the artifact:
 

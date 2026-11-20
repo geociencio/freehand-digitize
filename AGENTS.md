@@ -324,6 +324,7 @@ Load only the relevant `SKILL.md` on demand.
 - **Edit-session plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_EDIT_SESSION.md`
 - **Vertex sampling plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_VERTEX_SAMPLING.md`
 - **Feature-difference plan (implemented in 2.0.0)**: `docs/maintainer/PLAN_FEATURE_DIFFERENCE.md`
+- **CI checkout fix (proposed)**: `docs/maintainer/PLAN_CI_CHECKOUT.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`
