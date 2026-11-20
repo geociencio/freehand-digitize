@@ -5,6 +5,30 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-19] - Proceso plan-first y plan de reshape (22:35)
+
+### Resumen
+Se estableció la regla de planificación previa a cualquier cambio de código y se
+documentó el plan de la función reshape, sin tocar código.
+
+### Logros
+- Procedimiento `docs/maintainer/CHANGE_PROCEDURE.md` (análisis → plan →
+  aprobación → implementación → verificación).
+- Skill `plan-first` y workflow `/plan-change`.
+- `AGENTS.md`, `opencode.json` y README actualizados con la regla.
+- Plan propuesto `docs/maintainer/PLAN_RESHAPE.md` con evidencia de API, diseño,
+  pruebas, riesgos y procedimiento.
+
+### Resultados
+- Sin cambios de código; el plan de reshape queda pendiente de aprobación.
+- `make agent-validate` y `make docs-check` se ejecutan tras el cambio.
+
+### Documentación
+- [Procedimiento de cambios](../maintainer/CHANGE_PROCEDURE.md)
+- [Plan de reshape](../maintainer/PLAN_RESHAPE.md)
+
+---
+
 ## [2026-11-19] - i18n: catálogo inglés y sistema de traducciones (22:05)
 
 ### Resumen

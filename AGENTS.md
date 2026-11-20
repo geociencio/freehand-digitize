@@ -7,6 +7,12 @@ vendored under `.agent/` (Agentic Forge 1.4.2); project-owned state, overlay
 skills and workflows live under `.agent-state/`. Paths are resolved through
 `forge.toml` and `.agent/tools/forge_paths.py`.
 
+> **Plan-first (mandatory):** before changing code, tests, metadata, CI,
+> packaging or translation catalogs, write `docs/maintainer/PLAN_<TOPIC>.md` with
+> its procedures and wait for explicit user approval. See
+> [CHANGE_PROCEDURE.md](docs/maintainer/CHANGE_PROCEDURE.md) and the
+> `/plan-change` workflow.
+
 ---
 
 ## 🧑‍💻 Agent Roles
@@ -22,7 +28,8 @@ as subagents in `opencode.json` with a permission gradient:
 - **Goal**: protect the `core/` ↔ `gui/` boundary and design small, testable
   features.
 - **Constraint**: never put Qt/PyQGIS imports in `core/`; stop and present a
-  technical plan before large refactors.
+  implementation plan before **any** code change and wait for explicit approval
+  (see `/plan-change`).
 - **Skills**: [coding-standards](.agent/skills/coding-standards/SKILL.md),
   [documentation-standards](.agent/skills/documentation-standards/SKILL.md),
   [freehand-digitizing](.agent-state/skills/freehand-digitizing/SKILL.md).
@@ -59,6 +66,7 @@ live in `.agent-state/workflows/name.md`.
 <!-- WORKFLOWS_TABLE_START -->
 | Command | Workflow file | Purpose |
 | :--- | :--- | :--- |
+| `/plan-change` | `.agent-state/workflows/plan-change.md` | Write the implementation plan and procedures, get approval, then edit code. |
 | `/audit-plugin` | `.agent-state/workflows/audit-plugin.md` | Full or partial plugin audit with `qgis-analyzer`. |
 | `/build-feature` | `.agent/workflows/build-feature.md` | Autonomous feature pipeline. |
 | `/close-phase` | `.agent/workflows/close-phase.md` | Close a development phase with metrics and retro. |
@@ -78,6 +86,27 @@ live in `.agent-state/workflows/name.md`.
 <!-- WORKFLOWS_TABLE_END -->
 
 Full index: `.agent/workflows/index.md` plus `.agent-state/workflows/`.
+
+---
+
+## 🧭 Plan-First Policy
+
+**No code change starts before an approved plan.** This applies to `core/`,
+`gui/`, `freehand_plugin.py`, tests, `metadata.txt`, CI/build/packaging and
+translation catalogs. Documentation-only changes are exempt.
+
+1. Analyze read-only; verify APIs and paths against the target QGIS version.
+2. Write `docs/maintainer/PLAN_<TOPIC>.md` using the template in
+   [CHANGE_PROCEDURE.md](docs/maintainer/CHANGE_PROCEDURE.md).
+3. Present the plan and ask explicitly: “Do you approve this plan?”.
+4. Implement only the approved scope; if it changes, stop and re-approve.
+5. Close with `make pre-release`, update the plan to `IMPLEMENTED` and record the
+   commit hash.
+
+The skill is [plan-first](.agent-state/skills/plan-first/SKILL.md); the workflow
+is `/plan-change`. The current proposed example is
+[PLAN_RESHAPE.md](docs/maintainer/PLAN_RESHAPE.md), which must not be implemented
+before approval.
 
 ---
 
@@ -269,6 +298,7 @@ Load only the relevant `SKILL.md` on demand.
 | Skill | Description | When to use |
 | :--- | :--- | :--- |
 | [agentic-memory](.agent/skills/agentic-memory/SKILL.md) | Lessons, patterns and preferences | Session close; recurring errors |
+| [plan-first](.agent-state/skills/plan-first/SKILL.md) | Mandatory plan-before-code procedure | Before any code/behaviour change |
 | [changelog-generator](.agent/skills/changelog-generator/SKILL.md) | User-facing changelog from commits | Release notes |
 | [coding-standards](.agent/skills/coding-standards/SKILL.md) | pathlib, docstrings, typing | Writing/refactoring code |
 | [commit-standards](.agent/skills/commit-standards/SKILL.md) | Conventional commits | Before committing |
@@ -286,6 +316,8 @@ Load only the relevant `SKILL.md` on demand.
 
 ## 📚 Key Resources
 
+- **Change procedure**: `docs/maintainer/CHANGE_PROCEDURE.md`
+- **Reshape plan (proposed)**: `docs/maintainer/PLAN_RESHAPE.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`
@@ -305,11 +337,12 @@ Load only the relevant `SKILL.md` on demand.
 
 ## ⚠️ Critical Reminders
 
-1. **NEVER** import `qgis.gui` or Qt in `core/`.
-2. **ALWAYS** draw in layer coordinates (`toLayerCoordinates`), not project
+1. **NO code changes** before an approved `docs/maintainer/PLAN_<TOPIC>.md`.
+2. **NEVER** import `qgis.gui` or Qt in `core/`.
+3. **ALWAYS** draw in layer coordinates (`toLayerCoordinates`), not project
    coordinates.
-3. **ALWAYS** keep the Qt5/Qt6 shims in `gui/qt_compat.py`.
-4. **ALWAYS** test both environments: `make test` and `make test-qgis`.
-5. **NEVER** re-add `supportsQt6`; QGIS 4 Ready is `qgisMaximumVersion >= 4.0`.
-6. **KEEP** Spanish as the UI source language with an English catalog; README, CHANGELOG, user guide, code and commits in English; internal plans/logs may be Spanish.
-7. **RUN** `make pre-release` before claiming a task is complete.
+4. **ALWAYS** keep the Qt5/Qt6 shims in `gui/qt_compat.py`.
+5. **ALWAYS** test both environments: `make test` and `make test-qgis`.
+6. **NEVER** re-add `supportsQt6`; QGIS 4 Ready is `qgisMaximumVersion >= 4.0`.
+7. **KEEP** Spanish as the UI source language with an English catalog; README, CHANGELOG, user guide, code and commits in English; internal plans/logs may be Spanish.
+8. **RUN** `make pre-release` before claiming a task is complete.

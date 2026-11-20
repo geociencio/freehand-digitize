@@ -41,7 +41,11 @@ make zip
 
 ## 📌 Remaining
 
-1. Final commit of the 2.0.0 work (the baseline commit is already in place).
+1. **Reshape plan**: review `docs/maintainer/PLAN_RESHAPE.md` and approve (or
+   adjust) the open decisions. No reshape code has been written.
+2. Final commit of the plan-first process/docs if not already committed.
+
+
 4. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 

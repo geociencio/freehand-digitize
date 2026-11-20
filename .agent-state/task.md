@@ -33,6 +33,13 @@
 - [x] CI, pre-commit, Dockerfile, devcontainer, detect-secrets baseline.
 - [x] Python 3.9 syntax compatibility test.
 
+### Process and planning
+
+- [x] Add the mandatory plan-first procedure (`docs/maintainer/CHANGE_PROCEDURE.md`).
+- [x] Add the `plan-first` skill and `/plan-change` workflow.
+- [x] Add the proposed reshape plan (`docs/maintainer/PLAN_RESHAPE.md`); waiting
+      for user approval before any code change.
+
 ### Internationalization
 
 - [x] `QCoreApplication.translate` integration with the `FreehandDigitize` context.

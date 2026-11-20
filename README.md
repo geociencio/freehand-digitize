@@ -160,6 +160,8 @@ The `uv` modernization guide is in
 
 - [User guide](docs/user/USER_GUIDE.md)
 - [Architecture](docs/ARCHITECTURE_EN.md)
+- [Change procedure (plan first)](docs/maintainer/CHANGE_PROCEDURE.md)
+- [Reshape implementation plan (proposed)](docs/maintainer/PLAN_RESHAPE.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

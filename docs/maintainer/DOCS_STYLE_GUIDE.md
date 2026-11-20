@@ -31,6 +31,7 @@ unless a genuine bilingual pair is required; 2.0.0 has none.
 | Architecture | `docs/ARCHITECTURE_EN.md` |
 | Maintainer guides | `docs/maintainer/` |
 | Session log (internal, Spanish) | `docs/maintenance/DEVELOPMENT_LOG.md` |
+| Implementation plans | `docs/maintainer/PLAN_<TOPIC>.md` |
 
 ## Links
 
