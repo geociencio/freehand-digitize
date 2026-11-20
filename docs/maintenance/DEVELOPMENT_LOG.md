@@ -18,6 +18,8 @@ documentó el plan de la función reshape, sin tocar código.
 - `AGENTS.md`, `opencode.json` y README actualizados con la regla.
 - Plan propuesto `docs/maintainer/PLAN_RESHAPE.md` con evidencia de API, diseño,
   pruebas, riesgos y procedimiento.
+- Revisión 2 del plan: el objetivo es la geometría bajo el trazo; la selección
+  actúa como filtro opcional.
 
 ### Resultados
 - Sin cambios de código; el plan de reshape queda pendiente de aprobación.

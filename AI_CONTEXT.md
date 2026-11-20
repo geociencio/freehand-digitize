@@ -69,8 +69,8 @@ make zip             # package + validate ZIP
 
 ## Pending
 
-- Review and approve (or adjust) `docs/maintainer/PLAN_RESHAPE.md`; no reshape
-  code is written yet.
+- Review and approve (or adjust) `docs/maintainer/PLAN_RESHAPE.md` revision 2
+  (target = geometry under the stroke); no reshape code is written yet.
 
 
 - Commit the 2.0.0 implementation (baseline commit already exists).

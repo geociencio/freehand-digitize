@@ -41,8 +41,10 @@ make zip
 
 ## 📌 Remaining
 
-1. **Reshape plan**: review `docs/maintainer/PLAN_RESHAPE.md` and approve (or
-   adjust) the open decisions. No reshape code has been written.
+1. **Reshape plan (revision 2)**: review `docs/maintainer/PLAN_RESHAPE.md` and
+   approve (or adjust) the open decisions. The target is now the geometry under
+   the stroke, with selection as an optional filter. No reshape code has been
+   written.
 2. Final commit of the plan-first process/docs if not already committed.
 
 

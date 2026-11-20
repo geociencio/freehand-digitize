@@ -37,8 +37,8 @@
 
 - [x] Add the mandatory plan-first procedure (`docs/maintainer/CHANGE_PROCEDURE.md`).
 - [x] Add the `plan-first` skill and `/plan-change` workflow.
-- [x] Add the proposed reshape plan (`docs/maintainer/PLAN_RESHAPE.md`); waiting
-      for user approval before any code change.
+- [x] Add the proposed reshape plan (`docs/maintainer/PLAN_RESHAPE.md`), revised
+      so the target is the geometry under the stroke; waiting for approval.
 
 ### Internationalization
 
