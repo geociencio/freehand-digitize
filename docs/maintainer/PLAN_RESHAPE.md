@@ -411,7 +411,7 @@ make agent-validate
   Qt5/QGIS 3.99 container; reshape creator, tool and plugin covered.
 - `make pre-release`, `make zip`, `make security-scan`, `make qt6-check` and
   `make docker-test` pass; deployed smoke test in QGIS 4 passes.
-- **Commit:** to be filled by the integration commit.
+- **Commit:** `7e54842 feat: add freehand reshape for features under a stroke`.
 
 ---
 
