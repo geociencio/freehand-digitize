@@ -95,4 +95,6 @@ make zip             # package + validate ZIP
 
 - Upload the ZIP to plugins.qgis.org and complete portal validation.
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
+- Roadmap approved; no stage started. On request, Stage 1 is
+  Backspace-to-remove-vertex for 2.1.0.
 - Real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

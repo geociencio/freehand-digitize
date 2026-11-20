@@ -47,6 +47,8 @@
 - [x] CI checkout fix implemented; GitHub Actions run 44684907873 green.
 - [x] Tag `v2.0.0` created and pushed; GitHub Release published with ZIP assets.
 - [ ] Upload the ZIP to plugins.qgis.org and complete portal validation.
+- [x] Feature roadmap approved (`docs/maintainer/PLAN_FEATURE_ROADMAP.md`);
+      no stage started. Stage 1 awaits an explicit kickoff.
 
 ### Internationalization
 

@@ -215,6 +215,7 @@ The `uv` modernization guide is in
 - [Edit-session gating plan (proposed)](docs/maintainer/PLAN_EDIT_SESSION.md)
 - [Feature-difference plan](docs/maintainer/PLAN_FEATURE_DIFFERENCE.md)
 - [CI checkout fix plan](docs/maintainer/PLAN_CI_CHECKOUT.md)
+- [Staged feature roadmap](docs/maintainer/PLAN_FEATURE_ROADMAP.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

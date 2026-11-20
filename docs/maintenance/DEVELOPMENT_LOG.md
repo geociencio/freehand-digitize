@@ -5,6 +5,31 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-20] - Roadmap de features aprobado (01:24)
+
+### Resumen
+Se creó y aprobó el roadmap de 10 etapas para 2.1.0 (quick wins), 2.2.0
+(edición de geometrías) y 2.3.0 (guarda de solapamientos). No se implementó
+ninguna etapa; el código sigue en v2.0.0.
+
+### Etapas
+1. Backspace para quitar el último vértice.
+2. Contador de vértices.
+3. Suavizado opcional.
+4. Pausa/reanudación.
+5. Atajos + ajuste siempre.
+6. Longitud/área en vivo.
+7. Dividir con trazo.
+8. Agregar anillo.
+9. Agregar parte.
+10. Guarda de solapamientos.
+
+### Documentación
+- [Roadmap](../maintainer/PLAN_FEATURE_ROADMAP.md) aprobado; cada etapa requiere
+  un kickoff explícito.
+
+---
+
 ## [2026-11-20] - Release v2.0.0 (01:05)
 
 ### Resumen
