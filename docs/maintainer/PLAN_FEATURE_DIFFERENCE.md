@@ -399,7 +399,7 @@ make agent-validate
   creator and plugin gating.
 - `make pre-release`, `make zip`, `make security-scan`, `make qt6-check` and
   `make docker-test` pass; deployed smoke test in QGIS 4 passes.
-- **Commit:** to be filled by the integration commit.
+- **Commit:** `28baa15 feat: add feature difference with selection and mouse picking`.
 
 ---
 
