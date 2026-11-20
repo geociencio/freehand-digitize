@@ -1,104 +1,104 @@
 # Freehand Digitize
 
-Digitalización a mano alzada de **líneas y polígonos** en QGIS, con las
-funciones del clásico plugin [`freehandEditing`](https://github.com/vinayan/freehandEditing)
-recuperadas y adaptadas a **QGIS 3.28–4.x** (Qt5 y Qt6).
+Freehand digitizing of **lines and polygons** in QGIS, restoring the features of
+the classic [`freehandEditing`](https://github.com/vinayan/freehandEditing)
+plugin and adapting them to **QGIS 3.28–4.x** (Qt5 and Qt6).
 
-Arrastra con el botón izquierdo sobre el mapa y al soltar se crea la entidad en
-la capa activa. El trazo se guarda en el **CRS de la capa** (con reproyección al
-vuelo) y se simplifica con la tolerancia configurable.
+Drag with the left mouse button over the map and release to create the feature
+on the active layer. The stroke is stored in the **layer CRS** (on-the-fly
+reprojection safe) and simplified with the configurable tolerance.
 
 ---
 
-## Funciones
+## Features
 
-| Función | Detalle |
+| Feature | Detail |
 | :--- | :--- |
-| Dibujo libre | Líneas y polígonos; el polígono se cierra automáticamente. |
-| Tolerancia de simplificación | `QDoubleSpinBox` 0–5, 3 decimales, paso 0.1; se guarda entre sesiones. |
-| CRS geográfico | La tolerancia se desactiva y se aplica 0 (los grados no son metros). |
-| Snapping con `Ctrl` | Ajusta el primer y el último vértice a vértices existentes (motor de snapping de QGIS). |
-| Cursor de lápiz | Cursor XPM específico, con `CrossCursor` como respaldo. |
-| Formulario de atributos | Se muestra el formulario de QGIS (si está habilitado) con cancelación limpia. |
-| Valores por defecto | `QgsVectorLayerUtils.createFeature` aplica defaults y restricciones del proveedor. |
-| Deshacer | La entidad se crea dentro de un `beginEditCommand`/`endEditCommand`. |
-| Geometría no válida | Se pregunta si usarla igualmente en lugar de corregirla en silencio. |
-| Habilitación por capa | Solo capas vectoriales de línea/polígono editables. |
-| Botón secundario | Termina el trazo en curso (como el plugin original). |
-| `Esc` | Cancela el trazo; si no hay trazo, desactiva la herramienta. |
-| Sin dependencias | No requiere paquetes Python externos; usa `qgis.PyQt`. |
+| Freehand drawing | Lines and polygons; polygons close automatically. |
+| Simplification tolerance | `QDoubleSpinBox` 0–5, 3 decimals, step 0.1; persisted between sessions. |
+| Geographic CRS | The tolerance is disabled and 0 is applied (degrees are not metres). |
+| `Ctrl` snapping | Snaps the first and last vertex to existing vertices (QGIS snapping engine). |
+| Pencil cursor | Dedicated XPM cursor with `CrossCursor` fallback. |
+| Attribute form | Shows the QGIS form (when enabled) with clean cancellation. |
+| Provider defaults | `QgsVectorLayerUtils.createFeature` applies defaults and constraints. |
+| Undo | The feature is created inside `beginEditCommand`/`endEditCommand`. |
+| Invalid geometry | Asks whether to use it instead of silently fixing it. |
+| Layer enablement | Only editable line/polygon vector layers. |
+| Secondary button | Finishes the current stroke (like the original plugin). |
+| `Esc` | Cancels the stroke; with no stroke it deactivates the tool. |
+| No dependencies | No external Python packages; uses `qgis.PyQt`. |
 
-### Paridad con `freehandEditing`
+### Parity with `freehandEditing`
 
-La comparación completa está en
-[`docs/maintainer/FEATURE_PARITY.md`](docs/maintainer/FEATURE_PARITY.md). Se
-recuperaron: tolerancia persistente, snapping con `Ctrl`, cursor de lápiz,
-formulario de atributos, valores por defecto, comandos de deshacer, aviso de
-geometría inválida, CRS de capa y habilitación por tipo de capa.
+The full comparison is in
+[`docs/maintainer/FEATURE_PARITY.md`](docs/maintainer/FEATURE_PARITY.md).
+Restored: persistent tolerance, `Ctrl` snapping, pencil cursor, attribute form,
+provider defaults, undo commands, invalid-geometry prompt, layer CRS and
+per-layer enablement.
 
 ---
 
-## Requisitos
+## Requirements
 
-- **QGIS 3.28 o superior**, incluido QGIS 4.x (Qt6).
-- Sin dependencias Python adicionales: QGIS aporta PyQt, GDAL y GEOS.
+- **QGIS 3.28 or newer**, including QGIS 4.x (Qt6).
+- No additional Python dependencies: QGIS provides PyQt, GDAL and GEOS.
 
-## Instalación
+## Installation
 
-### Desde el ZIP
+### From the ZIP
 
-1. Descarga `dist/freehand_digitize.<versión>.zip`.
-2. En QGIS: **Complementos → Administrar e instalar complementos → Instalar a
-   partir de ZIP**.
-3. Activa **Freehand Digitize**.
+1. Download `dist/freehand_digitize.<version>.zip`.
+2. In QGIS: **Plugins → Manage and Install Plugins → Install from ZIP**.
+3. Enable **Freehand Digitize**.
 
-### Desde el repositorio (desarrollo)
+### From the repository (development)
 
 ```bash
-# Despliegue directo en el perfil de QGIS 4
+# Direct deployment into the QGIS 4 profile
 uv run qgis-manage deploy --no-compile --qgis-version 4
 ```
 
-También puedes copiar esta carpeta a
+You can also copy this folder to
 `~/.local/share/QGIS/QGIS4/profiles/default/python/plugins/freehand_digitize`.
 
 ---
 
-## Uso
+## Usage
 
-1. Selecciona una **capa de línea o polígono** y ponla en edición (la
-   herramienta también puede iniciar la edición).
-2. Pulsa **Dibujo a mano alzada** en la barra de digitalización o en
+1. Select a **line or polygon layer** and start editing (the tool can also start
+   the edit session).
+2. Click **Dibujo a mano alzada** in the digitize toolbar or
    **Vector → Freehand Digitize**.
-3. Arrastra con el botón izquierdo para dibujar.
-4. Suelta para crear la entidad. Si el formulario de atributos está habilitado,
-   se abrirá antes de añadirla.
-5. Ajusta la **tolerancia** en el cuadro de la barra de digitalización (0 = sin
-   simplificación).
+3. Drag with the left mouse button to draw.
+4. Release to create the feature. If the attribute form is enabled, it opens
+   before the feature is added.
+5. Adjust the **tolerance** in the digitize toolbar spin box (0 = no
+   simplification).
 
-### Atajos y botones
+The full user guide is in [`docs/user/USER_GUIDE.md`](docs/user/USER_GUIDE.md).
 
-| Acción | Efecto |
+### Shortcuts and mouse buttons
+
+| Action | Effect |
 | :--- | :--- |
-| Botón izquierdo + arrastrar | Dibuja el trazo. |
-| `Ctrl` (al empezar/terminar) | Ajusta el primer/último vértice al snapping de QGIS. |
-| Soltar cualquier botón | Termina el trazo (el secundario lo detiene). |
-| `Esc` con trazo en curso | Cancela el trazo y mantiene la herramienta. |
-| `Esc` sin trazo | Desactiva la herramienta. |
+| Left button + drag | Draws the stroke. |
+| `Ctrl` (at start/end) | Snaps the first/last vertex to QGIS snapping targets. |
+| Release any button | Finishes the stroke (secondary button halts it). |
+| `Esc` with a stroke in progress | Cancels the stroke and keeps the tool active. |
+| `Esc` with no stroke | Deactivates the tool. |
 
-> El snapping con `Ctrl` respeta la configuración de snapping de QGIS
-> (tolerancia, modo y capas). Si no hay ningún vértice dentro de la tolerancia,
-> se usa el punto libre.
+> `Ctrl` snapping respects the QGIS snapping configuration (tolerance, mode and
+> layers). If no vertex is within tolerance, the free point is used.
 
 ---
 
-## Arquitectura
+## Architecture
 
 ```
 freehand_digitize/
 ├── __init__.py              # classFactory
-├── freehand_plugin.py       # acción, spinbox, señales, ciclo de vida
-├── core/                    # lógica pura, sin QGIS ni Qt
+├── freehand_plugin.py       # action, spinbox, signals, lifecycle
+├── core/                    # pure logic, no QGIS or Qt
 │   ├── constants.py
 │   ├── geometry_rules.py
 │   ├── settings.py
@@ -109,63 +109,70 @@ freehand_digitize/
 │   ├── freehand_tool.py
 │   ├── geometry_factory.py
 │   └── qt_compat.py
-└── tests/                   # unitarios (sin QGIS) e integración (QGIS real)
+└── tests/                   # unit (no QGIS) and integration (real QGIS)
 ```
 
-- `core/` no importa `qgis` ni Qt; recibe valores planos y es testeable sin QGIS.
-- `gui/` concentra las APIs de PyQGIS y los shims PyQt5/PyQt6.
+- `core/` does not import `qgis` or Qt; it receives plain values and is testable
+  without QGIS.
+- `gui/` contains the PyQGIS APIs and the PyQt5/PyQt6 shims.
+
+See [`docs/ARCHITECTURE_EN.md`](docs/ARCHITECTURE_EN.md) for the full design.
 
 ---
 
-## Desarrollo y QA
+## Development and QA
 
-El entorno de desarrollo se gestiona con [`uv`](https://docs.astral.sh/uv/); el
-plugin en sí no se instala con `pip`.
+The development environment is managed with [`uv`](https://docs.astral.sh/uv/);
+the plugin itself is not installed with `pip`.
 
 ```bash
-uv sync --frozen            # entorno de desarrollo
-make test                   # tests unitarios (sin QGIS)
-make test-qgis              # integración contra el QGIS del sistema
+uv sync --frozen            # development environment
+make test                   # unit tests (no QGIS)
+make test-qgis              # integration against the system QGIS
 make lint                   # ruff
-make flake8                 # flake8 (alcance del portal QGIS)
-make mypy                   # tipos de core/
+make flake8                 # flake8 (QGIS portal scope)
+make mypy                   # core/ types
+make docs-check             # relative documentation links
 make analyzer               # qgis-analyzer, CC <= 10
-make agent-validate         # valida el sistema agéntico
-make qgis-validate          # metadata y estructura
-make zip                    # ZIP + validación del artefacto
+make agent-validate         # validate the agentic system
+make qgis-validate          # metadata and structure
+make zip                    # ZIP + artifact validation
 ```
 
-La guía de modernización con `uv` está en
+The `uv` modernization guide is in
 [`docs/maintainer/uv_modernization_guide.md`](docs/maintainer/uv_modernization_guide.md).
 
 ### CI
 
-`.github/workflows/test.yml` ejecuta:
+`.github/workflows/test.yml` runs:
 
-- lint, formato, flake8, mypy, `forge validate` y `qgis-manage validate`;
-- tests unitarios sin QGIS;
-- comprobación de enums Qt6/PyQt6 (`pyqgis4-checker`);
-- tests de integración en un contenedor QGIS.
+- lint, formatting, flake8, mypy, docs links, `forge validate` and
+  `qgis-manage validate`;
+- unit tests without QGIS;
+- Qt6/PyQt6 enum check (`pyqgis4-checker`);
+- integration tests in a QGIS container.
 
 ---
 
-## Documentación
+## Documentation
 
-- [Arquitectura](docs/ARCHITECTURE_EN.md)
-- [Guía de estilo de documentación](docs/maintainer/DOCS_STYLE_GUIDE.md)
-- [Convenciones de commit](docs/maintainer/COMMIT_GUIDELINES.md)
-- [Convenciones de la guía de usuario](docs/maintainer/USER_GUIDE_CONVENTIONS.md)
-- [Registro de desarrollo](docs/maintenance/DEVELOPMENT_LOG.md)
-- [Informe de paridad con freehandEditing](docs/maintainer/FEATURE_PARITY.md)
-- [Guía de modernización con uv](docs/maintainer/uv_modernization_guide.md)
+- [User guide](docs/user/USER_GUIDE.md)
+- [Architecture](docs/ARCHITECTURE_EN.md)
+- [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
+- [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
+- [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)
+- [Development log](docs/maintenance/DEVELOPMENT_LOG.md)
+- [Parity report with freehandEditing](docs/maintainer/FEATURE_PARITY.md)
+- [uv modernization guide](docs/maintainer/uv_modernization_guide.md)
 
-## Licencia y atribución
+## License and attribution
 
-GPL-2.0. El plugin original **Freehand Editing** es obra de Pavol Kapusta
-(2010–2012) y Larry Shaffer (2013); esta versión moderna conserva sus ideas y
-parte de su comportamiento (cursor XPM, semántica de eventos, tolerancia y
-formulario). Consulta [`LICENSE`](LICENSE).
+GPL-2.0. The original **Freehand Editing** plugin is by Pavol Kapusta
+(2010–2012) and Larry Shaffer (2013); this modern version keeps its ideas and
+part of its behaviour (XPM cursor, event semantics, tolerance and form). See
+[`LICENSE`](LICENSE).
 
-Los metadatos apuntan al repositorio original de `freehandEditing`; si publicas
-esta versión en un repositorio propio, actualiza `homepage`, `repository` y
-`tracker` en `metadata.txt` antes de subirla a <https://plugins.qgis.org/>.
+The metadata currently points to the original `freehandEditing` repository; if
+you publish this version in a dedicated repository, update `homepage`,
+`repository` and `tracker` in `metadata.txt` before uploading it to
+<https://plugins.qgis.org/>.

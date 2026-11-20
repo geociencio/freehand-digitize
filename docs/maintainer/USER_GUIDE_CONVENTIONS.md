@@ -2,22 +2,23 @@
 
 > Version 2.0.0 | Last Updated: 2026-11-19
 >
-> Adapted from the SecInterp user-guide conventions to the current Freehand
-> Digitize documentation (no Sphinx, no generated help, no translations).
+> Adapted from the SecInterp user-guide conventions to Freehand Digitize (no
+> Sphinx, no generated help, no translations).
 
 ## 1. Where things live
 
 | Item | Location |
 | :--- | :--- |
-| Current user-facing guide | [`README.md`](../../README.md) (Spanish) |
-| Future long-form guide | `docs/user/USER_GUIDE.md` (Spanish) |
+| User guide | [`docs/user/USER_GUIDE.md`](../user/USER_GUIDE.md) (English) |
+| Quick start | [`README.md`](../../README.md) (English) |
 | Images | `docs/images/` |
+| Reference from the user guide | `../images/<file>.png` |
 | Reference from `README.md` | `docs/images/<file>.png` |
-| Reference from `docs/user/USER_GUIDE.md` | `../images/<file>.png` |
 | Translations | none in 2.0.0 |
 
-Do **not** add generated `help/html/` or duplicate the README. If a long-form
-guide is created, the README links to it and keeps only a short quick start.
+The user guide is the long-form source for features and workflows. The README
+keeps a short quick start and links to the guide instead of duplicating it. Do
+**not** add generated `help/html/`.
 
 ## 2. Image naming
 
@@ -38,24 +39,25 @@ Use a `prefix_` + descriptive, lowercase, underscore-separated name:
 ## 3. Markdown insertion pattern
 
 ```markdown
-![Short alt text](docs/images/guide_tolerance_spinbox.png)
-*Figura 1. Tolerancia de simplificación en la barra de digitalización.*
+![Short alt text](../images/guide_tolerance_spinbox.png)
+*Figure 1. Simplification tolerance in the digitize toolbar.*
 ```
 
-- Alt text and caption are user-facing: write them in **Spanish**.
+- Alt text and caption are user-facing: write them in **English**.
 - Put the image on its own line and the caption on the next line in italics.
 - Keep captions short and numbered when they are part of a sequence.
 - The alt text must describe the action, not the filename.
 
 ### Placement by section
 
-| `README.md` section | Typical images |
+| `USER_GUIDE.md` section | Typical images |
 | :--- | :--- |
-| Uso | `workflow_01_select_layer.png`, `workflow_02_draw.png` |
-| Atajos y botones | `guide_snapping_1.png` |
-| Funciones / tolerancia | `guide_tolerance_spinbox.png` |
-| Formulario de atributos | `feature_attribute_form.png` |
-| Instalación | `ui_plugin_manager.png` |
+| 4. Drawing a feature | `workflow_01_select_layer.png`, `workflow_02_draw.png` |
+| 5. The digitize toolbar | `guide_tolerance_spinbox.png` |
+| 6. Snapping with Ctrl | `guide_snapping_1.png` |
+| 7. Attribute form and defaults | `feature_attribute_form.png` |
+| 8. Undo, cancel and invalid geometries | `feature_invalid_geometry.png` |
+| 11. Troubleshooting | `ui_log_messages.png` |
 
 ## 4. After adding or updating images
 
@@ -71,8 +73,8 @@ the plugin ZIP (`docs/` is excluded by `.qgisignore`), so they do not affect
 ## 5. Checklist
 
 - [ ] Image saved in `docs/images/` with a convention-compliant name.
-- [ ] Referenced from `README.md` as `docs/images/<file>.png`.
-- [ ] Alt text and Spanish caption present.
+- [ ] Referenced from `docs/user/USER_GUIDE.md` as `../images/<file>.png`.
+- [ ] English alt text and caption present.
 - [ ] Sequential images zero-padded and consecutive.
 - [ ] Superseded images removed.
 - [ ] `make docs-check` passes.

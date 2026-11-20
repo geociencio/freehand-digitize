@@ -23,7 +23,8 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
   qgis-manage, pre-commit, CI, Docker, detect-secrets baseline.
 - Agentic system: Agentic Forge vendored in `.agent/`, project state in
   `.agent-state/`, roles in `opencode.json`, config in `forge.toml`.
-- Docs: `docs/ARCHITECTURE_EN.md`, `docs/maintainer/PLAN_FREEHAND_PARITY.md`,
+- Docs: `docs/user/USER_GUIDE.md`, `docs/ARCHITECTURE_EN.md`,
+  `docs/maintainer/PLAN_FREEHAND_PARITY.md`,
   `docs/maintainer/FEATURE_PARITY.md`,
   `docs/maintainer/uv_modernization_guide.md`, the maintainer style/commit/
   logging/user-guide conventions and `docs/maintenance/DEVELOPMENT_LOG.md`.
@@ -55,8 +56,9 @@ make zip             # package + validate ZIP
 
 ## Decisions
 
-- **Spanish UI**, English code/docs; no translation catalogs in 2.0.0, so the
-  analyzer `MISSING_I18N` rule is disabled in the default profile.
+- **Spanish UI; English README, CHANGELOG, user guide and code/docs**; internal
+  plans, parity reports and logs may stay Spanish. No translation catalogs in
+  2.0.0, so the analyzer `MISSING_I18N` rule is disabled in the default profile.
 - **Auto-start editing** on activation (kept from 1.0.0; original required an
   explicit edit session).
 - **Lines allow 2 points**; polygons require 3 distinct points before closing.

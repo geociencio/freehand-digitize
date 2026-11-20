@@ -2,54 +2,53 @@
 
 ## 2.0.0 — 2026-11-19
 
-Reescritura moderna del plugin con paridad funcional respecto a
-[`freehandEditing`](https://github.com/vinayan/freehandEditing) y soporte
+Modern rewrite of the plugin with full functional parity with
+[`freehandEditing`](https://github.com/vinayan/freehandEditing) and support for
 QGIS 3.28–4.x (Qt5/Qt6).
 
-### Añadido
+### Added
 
-- Tolerancia de simplificación ajustable (0–5, 3 decimales) en la barra de
-  digitalización, persistida en `QgsSettings` con migración de la clave
-  heredada `/freehandEdit/tolerance`.
-- Snapping con `Ctrl` del primer y último vértice usando el motor de snapping
-  de QGIS.
-- Cursor de lápiz (XPM) con respaldo a cruz.
-- Formulario de atributos de QGIS, con supresión de clics mientras es modal.
-- Valores por defecto del proveedor mediante
-  `QgsVectorLayerUtils.createFeature`.
-- Comandos de edición (`beginEditCommand`/`endEditCommand`) para deshacer la
-  entidad como una sola operación.
-- Aviso ante geometrías no válidas (¿usar de todos modos?).
-- Habilitación de la acción solo para capas vectoriales de línea/polígono
-  editables, sincronizada con la capa activa y el cambio de herramienta.
-- Arquitectura `core/` (sin QGIS) y `gui/` (PyQGIS), con shims PyQt5/PyQt6.
-- Sistema agéntico (Agentic Forge), tests unitarios y de integración, CI,
-  pre-commit y empaquetado con `qgis-manage`.
-- Documentación de mantenimiento: arquitectura, guía de estilo, convenciones de
-  commit, registro de desarrollo y comprobador de enlaces (`make docs-check`).
+- Adjustable simplification tolerance (0–5, 3 decimals) in the digitize toolbar,
+  persisted in `QgsSettings` with migration of the legacy
+  `/freehandEdit/tolerance` key.
+- `Ctrl` snapping of the first and last vertex using the QGIS snapping engine.
+- Pencil cursor (XPM) with a cross-cursor fallback.
+- QGIS attribute form, with click suppression while it is modal.
+- Provider defaults through `QgsVectorLayerUtils.createFeature`.
+- Edit commands (`beginEditCommand`/`endEditCommand`) so the feature can be
+  undone as a single operation.
+- Invalid-geometry prompt (“use it anyway?”).
+- Action enabled only for editable line/polygon vector layers, synchronised with
+  the active layer and with tool changes.
+- `core/` (QGIS-free) and `gui/` (PyQGIS) architecture with PyQt5/PyQt6 shims.
+- Agentic system (Agentic Forge), unit and integration tests, CI, pre-commit and
+  `qgis-manage` packaging.
+- Maintainer documentation: architecture, style guide, commit guidelines,
+  development log and link checker (`make docs-check`).
+- English user guide for features and workflows.
 
-### Cambiado
+### Changed
 
-- El trazo se guarda en coordenadas de capa (`toLayerCoordinates`), no en el
-  CRS del proyecto; se elimina el riesgo de geometrías en el CRS equivocado.
-- El muestreo del trazo usa distancia en píxeles de dispositivo, no
-  `mapUnitsPerPixel` sobre coordenadas de capa.
-- El botón secundario termina el trazo (comportamiento del original), en lugar
-  de cancelarlo; `Esc` sigue cancelando.
-- La simplificación ya no está fijada a 2 px: usa la tolerancia configurada.
-- Las geometrías inválidas ya no se corrigen en silencio: se pregunta.
+- The stroke is stored in layer coordinates (`toLayerCoordinates`), not in the
+  project CRS; the risk of geometries in the wrong CRS is removed.
+- Stroke sampling uses device-pixel distance, not `mapUnitsPerPixel` over layer
+  coordinates.
+- The secondary button finishes the stroke (original behaviour) instead of
+  cancelling it; `Esc` still cancels.
+- Simplification is no longer fixed at 2 px: it uses the configured tolerance.
+- Invalid geometries are no longer fixed silently: the user is asked.
 
-### Corregido
+### Fixed
 
-- Entidades creadas en el CRS del proyecto cuando la capa usaba otro CRS.
-- Falta de valores por defecto y de formulario de atributos.
-- Ausencia de comando de deshacer para la entidad creada.
-- Acción siempre habilitada sobre capas de puntos o no editables.
-- `QAction` importado de forma no portable entre PyQt5/PyQt6.
+- Features created in the project CRS when the layer used a different CRS.
+- Missing provider defaults and attribute form.
+- Missing undo command for the created feature.
+- Action always enabled on point or non-editable layers.
+- `QAction` imported in a non-portable way between PyQt5/PyQt6.
 
-### Eliminado
+### Removed
 
-- Dependencia del código PyQt4/QGIS 2 del upstream; se conserva como referencia
-  en `freehandEditing/` (excluido del ZIP).
-- `supportsQt6` en `metadata.txt` (obsoleto con qgis-manage 0.17; QGIS 4 Ready
-  se marca con `qgisMaximumVersion >= 4.0`).
+- Dependency on the upstream PyQt4/QGIS 2 code; it is kept as a reference in
+  `freehandEditing/` (excluded from the ZIP).
+- `supportsQt6` in `metadata.txt` (deprecated with qgis-manage 0.17; QGIS 4
+  Ready is marked with `qgisMaximumVersion >= 4.0`).

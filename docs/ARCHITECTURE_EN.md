@@ -408,6 +408,7 @@ value; the GUI must not duplicate the geographic-CRS rule.
 ## 📚 Related documents
 
 - [README.md](../README.md) — installation, usage and shortcuts.
+- [User guide](user/USER_GUIDE.md) — feature and workflow guide.
 - [FEATURE_PARITY.md](maintainer/FEATURE_PARITY.md) — upstream behavior matrix.
 - [PLAN_FREEHAND_PARITY.md](maintainer/PLAN_FREEHAND_PARITY.md) — approved plan.
 - [uv modernization guide](maintainer/uv_modernization_guide.md) — environment,

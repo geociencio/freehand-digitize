@@ -29,8 +29,9 @@ la guía de modernización con `uv`.
   detect-secrets y tests unitarios e integración.
 - Sistema agéntico: `.agent/` vendorizado, `.agent-state/` adaptado,
   `AGENTS.md`, `forge.toml`, `opencode.json`, `.ai-context/` y workflows.
-- Documentación: README, CHANGELOG, informe de paridad, guía `uv` adaptada,
-  arquitectura y guías de mantenimiento.
+- Documentación: README, CHANGELOG, metadatos y guía de usuario en inglés;
+  informe de paridad, plan, registro y guía de logging en español; arquitectura,
+  guía `uv` y convenciones de mantenimiento en inglés.
 
 ### Resultados
 

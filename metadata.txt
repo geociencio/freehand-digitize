@@ -2,21 +2,21 @@
 name=Freehand Digitize
 qgisMinimumVersion=3.28
 qgisMaximumVersion=4.99
-description=Digitalización a mano alzada de líneas y polígonos sobre la capa activa.
+description=Freehand digitizing of lines and polygons on the active layer.
 version=2.0.0
 author=Chito
 email=juanbernales@gmail.com
-about=Freehand Digitize permite dibujar líneas y polígonos a mano alzada arrastrando el ratón sobre el mapa. Recupera las funciones del clásico plugin freehandEditing: tolerancia de simplificación ajustable y persistente, ajuste (snapping) del primer y último vértice con Ctrl, cursor de lápiz, formulario de atributos, valores por defecto del proveedor, comandos de deshacer y aviso ante geometrías no válidas. Trabaja en el CRS de la capa (con reproyección al vuelo) y es compatible con QGIS 3.28–4.x sobre Qt5/Qt6. No requiere dependencias Python externas y se distribuye bajo GPL-2.0. Derivado del plugin original freehandEditing de Pavol Kapusta.
+about=Freehand Digitize lets you draw lines and polygons freehand by dragging over the map. It restores the features of the classic freehandEditing plugin: adjustable and persistent simplification tolerance, Ctrl snapping of the first and last vertex, pencil cursor, attribute form, provider default values, undo commands and a prompt for invalid geometries. Strokes are stored in the layer CRS (on-the-fly reprojection safe) and the plugin supports QGIS 3.28–4.x on Qt5/Qt6. It has no external Python dependencies and is released under GPL-2.0. The plugin UI is Spanish in 2.0.0. Derived from the original freehandEditing plugin by Pavol Kapusta.
 homepage=https://github.com/vinayan/freehandEditing
 tracker=https://github.com/vinayan/freehandEditing/issues
 repository=https://github.com/vinayan/freehandEditing
 hasProcessingProvider=False
 changelog=
     2.0.0 (2026-11-19)
-    * Paridad funcional con freehandEditing: tolerancia, snapping CTRL, cursor de lápiz, CRS de capa, aviso de geometría no válida, valores por defecto, formulario de atributos y comandos de deshacer.
-    * Nueva arquitectura core/gui sin dependencias de QGIS en el núcleo.
-    * Sistema agéntico (Agentic Forge) y QA reproducible con uv, tests y CI.
-tags=freehand,digitize,pencil,draw,digitalizar,mano alzada,line,polygon
+    * Full parity with freehandEditing: tolerance, CTRL snapping, pencil cursor, layer CRS, invalid-geometry prompt, provider defaults, attribute form and undo commands.
+    * New core/gui architecture with no QGIS dependency in the core.
+    * Agentic system (Agentic Forge) and reproducible QA with uv, tests and CI.
+tags=freehand,digitize,pencil,draw,digitizing,line,polygon
 icon=icon.png
 experimental=False
 deprecated=False

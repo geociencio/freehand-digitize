@@ -40,6 +40,8 @@
       `USER_GUIDE_CONVENTIONS` adapted under `docs/maintainer/`.
 - [x] `docs/maintenance/DEVELOPMENT_LOG.md` created with the 2.0.0 session.
 - [x] `scripts/check_docs.py` + `make docs-check` wired into `pre-release` and CI.
+- [x] Language policy: English README/CHANGELOG/user guide/metadata; internal
+      plan, parity report, development log and logging guide in Spanish.
 
 ### Agentic system and docs
 

@@ -2,20 +2,22 @@
 
 > Version 2.0.0 | Last Updated: 2026-11-19
 >
-> Adaptado de la guía de documentación de SecInterp a la estructura real de
-> Freehand Digitize (sin Sphinx, sin espejos y sin catálogos de traducción).
+> Adapted from the SecInterp documentation guide to the real Freehand Digitize
+> structure (no Sphinx, no mirrors and no translation catalogs).
 
 ## Language
 
 | Artifact | Language |
 | :--- | :--- |
-| Code, commits, API/architecture docs, maintainer guides | **English** |
-| User-facing docs (`README.md`, `CHANGELOG.md`, future user guide) | **Spanish** |
+| Code, commits, `README.md`, `CHANGELOG.md`, user guide | **English** |
+| API/architecture docs and maintainer guides | **English** |
 | Internal plans, parity reports, session logs and the logging guidelines | **Spanish** |
+| Plugin UI strings | **Spanish** (2.0.0; no translation catalogs) |
 
-The plugin UI is Spanish-only in 2.0.0, so user-facing documentation stays in
-Spanish. Do not add `_EN` variants unless a genuine bilingual pair is required;
-2.0.0 has none.
+User-facing documentation (README, CHANGELOG and the feature/user guide) is
+English. Internal project records may stay in Spanish, but everything that is
+shipped or published as documentation is English. Do not add `_EN` variants
+unless a genuine bilingual pair is required; 2.0.0 has none.
 
 ## File naming and locations
 
@@ -24,11 +26,11 @@ Spanish. Do not add `_EN` variants unless a genuine bilingual pair is required;
 
 | Content | Location |
 | :--- | :--- |
+| User guide | `docs/user/USER_GUIDE.md` |
+| Quick start | [`README.md`](../../README.md) |
 | Architecture | `docs/ARCHITECTURE_EN.md` |
 | Maintainer guides | `docs/maintainer/` |
-| Session log | `docs/maintenance/DEVELOPMENT_LOG.md` |
-| User guide (future) | `docs/user/USER_GUIDE.md` |
-| Current user-facing guide | [`README.md`](../../README.md) |
+| Session log (internal, Spanish) | `docs/maintenance/DEVELOPMENT_LOG.md` |
 
 ## Links
 
@@ -61,15 +63,16 @@ Spanish. Do not add `_EN` variants unless a genuine bilingual pair is required;
 - There is no `docs/source/` mirror and no Sphinx build in this repository.
 - Never commit generated HTML or `help/html/`; the QGIS ZIP only ships the
   plugin runtime.
-- If a long-form user guide is added, `README.md` links to it instead of
-  duplicating its content.
+- `README.md` is a quick start; the long-form content belongs to
+  `docs/user/USER_GUIDE.md`. Do not duplicate sections between them.
 
 ## Internationalization (docs)
 
 - The 2.0.0 UI and docs catalogs do not exist; the analyzer `MISSING_I18N` rule
   is disabled by project decision.
-- If i18n is reintroduced, translate only user-facing pages and require **≥ 80 %**
-  coverage before publishing a language. Code/API docs stay in English.
+- If i18n is reintroduced, translate only the user-facing pages and require
+  **≥ 80 %** coverage before publishing a language. Code/API docs stay in
+  English.
 
 ## Quality gates
 
@@ -93,5 +96,6 @@ guide`. See [COMMIT_GUIDELINES.md](COMMIT_GUIDELINES.md).
 - [ ] File name and location follow the table above.
 - [ ] Version/date header present and matching `metadata.txt`.
 - [ ] Relative links resolve (`make docs-check`).
-- [ ] User-facing text is Spanish; code/API text is English.
+- [ ] README, CHANGELOG and the user guide are in English.
+- [ ] Internal plans/logs are the only Spanish documents.
 - [ ] No generated files, no duplicated content, no future-file links.
