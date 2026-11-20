@@ -1,0 +1,68 @@
+# .qgisignore — files excluded from the plugin ZIP/deploy.
+# Keep only the plugin runtime, metadata, icon, LICENSE and README.
+
+# Version control / IDE / agentic tooling
+.git
+.gitignore
+.qgisignore
+.github
+.devcontainer
+.idea
+.vscode
+.agent/
+.agent-state/
+.ai-context/
+.uvcache/
+.pre-commit/
+.qgis-manage/
+opencode.json
+AGENTS.md
+AI_CONTEXT.md
+forge.toml
+skills-lock.json
+context_manifest.json
+
+# Python caches and environments
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Development and QA
+tests/
+docs/
+scripts/
+freehandEditing/
+.github/
+Makefile
+Dockerfile
+.dockerignore
+docker-compose.yml
+pyproject.toml
+uv.lock
+.python-version
+.pre-commit-config.yaml
+.flake8
+.bandit
+.secrets.baseline
+.analyzerignore
+requirements.txt
+requirements-dev.txt
+analysis_results/
+logs/
+*.log
+pyqt6_checker.log
+
+# Local/output artifacts
+*.qm
+*.ts

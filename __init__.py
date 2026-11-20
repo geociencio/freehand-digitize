@@ -1,4 +1,12 @@
-def classFactory(iface):
-    """Punto de entrada del plugin (QGIS 3.x y 4.x)."""
+"""QGIS plugin entry point for Freehand Digitize."""
+
+from __future__ import annotations
+
+from typing import Any
+
+
+def classFactory(iface: Any) -> Any:  # noqa: N802 - QGIS API name
+    """Return the plugin instance for QGIS."""
     from .freehand_plugin import FreehandDigitizePlugin
+
     return FreehandDigitizePlugin(iface)

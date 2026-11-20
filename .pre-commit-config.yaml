@@ -1,0 +1,39 @@
+# See https://pre-commit.com for more information.
+# Hooks run in their own environments; do not wrap them in `uv run`.
+exclude: ^(freehandEditing/|\.agent/|\.agent-state/|\.ai-context/|docs/|dist/|\.venv/|\.uvcache/)
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.6
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  # QGIS portal-compatible gate: flake8 on the packaged plugin code only.
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.4.1
+    hooks:
+      - id: flake8
+        files: ^(core/|gui/|freehand_plugin\.py$|__init__\.py$)
+        args: [--config=.flake8, --format=default]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []

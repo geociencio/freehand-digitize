@@ -1,0 +1,31 @@
+[flake8]
+# Flake8 configuration for QGIS Portal compatibility.
+# Blocking gate: `make flake8` (packaged plugin scope).
+
+max-line-length = 100
+max-complexity = 15
+
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    .uvcache,
+    build,
+    dist,
+    tests,
+    docs,
+    freehandEditing,
+    .agent,
+    .agent-state,
+    .ai-context
+
+# E203: whitespace before ':' (conflicts with formatters)
+# W503: line break before binary operator (updated PEP 8)
+# E501: line length is enforced by Ruff at a different threshold
+ignore =
+    E203,
+    W503,
+    E501
+
+per-file-ignores =
+    __init__.py:F401

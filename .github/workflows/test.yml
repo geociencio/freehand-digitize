@@ -1,0 +1,102 @@
+name: CI - Quality, Tests and QGIS 4
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Lint, types, agent system and metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.12.23"
+          enable-cache: true
+
+      - run: uv python install
+      - run: uv sync --frozen
+      - run: uv lock --check
+      - run: uv run --frozen ruff check .
+      - run: uv run --frozen ruff format --check .
+      - run: make flake8
+      - run: make mypy
+      - run: uv run --frozen python .agent/tools/forge.py validate
+      - run: uv run --frozen qgis-manage validate --strict
+
+  test:
+    name: Unit tests (mock-free)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.12.23"
+          enable-cache: true
+
+      - run: uv python install
+      - run: uv sync --frozen
+      - run: PYTHONPATH=.. uv run --frozen python -m unittest discover tests
+
+  qt6:
+    name: Qt6 / QGIS 4 enum check
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/qgis/pyqgis4-checker:main-ubuntu
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run PyQGIS 4 migration check
+        run: |
+          # Check only the packaged plugin code; the untracked upstream clone
+          # and the agentic tooling are not part of the ZIP.
+          mkdir -p /tmp/qt6src
+          git ls-files -z core gui freehand_plugin.py __init__.py \
+            | xargs -0 cp --parents -t /tmp/qt6src
+          pyqt5_to_pyqt6.py --dry_run --logfile pyqt6_checker.log /tmp/qt6src
+          if grep -q "Enum error" pyqt6_checker.log; then
+            cat pyqt6_checker.log
+            echo "::error::Qt6/PyQt6 enum incompatibilities detected."
+            exit 1
+          fi
+          echo "No Qt6/PyQt6 enum incompatibilities detected."
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pyqt6-checker-report
+          path: pyqt6_checker.log
+          retention-days: 7
+
+  integration:
+    name: Integration tests (QGIS)
+    runs-on: ubuntu-latest
+    needs: [quality, qt6]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build test image
+        run: DOCKER_BUILDKIT=1 docker build -t freehand_digitize_test .
+
+      - name: Run integration tests (headless)
+        run: |
+          set +e
+          docker run --rm freehand_digitize_test > /tmp/tests.log 2>&1
+          code=$?
+          set -e
+          tail -20 /tmp/tests.log
+          if [ "$code" -eq 0 ]; then
+            exit 0
+          fi
+          if [ "$code" -eq 139 ] && grep -qE '^OK' /tmp/tests.log && \
+             ! grep -qE '^(FAILED|ERROR)' /tmp/tests.log; then
+            echo "::warning::Tolerated QGIS teardown segfault (exit 139) after OK."
+            exit 0
+          fi
+          echo "Integration run failed (exit $code)."
+          exit "$code"

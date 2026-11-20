@@ -1,168 +1,104 @@
 ---
-description: Unified Release Workflow (QGIS Release Flow) - Generation 8 Standard
+description: Release Freehand Digitize to plugins.qgis.org (version bump, gates, ZIP, validation and upload).
 agent: qa_engineer
-skills: [release-management, qgis-release, qgis-migration-4x, testing-standards, commit-standards, i18n-standards, changelog-generator]
+skills: [release-management, qgis-release, qgis-migration-4x, testing-standards, commit-standards, changelog-generator]
 stop_conditions:
-  - "Any function exceeds CC > 10 → Block release and refactor"
-  - "Any quality gate fails (ruff, flake8, mypy, docs, i18n, security, analyzer) → Block release and fix it"
-  - "make flake8 reports any issue in the packaged plugin scope → Block release and fix it"
-  - "Docstring coverage regresses below the recorded baseline (99.0%) → Block release and fix documentation"
-  - "Forbidden files (.agent, scripts, tests) found in ZIP → Abort and fix .qgisignore"
-  - "make security-scan reports CRITICAL findings (Bandit/detect-secrets) → Block release and fix before packaging"
+  - "Any function exceeds CC > 10 → block and refactor"
+  - "Any blocking gate fails (ruff, flake8, mypy, analyzer, tests, agent validate, qgis-manage) → block and fix"
+  - "make security-scan reports a CRITICAL finding → block before packaging"
+  - "Forbidden files (.agent, .agent-state, tests, docs, freehandEditing) found in the ZIP → abort and fix .qgisignore"
+  - "The ZIP version is not numeric/unique or metadata.txt and pyproject.toml disagree → abort"
 validation: |
-  - Verify that all tests pass in Docker (see `tests/TESTING_STATUS.md`)
-  - Confirm ruff, flake8, mypy, check_docs, i18n-check and security-scan pass
-  - Confirm CC <= 10 for all methods (qgis-analyzer --max-cc 10)
-  - Ensure Zero High-Severity Security Findings
-  - Validate ZIP contents (Plugin-only, no agentic system)
+  - make pre-release passes
+  - make zip and make portal-check pass
+  - make security-scan and make qt6-check pass (Docker)
+  - dist/freehand_digitize.X.Y.Z.zip contains only the plugin runtime + metadata + icon + LICENSE + README
 ---
 
-# Workflow: Release Plugin (Gen 8)
+# Workflow: Release Plugin
 
-Follow this 5-phase workflow to perform an official release of the Freehand Digitize plugin.
+Five-phase release for Freehand Digitize. The plugin has no runtime Python
+dependencies and no translation catalogs in 2.0.0.
 
-### Phase 1: Quality and Preparation
+## Phase 1 — Quality and preparation
 
-1. **Operational Audit**:
-   // turbo
-   ```bash
-   uv run python scripts/sync_metrics.py --report
-   uv run qgis-analyzer analyze . --max-cc 10
-   ```
-   🤖 **Agent Action**: Verify CC <= 10 and that docstring/return-type coverage has not regressed below the recorded baseline.
+```bash
+make sync
+make pre-release        # format, lint, flake8, mypy, analyzer, agent validate, tests, qgis validate
+make security-scan      # no CRITICAL finding
+make qt6-check          # no Qt6/PyQt6 enum error (Docker)
+```
 
-2. **Full Analysis**:
-   // turbo
-   ```bash
-   uv run qgis-analyzer analyze . -o analysis_results
-   ```
-   🤖 **Agent Action**: Update badges in `README.md` based on current scores.
+Block the release on any failure. Review `analysis_results/` for CC, docstrings
+and module size.
 
-### Phase 2: Versioning and Documentation
+## Phase 2 — Version and documentation
 
-1. **Synchronize Version (vX.Y.Z)** — full checklist:
+Update, in this order, and keep them consistent:
 
-   | # | File | What to update |
-   |:--|:-----|:--------------|
-   | 1 | `metadata.txt` | `version` + `changelog` (escape `%` as `%%`) |
-   | 2 | `pyproject.toml` | `version` |
-   | 3 | `README.md` | badges (Version, Quality, Tests) + "What's New" |
-   | 4 | `docs/CHANGELOG.md` | move `[Unreleased]` → `[X.Y.Z]` + date |
-   | 5 | `docs/docsec/CHANGELOG.md` | same (Spanish changelog) |
-   | 6 | `docs/source/conf.py` | `release = "X.Y.Z"` |
-   | 7 | `docs/releases/notes/v[X.Y.Z].md` | new release note |
-   | 8 | `docs/DEVELOPMENT_LOG.md` | milestone entry |
-   | 9 | `.agent/QUICK_REFERENCE.md` | test count + metrics |
+| File | What to change |
+| :--- | :--- |
+| `metadata.txt` | `version=X.Y.Z` and a `changelog` entry |
+| `pyproject.toml` | `version = "X.Y.Z"` |
+| `CHANGELOG.md` | new `## X.Y.Z — YYYY-MM-DD` section |
+| `AI_CONTEXT.md` | current release and date |
+| `.agent-state/task.md` | close the release tasks |
+| `.agent-state/next_steps.md` | handoff for the next session |
+| `README.md` | only if features or requirements changed |
 
-   🤖 **Agent Action**: Validate that `metadata.txt`, `pyproject.toml`, and
-   `docs/source/conf.py` versions match exactly.
+Use the `changelog-generator` skill to turn commits into user-facing notes. Do
+not invent metrics; record the actual test count and analyzer scores in
+`.agent-state/memory/agent_metrics.json`.
 
-2. **Changelog Update**:
-   - Use **changelog-generator** to move `[Unreleased]` to the new version in `docs/CHANGELOG.md`.
-   - Add a summary of the Phase achievements.
+## Phase 3 — Final verification
 
-3. **Generate Release Notes**:
-   - Create `docs/releases/notes/v[VERSION].md` with a descriptive and professional title (English required).
-   - Use the **changelog-generator** skill to transform technical commits into user-facing value.
+```bash
+make test
+make test-qgis
+make zip                # package --repo-check + validate --zip
+make portal-check
+```
 
-4. **Development Log Milestone**:
-   - Add a milestone entry in `docs/DEVELOPMENT_LOG.md` summarizing the phase closure.
+`make zip` must produce `dist/freehand_digitize.X.Y.Z.zip` with:
 
-5. **Documentation Audit**:
-   - Ensure `AGENTS.md` (root SSoT), `.agent/QUICK_REFERENCE.md`, and other core
-     docs reflect the latest architectural changes or standards.
-   - Regenerate `AI_CONTEXT.md` via `uv run ai-ctx analyze`.
+- one `freehand_digitize/` root folder;
+- `metadata.txt`, `__init__.py`, `LICENSE`, `icon.png` and the plugin code;
+- no `tests/`, `docs/`, `.agent`, `.agent-state`, `.ai-context`,
+  `freehandEditing/`, caches or `uv.lock`.
 
-### Phase 3: Final Verification (Safety Net)
+Audit the artifact:
 
-1. **Flake8 (QGIS portal gate — BLOCKING)**:
-   // turbo
-   ```bash
-   make flake8
-   ```
-   🤖 **Agent Action**: runs flake8 7.4.1 with `.flake8` on the packaged plugin scope
-   (`core gui exporters plugin` + root modules). Any finding blocks the release: the QGIS
-   portal runs the same checker on the uploaded ZIP. `make pep8` is an alias.
+```bash
+unzip -l dist/freehand_digitize.X.Y.Z.zip
+unzip -l dist/freehand_digitize.X.Y.Z.zip | grep -E "\.agent|tests|docs|freehandEditing|uv.lock"
+```
 
-2. **Security Scan (CRITICAL — includes Bandit)**:
-   // turbo
-   ```bash
-   make security-scan
-   ```
-   // turbo
-   ```bash
-   uv run qgis-analyzer security --deep .
-   ```
+The second command must print nothing.
 
-   🤖 **Agent Action**: `make security-scan` runs `qgis-manage security --portal` (0.15+) with **native** PyQGIS rules plus **Bandit** (`B110 try_except_pass`, hardcoded passwords, unsafe functions, etc.), **detect-secrets** and **Flake8** on the packaged plugin scope. It exits non-zero on any CRITICAL finding. Do NOT proceed to packaging if it fails. This is the full scan that catches code smells the `qgis-analyzer security` secrets-only check does not.
+## Phase 4 — Commit and tag
 
-3. **Tests (Full Suite)**:
-   // turbo
-   ```bash
-   make docker-test
-   ```
-   🤖 **Agent Action**: 100% pass rate required (all tests; see `tests/TESTING_STATUS.md`).
+```bash
+git add .
+git commit -m "chore(release): prepare vX.Y.Z"
+git tag -a vX.Y.Z -m "Release vX.Y.Z"
+git push origin main && git push origin vX.Y.Z
+```
 
-### Phase 4: Git and Tagging
+## Phase 5 — Publish
 
-1. **Release Commit**:
-   ```bash
-   git add metadata.txt pyproject.toml docs/CHANGELOG.md README.md
-   git commit -m "chore(release): prepare vX.Y.Z"
-   ```
+1. Upload `dist/freehand_digitize.X.Y.Z.zip` at
+   <https://plugins.qgis.org/plugins/> (manual).
+2. Wait for the validation email: `Validating` → `Validated` /
+   `Validated (configured)` / `Blocked`.
+3. A `Blocked` status means a CRITICAL Bandit/detect-secrets finding. Fix it and
+   upload a **new** version; never reuse the version string.
+4. Create the GitHub release with the ZIP attached (draft first if the portal is
+   still validating).
+5. Run `uv run python .agent/tools/forge.py memory prune --apply` and update the
+   session history.
 
-2. **Tagging**:
-   ```bash
-   git tag -a vX.Y.Z -m "Release vX.Y.Z"
-   git push origin main && git push origin vX.Y.Z
-   ```
+## Expected result
 
-### Phase 5: Packaging and Distribution (PLUGIN ONLY)
-
-1. **Clean Memory**:
-   // turbo
-   ```bash
-   uv run python .agent/tools/forge.py memory prune --apply
-   ```
-
-2. **Build Optimized ZIP**:
-   // turbo
-   ```bash
-   make zip
-   ```
-   `make zip` builds the docs/help, compiles resources, packages with
-   `--repo-check` and runs `make portal-check`.
-
-3. **Portal compliance (BLOCKING)**:
-   // turbo
-   ```bash
-   make portal-check
-   ```
-   🤖 **Agent Action**: validates the built ZIP against plugins.qgis.org: one
-   `freehand_digitize/` root, required metadata, `LICENSE`, ≤25 MB, no binaries/dev files,
-   numeric version and file modes. Fix every error before uploading; see the
-   `qgis-release` skill and `docs/research/qgis_plugin_repository_requirements.md`.
-
-4. **Strict Artifact Audit**:
-   // turbo
-   ```bash
-   unzip -l dist/*.zip | grep -E "\.agent|scripts|tests|docs|AI_CONTEXT|antigravity"
-   ```
-   🤖 **Agent Action**: **STOP** if the output is not empty. The agentic system MUST NOT be in the ZIP.
-
-5. **GitHub Release**:
-   ```bash
-   gh release create vX.Y.Z --title "vX.Y.Z" --notes-file docs/releases/notes/vX.Y.Z.md dist/*.zip --draft
-   ```
-
-6. **QGIS Plugin Repository (manual, blocking)**:
-   Upload `dist/freehand_digitize.X.Y.Z.zip` at <https://plugins.qgis.org/plugins/freehand_digitize/>
-   and wait for the validation email (`Validating` → `Validated`/`Blocked`). A
-   CRITICAL Bandit/detect-secrets finding blocks the version: fix it and upload a
-   **new** version. After portal approval, publish the GitHub release if it is still
-   a draft.
-
-## Expected Result
-- Official version published (Plugin-only ZIP).
-- Zero technical debt regressions.
-- Sincronized metrics and documentation.
+- A published, portal-validated ZIP with no development files.
+- Updated `metadata.txt`, `pyproject.toml`, `CHANGELOG.md`, state and metrics.
+- No quality-gate regression.

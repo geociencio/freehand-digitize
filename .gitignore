@@ -11,14 +11,18 @@ env/
 .ruff_cache/
 .pytest_cache/
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
 .uvcache/
+.pre-commit/
 
 # Build and packaging
 dist/
 build/
 *.egg-info/
 .qgis-manage/
+*.qm
 
 # External upstream reference clone (not part of the plugin ZIP)
 freehandEditing/
@@ -27,4 +31,5 @@ freehandEditing/
 analysis_results/
 logs/
 *.log
+pyqt6_checker.log
 .DS_Store

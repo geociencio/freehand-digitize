@@ -1,0 +1,24 @@
+# Agentic Forge configuration for Freehand Digitize.
+#
+# The reusable framework (skills, workflows, forge CLI) is vendored under
+# `.agent/`; project-owned state that a framework update must never overwrite
+# lives under `.agent-state/`. All paths are relative to the repository root.
+
+[forge]
+framework = ".agent"
+state = ".agent-state"
+
+[project]
+name = "freehand_digitize"
+strict_agent_system = true
+test_dirs = ["tests"]
+test_command = "PYTHONPATH=.. uv run --frozen python -m unittest discover tests"
+test_command_full = "make test-qgis"
+test_command_docker = "make docker-test"
+lint_command = "uv run --frozen ruff check ."
+format_command = "uv run --frozen ruff format ."
+type_command = "uv run --frozen mypy --config-file pyproject.toml --follow-imports=silent core"
+analyzer_command = "uv run --frozen qgis-analyzer analyze . --max-cc 10"
+max_cc = 10
+module_size_limit = 400
+max_lesson_lines = 350

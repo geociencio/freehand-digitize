@@ -1,0 +1,25 @@
+# Analysis scope for Freehand Digitize (shared by qgis-plugin-analyzer).
+# Analyze the plugin code only; development tooling, tests, docs and the
+# upstream reference clone are out of scope.
+
+tests/
+docs/
+freehandEditing/
+.agent/
+.agent-state/
+.ai-context/
+.venv/
+build/
+dist/
+*.egg-info/
+.uvcache/
+
+metadata.txt
+pyproject.toml
+uv.lock
+Makefile
+Dockerfile
+README.md
+CHANGELOG.md
+LICENSE
+icon.png

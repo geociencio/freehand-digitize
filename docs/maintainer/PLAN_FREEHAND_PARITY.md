@@ -1,7 +1,7 @@
 # Plan de actualización — Freehand Digitize (paridad con `freehandEditing`)
 
-> **Estado:** plan para revisión. No se harán más cambios de código hasta que lo
-> apruebes.
+> **Estado:** aprobado y ejecutado (2026-11-19). Plan de referencia de la
+> implementación 2.0.0; las decisiones finales están en la sección 15.
 >
 > **Fecha:** 2026-11-19
 > **Repositorio de trabajo:** `/home/jmbernales/qgispluginsdev/freehand_digitize`
@@ -72,7 +72,7 @@ compatibilidad con **QGIS 3.28+ y QGIS 4.x (PyQt5 y PyQt6)**. Además:
 freehand_digitize/
 ├── __init__.py               # classFactory -> FreehandDigitizePlugin
 ├── freehand_plugin.py        # tool + plugin (224 líneas originales)
-├── metadata.txt              # QGIS 3.28–4.99, supportsQt6=True
+├── metadata.txt              # QGIS 3.28–4.99 (sin supportsQt6)
 └── freehandEditing/          # clon del upstream como referencia (GPL-2)
 ```
 
@@ -433,7 +433,7 @@ corrige o se documenta.
 
 | Archivo | Acción | Notas |
 | :--- | :--- | :--- |
-| `pyproject.toml` | Adaptar | `name="freehand-digitize"`, `version="2.0.0"`, `requires-python=">=3.9"` (runtime QGIS 3.28) con `.python-version=3.12` (dev); `dependencies=[]`; `[dependency-groups].dev` con `ruff`, `mypy`, `qgis-manage`, `qgis-plugin-analyzer`, `pre-commit`, `flake8`, `bandit`, `detect-secrets`, `coverage`, `pyyaml`; `[tool.uv] package=false`; `[tool.qgis-manager]` |
+| `pyproject.toml` | Adaptar | `name="freehand-digitize"`, `version="2.0.0"`, `requires-python=">=3.11"` (entorno de desarrollo; el runtime del plugin es 3.9) con `.python-version=3.12`; `dependencies=[]`; `[dependency-groups].dev` con `ruff`, `mypy`, `qgis-manage`, `qgis-plugin-analyzer`, `pre-commit`, `flake8`, `bandit`, `detect-secrets`, `coverage`, `pyyaml`; `[tool.uv] package=false`; `[tool.qgis-manager]` |
 | `.python-version` | Nuevo | `3.12` |
 | `uv.lock` | Generar | `uv lock` con `UV_CACHE_DIR` dentro del workspace (el caché global es de solo lectura en este entorno) |
 | `Makefile` | Adaptar | `PLUGINNAME=freehand_digitize`; targets `sync`, `test`, `test-qgis`, `test-all`, `lint`, `format`, `flake8`, `mypy`, `analyzer`, `qgis-validate`, `zip`, `portal-check`, `security-scan`, `qt6-check`, `deploy`, `agent-validate`, `clean` |
@@ -505,7 +505,7 @@ Se copia la guía de `../sec_interp/docs/maintainer/uv_modernization_guide.md`
    `unittest` (mock-first) + integración QGIS/Docker, incluida la tolerancia al
    segfault de cierre.
 6. **CI:** workflow real del repo (setup-uv pinned, `--frozen`, matriz
-   Python 3.9/3.12, contenedor QGIS).
+   Python 3.11/3.12; el runtime 3.9 se protege con el test de sintaxis, contenedor QGIS).
 7. **Empaquetado:** `qgis-manage package --repo-check` y
    `validate --zip`; advertencia sobre `freehandEditing/` y archivos de
    desarrollo.
@@ -542,7 +542,7 @@ Se copia la guía de `../sec_interp/docs/maintainer/uv_modernization_guide.md`
 | Revisar | `gui/feature_creator.py` | Defaults, validez, formulario, undo |
 | Revisar | `freehand_plugin.py` | Acción, spinbox, señales, enable/disable, unload |
 | **Añadir** | `__init__.py` | Sin cambios (relativo) |
-| **Añadir** | `metadata.txt` | Versión 2.0.0, descripción, `supportsQt6`, `repository`/`tracker` a confirmar |
+| **Añadir** | `metadata.txt` | Versión 2.0.0, descripción, `homepage`/`repository`/`tracker` (upstream hasta crear repo propio) |
 | **Añadir** | `icon.png` | PNG ≥ 32×32 (se genera desde el XPM del lápiz o se adapta el upstream) |
 | **Añadir** | `LICENSE` | GPL-2.0 (compatible con upstream) |
 
@@ -669,19 +669,24 @@ consume antes; el `deactivate()` cancela el trazo en cualquier caso.
 
 ---
 
-## 15. Decisiones que necesito de ti
+## 15. Decisiones finales (resueltas)
 
-1. **Andamiaje ya creado:** ¿lo conservo (A), restauro `freehand_plugin.py` y
-   borro `core/`/`gui/` (B), o revierto también `.agent/` (C)?
-2. **Idioma de la UI:** ¿español (como la versión actual) o inglés?
-3. **Auto-inicio de edición:** ¿lo mantengo (cómodo) o exijo edición manual como
-   el upstream (paridad estricta)?
-4. **Metadatos:** ¿qué `repository` y `tracker` pongo en `metadata.txt`? Si no
-   hay URL todavía, los dejo vacíos y `qgis-validate` se ejecuta sin `--repo`.
-5. **Git:** ¿inicializo el repositorio (`git init`) para que funcionen
-   pre-commit/submódulo/CI, o lo dejas para después?
-6. **Versión:** propongo `2.0.0` (cambio mayor por paridad + reestructuración).
-   ¿De acuerdo?
+1. **Andamiaje:** se revirtió el código no revisado y se reimplementó desde el
+   plan (**opción B**); `.agent/` se conservó vendorizado.
+2. **Idioma de la UI:** español (como la versión 1.0.0); código, tests y
+   documentación técnica en inglés.
+3. **Auto-inicio de edición:** se mantiene por comodidad; la acción sigue
+   deshabilitada para capas que no soportan edición.
+4. **Metadatos:** `homepage`, `repository` y `tracker` apuntan al repositorio
+   original `vinayan/freehandEditing` hasta que exista un repositorio propio.
+5. **Git:** repositorio inicializado con un commit baseline (plugin original +
+   framework + plan).
+6. **Versión:** `2.0.0`.
+7. **Política de Python:** entorno de desarrollo `>=3.11` (por `pre-commit` 4.x)
+   y `.python-version=3.12`; el runtime 3.9 de QGIS 3.28 se protege con
+   `tests/core/test_python_compat.py`.
+8. **`supportsQt6`:** eliminado (obsoleto con qgis-manage 0.17); QGIS 4 Ready se
+   marca con `qgisMaximumVersion=4.99`.
 
 ---
 

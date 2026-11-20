@@ -2,19 +2,22 @@
 name=Freehand Digitize
 qgisMinimumVersion=3.28
 qgisMaximumVersion=4.99
-supportsQt6=True
-description=Dibuja lineas y poligonos a mano alzada directamente en la capa activa.
-version=1.0.0
-author=Chito / asistente
-email=
-about=Herramienta de digitalizacion libre (tipo freehandEditing) compatible con QGIS 3.28+ y QGIS 4.x (PyQt6).
-
-Arrastra con el boton izquierdo sobre el mapa para dibujar; al soltar se crea la entidad en la capa activa. ESC o clic derecho cancela.
-tracker=
-repository=
-tags=freehand,digitize,pencil,draw,digitalizar,mano alzada
-category=Vector
-icon=
+description=Digitalización a mano alzada de líneas y polígonos sobre la capa activa.
+version=2.0.0
+author=Chito
+email=juanbernales@gmail.com
+about=Freehand Digitize permite dibujar líneas y polígonos a mano alzada arrastrando el ratón sobre el mapa. Recupera las funciones del clásico plugin freehandEditing: tolerancia de simplificación ajustable y persistente, ajuste (snapping) del primer y último vértice con Ctrl, cursor de lápiz, formulario de atributos, valores por defecto del proveedor, comandos de deshacer y aviso ante geometrías no válidas. Trabaja en el CRS de la capa (con reproyección al vuelo) y es compatible con QGIS 3.28–4.x sobre Qt5/Qt6. No requiere dependencias Python externas y se distribuye bajo GPL-2.0. Derivado del plugin original freehandEditing de Pavol Kapusta.
+homepage=https://github.com/vinayan/freehandEditing
+tracker=https://github.com/vinayan/freehandEditing/issues
+repository=https://github.com/vinayan/freehandEditing
+hasProcessingProvider=False
+changelog=
+    2.0.0 (2026-11-19)
+    * Paridad funcional con freehandEditing: tolerancia, snapping CTRL, cursor de lápiz, CRS de capa, aviso de geometría no válida, valores por defecto, formulario de atributos y comandos de deshacer.
+    * Nueva arquitectura core/gui sin dependencias de QGIS en el núcleo.
+    * Sistema agéntico (Agentic Forge) y QA reproducible con uv, tests y CI.
+tags=freehand,digitize,pencil,draw,digitalizar,mano alzada,line,polygon
+icon=icon.png
 experimental=False
 deprecated=False
-hasProcessingProvider=no
+category=Vector

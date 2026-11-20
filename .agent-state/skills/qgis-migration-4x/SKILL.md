@@ -75,7 +75,13 @@ make qt6-fix
 These targets use the Docker image `ghcr.io/qgis/pyqgis4-checker:main-ubuntu`.
 
 ### Scoped Enum Migration
-- Use scoped enums (`Qgis.MessageLevel.Critical`, `QgsWkbTypes.Type.LineString`, `Qt.PenStyle.NoPen`) — not flat (`Qgis.Critical`, `QgsWkbTypes.LineString`, `Qt.NoPen`).
-- Scoped enums work in QGIS 3.22+ (LTR) AND QGIS 4.x. The project's `qgisMinimumVersion` is `3.28`.
-- After a migration, update the test mocks in `tests/mocks/` to expose the scoped enum nested classes (the auto-fix tool does NOT update mocks).
-- `make qt6-check` is wired into `make pre-release` (blocks release on enum errors).
+- Prefer scoped enums (`Qgis.MessageLevel.Critical`, `QgsWkbTypes.Type.LineString`, `Qt.PenStyle.NoPen`) over flat ones.
+- Scoped enums work in QGIS 3.22+ (LTR) and QGIS 4.x; the plugin's `qgisMinimumVersion` is `3.28`.
+- **This project keeps a compatibility shim**: `gui/qt_compat.py` resolves
+  `QAction`, `Qt.MouseButton`, `Qgis.GeometryType` and `QgsPointLocator.Type`
+  with `try/except AttributeError` because QGIS 3.28/PyQt5 may not expose the
+  scoped form. Do not remove those fallbacks without testing QGIS 3.28.
+- The integration tests use the real API; there is no `tests/mocks/` QGIS mock
+  layer to update.
+- `make qt6-check` is a **release** gate (it needs Docker); it is not part of
+  `make pre-release`. Run it before uploading a ZIP.

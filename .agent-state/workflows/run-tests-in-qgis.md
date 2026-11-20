@@ -1,80 +1,62 @@
 ---
-description: How to run tests inside QGIS (integration testing)
+description: How to run the integration suite inside a real QGIS (host or container).
 agent: qa_engineer
-skills: [testing-standards]
+skills: [testing-standards, freehand-digitizing]
 validation: |
-  - Verify that QGIS is installed correctly
-  - Confirm that tests are discovered and executed
-  - Validate that there are no import errors
+  - QGIS is installed (or the container is available)
+  - tests/integration is discovered and every test runs
+  - no import errors, no skipped integration tests when QGIS is present
 ---
 
 # Workflow: Run Tests in QGIS
 
-This workflow describes how to run tests inside the QGIS environment using the real QGIS APIs (no mocks). This is useful for integration testing and GUI component verification.
+The integration suite exercises the real PyQGIS API: `QgsMapTool` events,
+rubber bands, `QgsSnappingUtils`, `QgsVectorLayerUtils.createFeature`, the
+attribute form and the plugin lifecycle. Unit tests (`tests/core/`) never need
+QGIS.
 
-## When to Use This
-
-🤖 **Agent Action**: Use **testing-standards** to determine if tests require real QGIS or mocks.
-
-Use QGIS in-process testing when:
-- Testing GUI components that require `iface`
-- Verifying actual QGIS API behavior (not mocked)
-- Visual debugging of layer rendering
-- Integration tests with real QGIS environment
-
-For standard unit tests, use the `run-tests.md` workflow instead (faster, better for CI/CD).
-
-## Steps
-
-1. Open QGIS application.
-
-2. Open the Python Console:
-   - Menu: `Plugins → Python Console`
-   - Or keyboard shortcut: `Ctrl+Alt+P`
-
-3. In the Python Console, click the **"Show Editor"** button (notepad icon).
-
-4. Open the test runner script:
-   ```
-   scripts/run_in_qgis.py
-   ```
-
-5. Click the **Run Script** button (Play icon ▶️).
-
-6. Watch the test output in the console. The script will:
-   - Auto-detect the project root
-   - Add the parent directory to `sys.path` for package resolution
-   - Discover all `test_*.py` files in `tests/`
-   - Run them with `unittest.TextTestRunner`
-
-## Expected Output
-
-```
-============================================================
-🚀 Starting Test Run in QGIS Environment
-📂 Project Root: /path/to/freehand_digitize
-============================================================
-📦 Adding to sys.path: /path/to/qgispluginsdev
-test_example (tests.test_module.TestClass) ... ok
-...
-----------------------------------------------------------------------
-Ran 640 tests in Y.ZZZs
-
-✅ SUCCESS: All tests passed!
-```
-
-## Headless Execution (CI/CD)
-
-For automated testing without GUI:
+## Host QGIS
 
 ```bash
-qgis --nologo --code scripts/run_in_qgis.py --suite integration
+# from the repository root
+QT_QPA_PLATFORM=offscreen PYTHONPATH=.. python3 \
+  -m unittest discover -s tests/integration -t . -v
+
+# or through the Makefile (also tolerates a teardown segfault after OK)
+make test-qgis
 ```
 
-**Note**: Requires proper QGIS installation and may need Xvfb on Linux.
+The system `python3` must be the one that can `import qgis`. In this workspace
+QGIS 4.2.2 is installed for `/usr/bin/python3`.
+
+## Container
+
+```bash
+make docker-test   # builds the Dockerfile and runs tests/integration
+```
+
+The image is `qgis/qgis:latest`; no pip/uv install is needed because the plugin
+has no runtime dependencies.
+
+## Expected output
+
+```
+Ran 32 tests in ~1s
+OK
+```
+
+QGIS may segfault during teardown (`exit 139`) **after** printing `OK`. The
+Makefile and CI accept 139 only when the log ends in `OK` and contains no
+`FAILED`/`ERROR`. Never ignore any other non-zero exit.
 
 ## Troubleshooting
 
-- **Import errors**: Verify that `sys.path` includes the parent directory
-- **QGIS not found**: Ensure QGIS is properly installed
-- **Tests not discovered**: Check that test files follow `test_*.py` naming convention
+- **`No module named qgis`**: the `python3` in use is not QGIS's interpreter.
+  Use the system Python or the container; do not install QGIS with pip.
+- **Integration tests are skipped under `make test`**: expected; the uv
+  environment has no QGIS. Use `make test-qgis`.
+- **`ImportError` for `freehand_digitize`**: run from the repository root with
+  `PYTHONPATH=..`.
+- **GUI tests crash without a display**: keep `QT_QPA_PLATFORM=offscreen`.
+- **A test hangs on a modal dialog**: the fake interface must return a
+  `FakeDialog` or `None`; see `tests/integration/fakes.py`.

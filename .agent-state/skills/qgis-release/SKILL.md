@@ -13,8 +13,8 @@ Authoritative references:
 - <https://plugins.qgis.org/docs/security-scanning/config-files>
 - <https://plugins.qgis.org/docs/migrate-qgis4>
 - <https://docs.qgis.org/3.40/en/docs/pyqgis_developer_cookbook/plugins/plugins.html>
-- Project audit: `docs/research/qgis_plugin_repository_requirements.md`
-- Upstream split: `docs/research/upstream_gate_integration.md`
+- Project audit: `make pre-release` + `make security-scan` + `make qt6-check`
+- Portal gates: `make qgis-validate`, `make zip`, `make portal-check`
 
 ## Hard requirements (a violation blocks or rejects the upload)
 
@@ -47,7 +47,7 @@ they do not lower the bar. Do not bundle them unless a real false positive requi
 | Layer | Tool / command | Covers |
 | :--- | :--- | :--- |
 | Static quality | `qgis-analyzer analyze . --max-cc 10` | CC, docstrings, i18n, architecture, module size, analyzer security rules |
-| Metadata/structure | `make qgis-validate` (`qgis-manage validate --strict --repo`) | required metadata, slug, structure, LICENSE, binaries, `about`/`repository` |
+| Metadata/structure | `make qgis-validate` (`qgis-manage validate --strict`) | required metadata, slug, structure, LICENSE, `about`/`repository` |
 | Source packaging | `qgis-manage package --repo-check` (inside `make zip`) | metadata/compliance, built-ZIP audit and permission normalization (0.14+) |
 | Style | `make flake8` | portal-compatible flake8 on the packaged plugin scope |
 | Security (portal) | `make security-scan` (`qgis-manage security --portal`, 0.15+) | native + Bandit + detect-secrets (CRITICAL), flake8 (INFO) |
@@ -62,16 +62,20 @@ plugin because the analyzer's Flake8 adapter scans the whole project.
 ## Pre-upload workflow
 
 ```bash
-make pre-release      # ruff, flake8, mypy, analyzer, i18n, Qt6, security, Docker
-make zip              # docs + compile + package --repo-check + portal-check
-make portal-check     # qgis-manage validate --zip (0.14+)
+make pre-release      # format, lint, flake8, mypy, analyzer, agent validate, tests, qgis validate
+make security-scan    # qgis-manage security --portal (release gate)
+make qt6-check        # pyqgis4-checker (release gate, Docker)
+make zip              # package --repo-check + portal-check
+make portal-check     # qgis-manage validate --zip
 ```
 
 `make portal-check` must pass before uploading. It delegates to
 `qgis-manage validate --zip`, which checks the ZIP root folder, required metadata,
 LICENSE, size, prohibited binaries/dev files, version, permissions and icon; warnings
 (e.g. small icon) are reported but do not block, matching the portal. `make zip` uses
-`package --repo-check`, which normalizes modes to 0644/0755 before auditing.
+`package --repo-check`, which normalizes modes to 0644/0755 before auditing. The
+untracked `freehandEditing/` reference clone and every dev directory are excluded by
+`.qgisignore`.
 
 ## Upload flow
 

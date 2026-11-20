@@ -1,0 +1,22 @@
+# ai-context-core (ai-ctx) configuration — context-only.
+#
+# ai-ctx renders/verifies the developer context bundle (AI_CONTEXT.md).
+# Quality metrics are single-sourced from qgis-plugin-analyzer
+# (analysis_results/project_context.json). Curated architecture notes live in
+# .ai-context/architecture_notes.md and are always embedded.
+
+context_docs = ["docs/maintainer/FEATURE_PARITY.md"]
+
+[context]
+sections = ["structure", "metrics", "dependencies", "git"]
+mermaid_style = false
+
+[context.budget]
+max_tokens = 8000
+
+[context.budget.sections]
+structure = 2500
+dependencies = 2500
+
+[sources]
+source = "external"

@@ -1,0 +1,161 @@
+[project]
+name = "freehand-digitize"
+version = "2.0.0"
+description = "Freehand digitizing of lines and polygons for QGIS 3.28+ / QGIS 4.x"
+readme = "README.md"
+# Development/tooling runtime. The plugin itself targets Python 3.9 (QGIS 3.28);
+# runtime compatibility is gated by tests/core/test_python_compat.py, which
+# parses every plugin module with ast.parse(feature_version=(3, 9)).
+requires-python = ">=3.11"
+license = { text = "GPL-2.0-or-later" }
+authors = [{ name = "Freehand Digitize contributors" }]
+dependencies = []
+
+[project.urls]
+Source = "https://github.com/vinayan/freehandEditing"
+Tracker = "https://github.com/vinayan/freehandEditing/issues"
+
+[tool.uv]
+package = false
+required-version = ">=0.12"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.1",
+    "mypy>=2.4.0",
+    "pre-commit>=4.7.0",
+    "flake8>=7.0.0",
+    "bandit>=1.7.0",
+    "detect-secrets>=1.4.0",
+    "coverage>=7.0.0",
+    "pyyaml>=6.0.0",
+    "qgis-manage>=0.17.0",
+    "qgis-plugin-analyzer>=1.19.2",
+]
+
+[tool.qgis-analyzer.profiles.default]
+linters = ["ruff"]
+
+[tool.qgis-analyzer.profiles.default.rules]
+# The plugin UI is Spanish-only and ships no translation catalogs; wrapping
+# every user-facing literal in tr() without a catalog would add noise, not i18n.
+MISSING_I18N = "ignore"
+
+[tool.qgis-manager]
+qgis_version = 4
+max_backups = 1
+auto_compile = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+exclude = [
+    ".git",
+    "__pycache__",
+    "*.pyc",
+    ".venv",
+    "venv",
+    "env",
+    "build",
+    "dist",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".uvcache",
+    ".agent",
+    ".agent-state",
+    ".ai-context",
+    "docs",
+    "freehandEditing",
+    "icon.png",
+    "metadata.txt",
+]
+
+[tool.ruff.lint]
+select = [
+    "F",   # Pyflakes
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "I",   # isort
+    "N",   # pep8-naming
+    "D",   # pydocstyle
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+    "PTH", # flake8-use-pathlib
+    "TRY", # tryceratops
+    "RUF", # Ruff-specific rules
+    "C90", # mccabe
+]
+ignore = [
+    "E501",
+    "D203",
+    "D213",
+    "D205",
+    "TRY003",
+    "TRY300",
+    "TRY301",
+    "TRY401",
+    "RUF001",
+    "RUF012",
+    "RUF100",
+    "SIM102",
+    "T201",
+    "E741",
+    "D107",
+    "D413",
+    "SIM105",
+    "UP045",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "D104", "N802"]
+"freehand_plugin.py" = ["N802"]
+"core/settings.py" = ["N802"]
+"gui/qt_compat.py" = ["B009"]
+"gui/feature_creator.py" = ["B009"]
+"gui/freehand_tool.py" = ["N802", "N815"]
+"tests/**/*.py" = ["D100", "D101", "D102", "D103", "S101", "PLR2004", "N815"]
+
+[tool.ruff.lint.pylint]
+max-args = 15
+max-branches = 20
+max-returns = 10
+max-statements = 60
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = 72
+
+[tool.mypy]
+# mypy 2.x no longer supports a 3.9 target; the plugin's 3.9 runtime syntax is
+# covered separately by tests/core/test_python_compat.py.
+python_version = "3.10"
+files = ["core"]
+exclude = ['^gui/', '^freehand_plugin\.py$', '^__init__\.py$', '^tests/']
+warn_return_any = true
+warn_unused_configs = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+
+
+[tool.coverage.run]
+source = ["core", "gui", "freehand_plugin.py"]
+omit = [
+    "tests/*",
+    "freehandEditing/*",
+    "**/__init__.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]

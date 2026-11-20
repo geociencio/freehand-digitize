@@ -24,16 +24,20 @@ Standardizes interaction with the QGIS API, ensuring a responsive and well-struc
 ## Instructions and Rules
 
 ### Golden Rules
-- **QgsTask**: Do not block the UI. Use signals and slots for communication.
+- **Responsiveness**: do not block the UI. This plugin's drawing path is
+  interactive and lightweight; use `QgsTask` only if a future operation exceeds
+  ~0.5 s.
 - **Network/Threads**: Avoid `threading.Thread` (use `QgsTask`) and synchronous network calls (rules `UNSAFE_THREAD` and `BLOCKING_NETWORK_CALL`).
-- **Boundaries**: Use WKT to communicate core logic with the graphical interface.
+- **Boundaries**: pass plain values (tuples, strings, floats) between `core/`
+  and `gui/`; never pass live QGIS objects into `core/`.
 - **Modernization**: Avoid legacy `QVariant`; the analyzer will detect `OBSOLETE_VARIANT`.
 - **Injection**: Avoid global use of `iface`; prefer passing objects in constructors.
 
-### Plugin Structure
-- `core/`: Business logic agnostic to the UI.
-- `gui/`: Widgets and dialogs dependent on PyQGIS.
-- `exporters/`: Data output modules.
+### Plugin Structure (this repository)
+- `core/`: pure rules agnostic to QGIS/Qt (geometry decisions, stroke sampling,
+  settings).
+- `gui/`: map tool, rubber band, feature creator and PyQt5/PyQt6 shims.
+- `freehand_plugin.py`: action, spinbox, signals and lifecycle.
 
 ## Quality Checklist
 - [ ] Is UI blocking avoided through `QgsTask`?
