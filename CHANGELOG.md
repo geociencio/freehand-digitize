@@ -26,6 +26,9 @@ QGIS 3.28–4.x (Qt5/Qt6).
 - Maintainer documentation: architecture, style guide, commit guidelines,
   development log and link checker (`make docs-check`).
 - English user guide for features and workflows.
+- Internationalization: `QCoreApplication.translate` integration, an English
+  catalog (`i18n/freehand_digitize_en.ts/.qm`), locale detection with Qt
+  fallback, and `make transup`/`make i18n-check`.
 
 ### Changed
 

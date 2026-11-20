@@ -313,6 +313,26 @@ of the code uses the stable constants.
 
 ---
 
+## 🌍 Internationalization
+
+The UI source language is Spanish. User-facing strings are wrapped in
+`QCoreApplication.translate("FreehandDigitize", "...")` at the point of use
+(literal context and source so ``pylupdate6`` can extract them).
+
+- `i18n/freehand_digitize_en.ts` — source catalog (Spanish source, English
+  translations).
+- `i18n/freehand_digitize_en.qm` — compiled catalog shipped in the ZIP.
+- `scripts/i18n/master_data/en.json` — translation memory; the `.ts` is
+  regenerated from it, never edited by hand.
+- `gui/i18n.py` — reads `locale/userLocale`, tries the full locale then the
+  two-letter language, installs the first matching `.qm`, and removes it on
+  unload. `es_ES` falls back to the Spanish source.
+
+Workflow: `make transup`, `make transcompile`, `make i18n-check`. See the
+[i18n guide](../scripts/i18n/README.md) for additional languages.
+
+---
+
 ## 🛡️ Error handling and logging
 
 - Canvas events catch QGIS/Qt exceptions and never let them escape.
@@ -393,7 +413,8 @@ value; the GUI must not duplicate the geographic-CRS rule.
 
 ## ⚠️ Known limitations
 
-- **Spanish-only UI** in 2.0.0; no translation catalogs.
+- **Translations**: Spanish is the source language; an English catalog is
+  included. More catalogs can be added under `i18n/` (see the i18n README).
 - **CTRL snapping depends on the QGIS snapping configuration** (mode, tolerance
   and layers). If the engine finds no match, the free point is used.
 - **Metadata URLs** point to the upstream `freehandEditing` repository until a

@@ -11,10 +11,12 @@ from __future__ import annotations
 from typing import Any, Callable, Optional
 
 from qgis.core import QgsMessageLog, QgsSettings, QgsVectorLayerUtils
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QMessageBox
 
-from ..core.constants import EDIT_COMMAND_TEXT, LOG_TAG, PLUGIN_NAME
+from ..core.constants import LOG_TAG, PLUGIN_NAME
 from ..core.settings import SettingsBackend, show_attribute_form
+from .texts import edit_command_text
 
 IgnoreClicks = Optional[Callable[[bool], None]]
 
@@ -81,7 +83,12 @@ class FeatureCreator:
         """Simplify the stroke and reject empty results."""
         simplified = self._simplify(geometry, tolerance)
         if simplified is None or simplified.isEmpty():
-            self._warn("La geometría resultante está vacía; no se añadió nada.")
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize",
+                    "La geometría resultante está vacía; no se añadió nada.",
+                )
+            )
             return None
         return simplified
 
@@ -96,7 +103,7 @@ class FeatureCreator:
         ignore_clicks: IgnoreClicks,
     ) -> bool:
         """Create the feature and commit it as a single undo command."""
-        layer.beginEditCommand(EDIT_COMMAND_TEXT)
+        layer.beginEditCommand(edit_command_text())
         feature = self._create_feature(layer, geometry)
         if feature is None:
             layer.destroyEditCommand()
@@ -122,7 +129,11 @@ class FeatureCreator:
         try:
             return QgsVectorLayerUtils.createFeature(layer, geometry=geometry)
         except (RuntimeError, TypeError) as exc:
-            self._warn(f"No se pudo crear la entidad: {exc}")
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize", "No se pudo crear la entidad: {error}"
+                ).format(error=exc)
+            )
             return None
 
     def _add_feature(self, layer: Any, feature: Any) -> bool:
@@ -133,7 +144,11 @@ class FeatureCreator:
             self._log(f"addFeature failed: {exc}")
             added = False
         if not added:
-            self._warn(f"La capa «{layer.name()}» rechazó la entidad.")
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize", "La capa «{name}» rechazó la entidad."
+                ).format(name=layer.name())
+            )
         return added
 
     def _abort(self, layer: Any) -> None:
@@ -166,9 +181,12 @@ class FeatureCreator:
         try:
             reply = QMessageBox.question(
                 self._parent(),
-                "Entidad no válida",
-                "La geometría de la entidad que acabas de dibujar no es válida.\n"
-                "¿Quieres usarla de todos modos?",
+                QCoreApplication.translate("FreehandDigitize", "Entidad no válida"),
+                QCoreApplication.translate(
+                    "FreehandDigitize",
+                    "La geometría de la entidad que acabas de dibujar no es válida.\n"
+                    "¿Quieres usarla de todos modos?",
+                ),
                 yes | no,
                 no,
             )
@@ -186,7 +204,11 @@ class FeatureCreator:
                 return True
         except (RuntimeError, AttributeError) as exc:
             self._log(f"startEditing failed: {exc}")
-        self._warn(f"No se pudo poner «{layer.name()}» en edición.")
+        self._warn(
+            QCoreApplication.translate(
+                "FreehandDigitize", "No se pudo poner «{name}» en edición."
+            ).format(name=layer.name())
+        )
         return False
 
     def _edit_attributes(

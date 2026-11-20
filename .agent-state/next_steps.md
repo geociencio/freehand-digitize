@@ -18,6 +18,8 @@
   `qgis-manage validate --strict`, `package --repo-check`, `validate --zip`,
   `security --portal` (0 findings) and `pyqgis4-checker` (0 enum errors) green;
   CI/pre-commit/Docker/detect-secrets configured.
+- **i18n**: Spanish source UI with an English catalog; locale loader, master
+  data JSON, `make i18n-check` and catalog tests.
 - **Docs**: English README, CHANGELOG, metadata and user guide; architecture,
   style/commit/user-guide conventions, a development log and `make docs-check`;
   internal plan, parity report, development log and logging guide remain Spanish.

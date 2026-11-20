@@ -37,8 +37,10 @@ It restores the feature set of the classic `freehandEditing` plugin:
 - a prompt when the resulting geometry is invalid;
 - the action is enabled only for editable line/polygon layers.
 
-The plugin UI is Spanish in 2.0.0; this guide uses the Spanish labels with an
-English explanation.
+The UI is available in Spanish (source language) and English. With an English
+QGIS locale the action reads **Freehand digitize**; with a Spanish locale it
+reads **Dibujo a mano alzada**. This guide uses the English labels and shows the
+Spanish one where useful.
 
 ---
 
@@ -78,8 +80,8 @@ After installation, the action appears in the **Digitize** toolbar and in
 1. Select the **line or polygon layer** where the feature must be created.
 2. Start editing if needed; the tool also starts the edit session when it is
    activated.
-3. Click **Dibujo a mano alzada** (Freehand digitize) in the Digitize toolbar or
-   choose **Vector → Freehand Digitize**.
+3. Click **Freehand digitize** (Spanish: **Dibujo a mano alzada**) in the Digitize
+   toolbar or choose **Vector → Freehand Digitize**.
 4. Drag with the **left mouse button** to draw the stroke.
 5. Release to finish. The feature is added to the active layer.
 
@@ -203,9 +205,9 @@ be meaningless.
 | Symptom | Cause / fix |
 | :--- | :--- |
 | The action is disabled | The active layer is not a valid, editable line/polygon layer. Select one or start editing. |
-| “Selecciona primero la capa…” | No active layer. Select the target layer first. |
-| “Esta herramienta solo dibuja en capas de línea o polígono.” | Point layers are not supported. |
-| “No se pudo poner «…» en edición.” | The layer is read-only or the provider rejected the edit session. |
+| “Select the layer where you want to draw first.” | No active layer. Select the target layer first. |
+| “This tool only draws on line or polygon layers.” | Point layers are not supported. |
+| “Layer ‘…’ could not be put in edit mode.” | The layer is read-only or the provider rejected the edit session. |
 | The tolerance spin box is disabled | The layer uses a geographic CRS; tolerance is forced to 0. |
 | The attribute form does not open | QGIS is configured to skip the form, or the layer has no editable fields. |
 | The feature is not where expected | Check the layer CRS and that you used the layer, not the project, as the target. |
@@ -218,7 +220,8 @@ Technical messages are written to the QGIS message log with the
 
 ## 12. Known limitations
 
-- **Spanish UI** in 2.0.0; there are no translation catalogs.
+- **UI languages**: Spanish is the source language; an English catalog is
+  included and additional catalogs can be added under `i18n/`.
 - **Snapping depends on QGIS settings**; the plugin does not override them.
 - **No background processing**: the drawing path is interactive and synchronous.
 - **Metadata URLs** currently point to the upstream `freehandEditing` repository

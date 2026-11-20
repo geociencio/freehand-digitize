@@ -3,10 +3,11 @@ name=Freehand Digitize
 qgisMinimumVersion=3.28
 qgisMaximumVersion=4.99
 description=Freehand digitizing of lines and polygons on the active layer.
+general_description=Supported languages: Spanish, English
 version=2.0.0
 author=Chito
 email=juanbernales@gmail.com
-about=Freehand Digitize lets you draw lines and polygons freehand by dragging over the map. It restores the features of the classic freehandEditing plugin: adjustable and persistent simplification tolerance, Ctrl snapping of the first and last vertex, pencil cursor, attribute form, provider default values, undo commands and a prompt for invalid geometries. Strokes are stored in the layer CRS (on-the-fly reprojection safe) and the plugin supports QGIS 3.28–4.x on Qt5/Qt6. It has no external Python dependencies and is released under GPL-2.0. The plugin UI is Spanish in 2.0.0. Derived from the original freehandEditing plugin by Pavol Kapusta.
+about=Freehand Digitize lets you draw lines and polygons freehand by dragging over the map. It restores the features of the classic freehandEditing plugin: adjustable and persistent simplification tolerance, Ctrl snapping of the first and last vertex, pencil cursor, attribute form, provider default values, undo commands and a prompt for invalid geometries. Strokes are stored in the layer CRS (on-the-fly reprojection safe) and the plugin supports QGIS 3.28–4.x on Qt5/Qt6. It has no external Python dependencies and is released under GPL-2.0. The UI is available in Spanish (source language) and English; additional catalogs can be added. Derived from the original freehandEditing plugin by Pavol Kapusta.
 homepage=https://github.com/vinayan/freehandEditing
 tracker=https://github.com/vinayan/freehandEditing/issues
 repository=https://github.com/vinayan/freehandEditing
@@ -16,6 +17,7 @@ changelog=
     * Full parity with freehandEditing: tolerance, CTRL snapping, pencil cursor, layer CRS, invalid-geometry prompt, provider defaults, attribute form and undo commands.
     * New core/gui architecture with no QGIS dependency in the core.
     * Agentic system (Agentic Forge) and reproducible QA with uv, tests and CI.
+    * i18n: QCoreApplication.translate integration and an English catalog (Spanish is the source language).
 tags=freehand,digitize,pencil,draw,digitizing,line,polygon
 icon=icon.png
 experimental=False

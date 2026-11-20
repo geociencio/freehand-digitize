@@ -27,6 +27,7 @@ reprojection safe) and simplified with the configurable tolerance.
 | Secondary button | Finishes the current stroke (like the original plugin). |
 | `Esc` | Cancels the stroke; with no stroke it deactivates the tool. |
 | No dependencies | No external Python packages; uses `qgis.PyQt`. |
+| Languages | Spanish source UI with an English catalog; more catalogs can be added. |
 
 ### Parity with `freehandEditing`
 
@@ -133,6 +134,7 @@ make lint                   # ruff
 make flake8                 # flake8 (QGIS portal scope)
 make mypy                   # core/ types
 make docs-check             # relative documentation links
+make i18n-check              # translation catalogs
 make analyzer               # qgis-analyzer, CC <= 10
 make agent-validate         # validate the agentic system
 make qgis-validate          # metadata and structure
@@ -164,6 +166,7 @@ The `uv` modernization guide is in
 - [Development log](docs/maintenance/DEVELOPMENT_LOG.md)
 - [Parity report with freehandEditing](docs/maintainer/FEATURE_PARITY.md)
 - [uv modernization guide](docs/maintainer/uv_modernization_guide.md)
+- [i18n and translation workflow](scripts/i18n/README.md)
 
 ## License and attribution
 

@@ -673,8 +673,9 @@ consume antes; el `deactivate()` cancela el trazo en cualquier caso.
 
 1. **Andamiaje:** se revirtió el código no revisado y se reimplementó desde el
    plan (**opción B**); `.agent/` se conservó vendorizado.
-2. **Idioma de la UI:** español (como la versión 1.0.0); código, tests y
-   documentación técnica en inglés.
+2. **Idioma de la UI:** español como idioma fuente, con catálogo inglés
+   (`i18n/freehand_digitize_en.qm`); código, tests y documentación técnica en
+   inglés.
 3. **Auto-inicio de edición:** se mantiene por comodidad; la acción sigue
    deshabilitada para capas que no soportan edición.
 4. **Metadatos:** `homepage`, `repository` y `tracker` apuntan al repositorio

@@ -17,12 +17,15 @@ export UV_CACHE_DIR
 UV ?= uv
 UV_RUN = $(UV) run --frozen
 PYTHON ?= python3
+PYLUPDATE ?= pylupdate6
+LOCALES = en
 
 PORTAL_ZIP ?= $(shell ls -t dist/*.zip 2>/dev/null | head -1)
 
 .PHONY: help sync test test-qgis test-all lint format format-check flake8 mypy \
         analyzer agent-validate qgis-validate zip portal-check security-scan \
-        qt6-check docker-build docker-test deploy docs-check pre-release clean
+        qt6-check docker-build docker-test deploy docs-check transup transcompile \
+        transclean i18n-check pre-release clean
 
 help:
 	@echo "Freehand Digitize targets:"
@@ -36,6 +39,10 @@ help:
 	@echo "  make mypy            # type-check core/"
 	@echo "  make analyzer        # qgis-analyzer --max-cc 10"
 	@echo "  make docs-check      # relative links in README/docs"
+	@echo "  make transup         # extract .ts and apply master translations"
+	@echo "  make transcompile    # compile .ts catalogs into .qm"
+	@echo "  make i18n-check      # validate catalogs (unfinished/placeholders/.qm)"
+	@echo "  make transclean      # remove compiled .qm files"
 	@echo "  make agent-validate  # Agentic Forge validator"
 	@echo "  make qgis-validate   # qgis-manage validate --strict"
 	@echo "  make zip             # build and validate the plugin ZIP"
@@ -73,6 +80,24 @@ format-check:
 
 docs-check:
 	$(UV_RUN) python scripts/check_docs.py
+
+transup:
+	@for lang in $(LOCALES); do \
+		echo "Extracting i18n/freehand_digitize_$$lang.ts..."; \
+		$(PYLUPDATE) --no-obsolete --ts i18n/freehand_digitize_$$lang.ts \
+			core/*.py gui/*.py freehand_plugin.py; \
+		python3 scripts/i18n/apply_full.py $$lang scripts/i18n/master_data/$$lang.json; \
+	done
+	python3 scripts/i18n/update_metadata_languages.py
+
+transcompile:
+	$(UV_RUN) qgis-manage compile --type translations
+
+transclean:
+	rm -f i18n/*.qm
+
+i18n-check:
+	$(UV_RUN) python -m unittest tests.test_i18n_catalogs
 
 flake8:
 	$(UV_RUN) flake8 $(FLAKE8_TARGETS) --config .flake8
@@ -128,7 +153,7 @@ docker-test:
 deploy:
 	$(UV_RUN) qgis-manage deploy --no-compile --qgis-version $(QGIS_VERSION)
 
-pre-release: format-check lint docs-check flake8 mypy analyzer agent-validate test test-qgis qgis-validate
+pre-release: format-check lint docs-check i18n-check flake8 mypy analyzer agent-validate test test-qgis qgis-validate
 	@echo "✅ Pre-release validation complete"
 
 clean:

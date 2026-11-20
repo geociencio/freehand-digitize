@@ -16,10 +16,10 @@
         "overall_effectiveness_score": 1.0,
         "task_completion_rate": 1.0,
         "avg_retries_per_session": 1.0,
-        "tests_ok": 74,
-        "tests_static": 74,
-        "tests_executed": 74,
-        "test_count": 74,
+        "tests_ok": 85,
+        "tests_static": 85,
+        "tests_executed": 85,
+        "test_count": 85,
         "quality_score_latest": 60.2,
         "maintainability_score": 99.9,
         "security_score": 100.0,
@@ -36,7 +36,12 @@
             "MISSING_I18N": 0,
             "MISSING_DOCSTRING": 0,
             "MISSING_TYPE_HINTS": 0
-        }
+        },
+        "tests_unit": 49,
+        "tests_integration": 36,
+        "i18n_catalogs": [
+            "en"
+        ]
     },
     "ground_truth_sources": {
         "qgis_analyzer": {
@@ -56,17 +61,17 @@
         "tests_local": {
             "date": "2026-11-19",
             "command": "PYTHONPATH=.. uv run --frozen python -m unittest discover tests",
-            "result": "74 ran, 32 skipped (integration), OK"
+            "result": "85 ran, 36 skipped (integration), OK"
         },
         "tests_qgis": {
             "date": "2026-11-19",
             "command": "make test-qgis",
-            "result": "32 ran, OK (QGIS 4.2.2, Qt6)"
+            "result": "36 ran, OK (QGIS 4.2.2, Qt6)"
         },
         "tests_container": {
             "date": "2026-11-19",
             "command": "make docker-test",
-            "result": "32 ran, OK (qgis/qgis:latest, Qt5)"
+            "result": "36 ran, OK (qgis/qgis:latest, Qt5)"
         },
         "packaging": {
             "date": "2026-11-19",
@@ -78,6 +83,11 @@
             "date": "2026-11-19",
             "command": "make docs-check",
             "result": "13 documentation files, relative links OK"
+        },
+        "i18n_check": {
+            "date": "2026-11-19",
+            "command": "make i18n-check",
+            "result": "7 catalog tests OK; 15 messages translated; en.qm present"
         }
     },
     "retries": {
@@ -90,7 +100,7 @@
     "last_session": {
         "date": "2026-11-19",
         "topic": "parity_2_0_0_agentic_qa",
-        "tests_ok": 74,
+        "tests_ok": 85,
         "quality_score": 60.2,
         "task_completion_rate": 1.0,
         "retries": 1,
@@ -99,7 +109,8 @@
             "Audit freehandEditing vs the 1.0.0 rewrite",
             "Implement core/gui parity (tolerance, snapping, cursor, CRS, form, undo, validity)",
             "Vendor Agentic Forge and adapt project state/skills/workflows",
-            "Add uv/QA/CI/tests and validate the 2.0.0 ZIP"
+            "Add uv/QA/CI/tests and validate the 2.0.0 ZIP",
+            "Add QCoreApplication.translate integration and the English catalog"
         ],
         "status": "SUCCESS"
     },

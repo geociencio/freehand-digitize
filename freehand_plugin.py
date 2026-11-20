@@ -19,11 +19,10 @@ from qgis.core import (
     QgsSettings,
     QgsVectorLayer,
 )
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QDoubleSpinBox
 
 from .core.constants import (
-    ACTION_TEXT,
-    ACTION_TOOLTIP,
     DEFAULT_TOLERANCE,
     LOG_TAG,
     PLUGIN_NAME,
@@ -31,14 +30,19 @@ from .core.constants import (
     TOLERANCE_MAX,
     TOLERANCE_MIN,
     TOLERANCE_STEP,
-    TOLERANCE_TOOLTIP,
-    TOLERANCE_TOOLTIP_GEOGRAPHIC,
 )
 from .core.geometry_rules import effective_tolerance, is_supported_geometry
 from .core.settings import ToleranceStore
 from .gui.feature_creator import FeatureCreator
 from .gui.freehand_tool import FreehandTool
+from .gui.i18n import install_translations, remove_translations
 from .gui.qt_compat import QAction
+from .gui.texts import (
+    action_text,
+    action_tooltip,
+    tolerance_tooltip,
+    tolerance_tooltip_geographic,
+)
 
 MENU_NAME = "&Freehand Digitize"
 TOOLBAR_NAME = "Freehand Digitize"
@@ -63,11 +67,15 @@ class FreehandDigitizePlugin:
         self._own_toolbar = False
         self._settings = None
         self._store = None
+        self._translator = None
 
     # -- QGIS lifecycle ---------------------------------------------------
     def initGui(self) -> None:
         """Create the toolbar action, the tolerance spinbox and the map tool."""
         self._settings = QgsSettings()
+        if self._translator is not None:
+            remove_translations(self._translator)
+        self._translator = install_translations(self._settings)
         self._store = ToleranceStore(self._settings)
         self._creator = FeatureCreator(self.iface, self._settings)
         self.tool = FreehandTool(self.canvas, self.iface)
@@ -75,12 +83,12 @@ class FreehandDigitizePlugin:
 
         self.action = QAction(
             QgsApplication.getThemeIcon("mActionCaptureLine.svg"),
-            ACTION_TEXT,
+            action_text(),
             self.iface.mainWindow(),
         )
         self.action.setObjectName("freehandDigitizeAction")
         self.action.setCheckable(True)
-        self.action.setToolTip(ACTION_TOOLTIP)
+        self.action.setToolTip(action_tooltip())
         self.action.triggered.connect(self._on_action_triggered)
         self.tool.setAction(self.action)
 
@@ -127,7 +135,15 @@ class FreehandDigitizePlugin:
             self._toolbar.deleteLater()
         self._toolbar = None
 
+        self._remove_translator()
+
     # -- action / tool ----------------------------------------------------
+    def _remove_translator(self) -> None:
+        """Remove the installed translation catalog, if any."""
+        if self._translator is not None:
+            remove_translations(self._translator)
+            self._translator = None
+
     def _on_action_triggered(self, checked: bool) -> None:
         """Activate or deactivate the map tool from the toolbar action."""
         if checked:
@@ -144,7 +160,10 @@ class FreehandDigitizePlugin:
             if self.action is not None:
                 self.action.setChecked(False)
             self._warn(
-                "Selecciona una capa vectorial de línea o polígono editable antes de dibujar."
+                QCoreApplication.translate(
+                    "FreehandDigitize",
+                    "Selecciona una capa vectorial de línea o polígono editable antes de dibujar.",
+                )
             )
             self._update_ui_state()
             return
@@ -153,12 +172,20 @@ class FreehandDigitizePlugin:
                 if not layer.startEditing():
                     if self.action is not None:
                         self.action.setChecked(False)
-                    self._warn(f"No se pudo poner «{layer.name()}» en edición.")
+                    self._warn(
+                        QCoreApplication.translate(
+                            "FreehandDigitize", "No se pudo poner «{name}» en edición."
+                        ).format(name=layer.name())
+                    )
                     return
             except (AttributeError, RuntimeError) as exc:
                 if self.action is not None:
                     self.action.setChecked(False)
-                self._warn(f"No se pudo poner «{layer.name()}» en edición: {exc}")
+                self._warn(
+                    QCoreApplication.translate(
+                        "FreehandDigitize", "No se pudo poner «{name}» en edición: {error}"
+                    ).format(name=layer.name(), error=exc)
+                )
                 return
         self.canvas.setMapTool(self.tool)
         if self.action is not None:
@@ -202,7 +229,7 @@ class FreehandDigitizePlugin:
         spinbox.setDecimals(TOLERANCE_DECIMALS)
         spinbox.setRange(TOLERANCE_MIN, TOLERANCE_MAX)
         spinbox.setSingleStep(TOLERANCE_STEP)
-        spinbox.setToolTip(TOLERANCE_TOOLTIP)
+        spinbox.setToolTip(tolerance_tooltip())
         spinbox.setValue(self._store.load() if self._store is not None else DEFAULT_TOLERANCE)
         spinbox.valueChanged.connect(self._on_tolerance_changed)
         self.spinbox = spinbox
@@ -241,7 +268,7 @@ class FreehandDigitizePlugin:
         if self.spinbox is not None:
             self.spinbox.setEnabled(tolerance_enabled)
             self.spinbox.setToolTip(
-                TOLERANCE_TOOLTIP_GEOGRAPHIC if geographic else TOLERANCE_TOOLTIP
+                tolerance_tooltip_geographic() if geographic else tolerance_tooltip()
             )
 
         if not drawable and self.action.isChecked():

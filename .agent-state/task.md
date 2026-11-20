@@ -33,6 +33,13 @@
 - [x] CI, pre-commit, Dockerfile, devcontainer, detect-secrets baseline.
 - [x] Python 3.9 syntax compatibility test.
 
+### Internationalization
+
+- [x] `QCoreApplication.translate` integration with the `FreehandDigitize` context.
+- [x] English catalog (`i18n/freehand_digitize_en.ts/.qm`) and master data JSON.
+- [x] Locale loader with full/2-letter fallback and translator lifecycle.
+- [x] `make transup` / `transcompile` / `i18n-check` + catalog tests.
+
 ### Documentation guides
 
 - [x] `docs/ARCHITECTURE_EN.md` adapted to the real core/gui design.

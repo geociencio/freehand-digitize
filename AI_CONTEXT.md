@@ -56,9 +56,10 @@ make zip             # package + validate ZIP
 
 ## Decisions
 
-- **Spanish UI; English README, CHANGELOG, user guide and code/docs**; internal
-  plans, parity reports and logs may stay Spanish. No translation catalogs in
-  2.0.0, so the analyzer `MISSING_I18N` rule is disabled in the default profile.
+- **Spanish UI source + English catalog**; README, CHANGELOG, user guide and
+  code/docs are English; internal plans, parity reports and logs may stay
+  Spanish. The analyzer `MISSING_I18N` rule stays disabled because catalogs are
+  maintained through `make transup`/`make i18n-check`.
 - **Auto-start editing** on activation (kept from 1.0.0; original required an
   explicit edit session).
 - **Lines allow 2 points**; polygons require 3 distinct points before closing.

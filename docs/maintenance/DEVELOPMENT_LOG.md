@@ -5,6 +5,33 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-19] - i18n: catálogo inglés y sistema de traducciones (22:05)
+
+### Resumen
+Se adaptó el sistema de traducción de SecInterp a Freehand Digitize: cadenas de
+UI con `QCoreApplication.translate`, catálogo inglés, carga según el locale de
+QGIS y validación de catálogos.
+
+### Logros
+- Cadenas de UI centralizadas o marcadas con el contexto `FreehandDigitize`.
+- Catálogo `i18n/freehand_digitize_en.ts/.qm` y memoria de traducción JSON.
+- Cargador `gui/i18n.py` con fallback de locale completo a idioma y limpieza en
+  `unload`.
+- `make transup`, `make transcompile`, `make i18n-check` y tests de catálogo.
+- Metadatos con `general_description` y README/user guide actualizados.
+
+### Resultados
+- 85 tests (49 unitarios, 36 de integración), incluidos 7 de catálogo y 4 de
+  carga de traducciones.
+- `make i18n-check`, `make test` y `make test-qgis` en verde.
+- Catálogo inglés compilado y empaquetado; `.ts` excluido del ZIP.
+
+### Documentación
+- [Guía i18n](../../scripts/i18n/README.md)
+- [Arquitectura](../ARCHITECTURE_EN.md)
+
+---
+
 ## [2026-11-19] - Paridad 2.0.0, sistema agéntico y QA (21:25)
 
 ### Resumen

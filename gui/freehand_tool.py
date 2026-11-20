@@ -6,7 +6,7 @@ from typing import Any
 
 from qgis.core import QgsMessageLog, QgsPointXY
 from qgis.gui import QgsMapTool, QgsRubberBand
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtCore import QCoreApplication, pyqtSignal
 from qgis.PyQt.QtGui import QColor
 
 from ..core.constants import LOG_TAG, PLUGIN_NAME
@@ -112,13 +112,25 @@ class FreehandTool(QgsMapTool):
 
         layer = self._active_layer()
         if layer is None:
-            self._warn("Selecciona primero la capa donde quieres dibujar.")
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize", "Selecciona primero la capa donde quieres dibujar."
+                )
+            )
             return
         if not is_supported_geometry(int(layer.geometryType())):
-            self._warn("Esta herramienta solo dibuja en capas de línea o polígono.")
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize", "Esta herramienta solo dibuja en capas de línea o polígono."
+                )
+            )
             return
         if not layer.isEditable() and not layer.startEditing():
-            self._warn(f"No se pudo poner «{layer.name()}» en edición.")
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize", "No se pudo poner «{name}» en edición."
+                ).format(name=layer.name())
+            )
             return
 
         self._layer = layer

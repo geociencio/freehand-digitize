@@ -32,19 +32,3 @@ MIN_LINE_POINTS = 2
 MIN_POLYGON_POINTS = 3
 #: A closed ring needs the three vertices plus the repeated first point.
 MIN_POLYGON_RING_POINTS = 4
-
-EDIT_COMMAND_TEXT = "Freehand Digitize: añadir entidad"
-
-ACTION_TEXT = "Dibujo a mano alzada"
-ACTION_TOOLTIP = (
-    "Arrastra con el botón izquierdo para dibujar una línea o un polígono en la "
-    "capa activa.\nMantén Ctrl para ajustar el primer y el último vértice; "
-    "Esc cancela el trazo."
-)
-TOLERANCE_TOOLTIP = (
-    "Tolerancia de simplificación en unidades de la capa (0 = sin simplificación).\n"
-    "Se desactiva con CRS geográficos, donde la simplificación siempre usa 0."
-)
-TOLERANCE_TOOLTIP_GEOGRAPHIC = (
-    "La capa activa usa un CRS geográfico: la tolerancia se ignora y la simplificación usa 0."
-)

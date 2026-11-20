@@ -101,6 +101,9 @@ make flake8                   # QGIS portal scope (packaged code)
 make mypy                     # type-check core/ (follow-imports=silent)
 make analyzer                 # qgis-analyzer --max-cc 10
 make docs-check               # relative links in README/docs
+make i18n-check               # translation catalogs
+make transup                  # extract strings + apply master translations
+make transcompile             # compile .ts catalogs into .qm
 make agent-validate           # Agentic Forge validator
 make qgis-validate            # qgis-manage validate --strict
 make security-scan            # qgis-manage security --portal
@@ -177,11 +180,11 @@ point = self.toLayerCoordinates(layer, event.pos())
 - Ruff is the formatter and linter: 100 columns, double quotes, `py39` target
   syntax. `core/` is mypy-checked.
 - Naming: `PascalCase` classes, `snake_case` functions, `UPPER_SNAKE` constants.
-- **Language policy**: the plugin UI is Spanish in 2.0.0 (`MISSING_I18N`
-  disabled); `README.md`, `CHANGELOG.md`, the user guide, code, tests,
+- **Language policy**: the plugin UI source strings are Spanish and an English
+  catalog is shipped; `README.md`, `CHANGELOG.md`, the user guide, code, tests,
   docstrings, commits, API/architecture docs and maintainer guides are English;
   internal plans, parity reports, session logs and the logging guidelines may
-  stay Spanish.
+  stay Spanish. New catalogs live under `i18n/`.
 - Errors in Qt callbacks are logged (`QgsMessageLog`) and surfaced via
   `iface.messageBar()`; never let an exception escape a canvas event.
 - Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`,
@@ -224,6 +227,7 @@ Blocking (`make pre-release`):
 
 - `ruff check` and `ruff format --check`;
 - `make docs-check` (relative links in README/CHANGELOG/AGENTS/AI_CONTEXT/docs);
+- `make i18n-check` (no unfinished/empty translations, placeholders and `.qm` present);
 - `flake8` on `core gui freehand_plugin.py __init__.py`;
 - `mypy` on `core/`;
 - `qgis-analyzer --max-cc 10` (no function > CC 10);
@@ -283,6 +287,7 @@ Load only the relevant `SKILL.md` on demand.
 ## 📚 Key Resources
 
 - **User guide**: `docs/user/USER_GUIDE.md`
+- **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`
 - **Plan**: `docs/maintainer/PLAN_FREEHAND_PARITY.md`
 - **Parity report**: `docs/maintainer/FEATURE_PARITY.md`
@@ -306,5 +311,5 @@ Load only the relevant `SKILL.md` on demand.
 3. **ALWAYS** keep the Qt5/Qt6 shims in `gui/qt_compat.py`.
 4. **ALWAYS** test both environments: `make test` and `make test-qgis`.
 5. **NEVER** re-add `supportsQt6`; QGIS 4 Ready is `qgisMaximumVersion >= 4.0`.
-6. **KEEP** the UI in Spanish; README, CHANGELOG, user guide, code and commits in English; internal plans/logs may be Spanish.
+6. **KEEP** Spanish as the UI source language with an English catalog; README, CHANGELOG, user guide, code and commits in English; internal plans/logs may be Spanish.
 7. **RUN** `make pre-release` before claiming a task is complete.
