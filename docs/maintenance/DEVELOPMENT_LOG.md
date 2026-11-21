@@ -5,6 +5,17 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - Decisión: conservar 2.0.2 (07:30)
+
+### Decisión
+- El usuario decide **conservar 2.0.2** pese a que se implementó antes de la
+  aprobación explícita del plan.
+- Se mantiene la secuencia del portal: 2.0.1 pendiente; 2.0.2 se subirá después
+  de su aprobación.
+- Lección registrada: “crea el plan” no es aprobación de implementación.
+
+---
+
 ## [2026-11-21] - Guardas de capa eliminada 2.0.2 (07:20)
 
 ### Resultado

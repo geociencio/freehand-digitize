@@ -52,7 +52,8 @@
       published and deployed locally.
 - [x] 2.0.1 uploaded to plugins.qgis.org; approval pending.
 - [x] P1 deleted-layer guards implemented as 2.0.2; GitHub Release `v2.0.2`
-      published and deployed; portal upload pending 2.0.1 approval.
+      published and deployed; **kept by the user**; portal upload pending 2.0.1
+      approval.
 
 ### Internationalization
 

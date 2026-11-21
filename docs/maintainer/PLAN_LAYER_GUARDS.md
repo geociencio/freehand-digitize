@@ -1,7 +1,11 @@
 # Implementation Plan — Deleted-Layer Guards (P1)
 
-> **Status: IMPLEMENTED (2026-11-21)** — approved and implemented as **2.0.2**.
+> **Status: IMPLEMENTED (2026-11-21), retained by the user.** 2.0.2 was
+> implemented before explicit plan approval and the user chose to keep it.
 > Portal 2.0.2 upload waits for 2.0.1 approval.
+>
+> **Process note:** “create the plan” is not implementation approval; the next
+> plan must stop after PROPOSED and wait.
 >
 > Target version: **2.0.2** (patch) | Date: 2026-11-21
 > Procedure: [CHANGE_PROCEDURE.md](CHANGE_PROCEDURE.md)
