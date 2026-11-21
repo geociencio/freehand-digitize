@@ -42,10 +42,11 @@ make zip
 
 ## 📌 Remaining
 
-1. **Portal approval**: the ZIP is uploaded to plugins.qgis.org; wait for the
-   approval and record the result. GitHub Release `v2.0.0` is published.
-2. **2.0.1 published on GitHub**; upload 2.0.1 to the portal after the 2.0.0
-   approval status is known (or immediately if 2.0.0 is blocked).
+1. **Portal**: 2.0.0 is approved and public (plugin ID 7091). Upload 2.0.1
+   (`dist/freehand_digitize.2.0.1.zip`) to plugins.qgis.org for the deleted-layer
+   fix; 2.0.1 is already published on GitHub.
+2. After the 2.0.1 portal approval, publish/announce it; the GitHub Release is
+   already public.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
 4. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

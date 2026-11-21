@@ -5,6 +5,19 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - 2.0.0 aprobado en el portal (06:00)
+
+### Estado
+- plugins.qgis.org: **2.0.0 aprobado y público** (plugin ID 7091).
+- GitHub: 2.0.1 publicado con el fix de capa eliminada.
+- Portal: sigue sirviendo 2.0.0; 2.0.1 pendiente de subida manual.
+
+### Siguiente
+- Subir `dist/freehand_digitize.2.0.1.zip` al portal para reemplazar la versión
+  con el bug de ciclo de vida.
+
+---
+
 ## [2026-11-21] - Release 2.0.1 (05:40)
 
 ### Resultado

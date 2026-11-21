@@ -46,13 +46,13 @@
       and confirmation dialog.
 - [x] CI checkout fix implemented; GitHub Actions run 44684907873 green.
 - [x] Tag `v2.0.0` created and pushed; GitHub Release published with ZIP assets.
-- [x] ZIP uploaded to plugins.qgis.org; portal approval pending (not yet
-      validated).
+- [x] 2.0.0 approved and public on plugins.qgis.org (plugin ID 7091).
 - [x] Feature roadmap approved (`docs/maintainer/PLAN_FEATURE_ROADMAP.md`);
       no stage started. Stage 1 awaits an explicit kickoff.
 - [x] Deleted-layer lifecycle fix implemented as 2.0.1; GitHub Release
       published and deployed locally.
-- [ ] Upload 2.0.1 to plugins.qgis.org after checking the 2.0.0 approval status.
+- [ ] Upload 2.0.1 to plugins.qgis.org (2.0.0 is approved; 2.0.1 fixes the
+      deleted-layer crash).
 
 ### Internationalization
 

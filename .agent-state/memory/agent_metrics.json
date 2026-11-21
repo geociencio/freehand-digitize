@@ -159,11 +159,12 @@
         "artifact": "dist/freehand_digitize.2.0.1.zip",
         "sha256": "63c6d36e39aee87bec850f9b871643263215bf9401628e540b1f1fbf5d492fdb",
         "github_release": "published",
-        "portal": "2.0.0 uploaded pending approval; 2.0.1 not uploaded",
+        "portal": "2.0.0 approved; 2.0.1 not uploaded",
         "ci_run": "44684907873",
         "github_release_url": "https://github.com/geociencio/freehand-digitize/releases/tag/v2.0.1",
         "published_at": "2026-11-20T06:11:27Z",
         "portal_url": "https://plugins.qgis.org/plugins/freehand_digitize/",
-        "portal_approval": "2.0.0 pending"
+        "portal_approval": "2.0.0 approved",
+        "portal_approved_version": "2.0.0"
     }
 }
