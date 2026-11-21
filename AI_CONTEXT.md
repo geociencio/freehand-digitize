@@ -90,7 +90,7 @@ make zip             # package + validate ZIP
 
 ## Release
 
-- Tag `v2.0.1` created and pushed; GitHub Release published with the ZIP and
+- Tag `v2.0.2` created and pushed; GitHub Release published with the ZIP and
   SHA256 assets.
 - 2.0.0 ZIP is **approved and public** on plugins.qgis.org (plugin ID 7091).
 - 2.0.1 ZIP is **uploaded to plugins.qgis.org and pending approval**.

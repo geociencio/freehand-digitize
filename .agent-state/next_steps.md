@@ -49,7 +49,7 @@ make zip
 1. **2.0.1 portal approval**: 2.0.0 is approved; 2.0.1 is uploaded and pending.
    2.0.2 is published on GitHub; upload 2.0.2 to the portal after 2.0.1 is
    approved (or if 2.0.1 is blocked).
-2. After 2.0.2 portal approval, announce the patch.
+2. After 2.0.1/2.0.2 portal approval, announce the patch.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
 4. Residual deleted-layer guards in creators/tool remain a separate P1.

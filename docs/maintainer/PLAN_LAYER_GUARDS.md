@@ -205,7 +205,7 @@ No plugin behavior changes beyond the guards and warning.
   existing 2.0.1 tests still cover real `QgsVectorLayer` deletion.
 - Tests: 145 total (57 unit + 88 integration incl. gate).
 - `make test-qgis` and `make docker-test`: 88 OK; `make pre-release`: OK.
-- **Commit:** to be filled by the guard commit.
+- **Commit:** `ea943a2 fix: guard remaining deleted-layer paths`.
 
 ---
 

@@ -51,8 +51,8 @@
 - [x] Deleted-layer lifecycle fix implemented as 2.0.1; GitHub Release
       published and deployed locally.
 - [x] 2.0.1 uploaded to plugins.qgis.org; approval pending.
-- [x] P1 deleted-layer guards implemented as 2.0.2; GitHub release and deploy
-      pending portal 2.0.1 approval.
+- [x] P1 deleted-layer guards implemented as 2.0.2; GitHub Release `v2.0.2`
+      published and deployed; portal upload pending 2.0.1 approval.
 
 ### Internationalization
 
