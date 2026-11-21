@@ -50,8 +50,9 @@
       validated).
 - [x] Feature roadmap approved (`docs/maintainer/PLAN_FEATURE_ROADMAP.md`);
       no stage started. Stage 1 awaits an explicit kickoff.
-- [x] Deleted-layer lifecycle fix implemented as 2.0.1; tests and release
-      verification in progress.
+- [x] Deleted-layer lifecycle fix implemented as 2.0.1; GitHub Release
+      published and deployed locally.
+- [ ] Upload 2.0.1 to plugins.qgis.org after checking the 2.0.0 approval status.
 
 ### Internationalization
 

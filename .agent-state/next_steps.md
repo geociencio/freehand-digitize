@@ -44,8 +44,8 @@ make zip
 
 1. **Portal approval**: the ZIP is uploaded to plugins.qgis.org; wait for the
    approval and record the result. GitHub Release `v2.0.0` is published.
-2. **2.0.1 published** on GitHub after the fix; upload 2.0.1 to the portal only
-   after the 2.0.0 approval status is known.
+2. **2.0.1 published on GitHub**; upload 2.0.1 to the portal after the 2.0.0
+   approval status is known (or immediately if 2.0.0 is blocked).
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
 4. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

@@ -5,6 +5,20 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - Release 2.0.1 (05:40)
+
+### Resultado
+- Fix de capa eliminada implementado y desplegado en QGIS 4.
+- Tag `v2.0.1` y GitHub Release publicados con ZIP y SHA256.
+- ZIP 2.0.1 validado con `qgis-manage`.
+- Portal: 2.0.0 sigue pendiente de aprobación; 2.0.1 no se ha subido aún.
+
+### Artefacto
+- `dist/freehand_digitize.2.0.1.zip`
+- SHA256 `63c6d36e39aee87bec850f9b871643263215bf9401628e540b1f1fbf5d492fdb`
+
+---
+
 ## [2026-11-21] - Fix de capa eliminada (2.0.1)
 
 ### Problema

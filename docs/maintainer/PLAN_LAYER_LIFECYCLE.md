@@ -184,7 +184,7 @@ The 2.0.0 portal upload remains pending approval. The plan recommends:
 - Added 4 integration tests (deleted active layer, stale reference, unload,
   difference pick).
 - Tests: 138 total (57 unit + 81 integration); QGIS 4.2.2 and Qt5 container.
-- **Commit:** to be filled by the fix commit.
+- **Commit:** `bd6bc35 fix: guard deleted layers in the editing signal lifecycle`.
 
 ---
 
