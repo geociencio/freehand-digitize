@@ -5,6 +5,24 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - Fix de capa eliminada (2.0.1)
+
+### Problema
+`RuntimeError: wrapped C/C++ object of type QgsVectorLayer has been deleted`
+al desconectar las señales de edición de una capa ya destruida.
+
+### Solución
+- Guardas con `sip.isdeleted` y `_layer_alive`.
+- `_disconnect_editing_signals` limpia la referencia antes de desconectar.
+- Señal `destroyed` conectada por capa activa; limpia referencia y pick tool.
+- Tests de capa eliminada, referencia obsoleta, unload y difference pick.
+- Tests: 138 totales (57 unitarios + 81 integración).
+
+### Pendiente
+- Publicar 2.0.1 en GitHub y desplegar; portal 2.0.1 después del estado de 2.0.0.
+
+---
+
 ## [2026-11-20] - ZIP subido al portal QGIS; aprobación pendiente (01:32)
 
 ### Resumen

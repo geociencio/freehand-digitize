@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.1 — 2026-11-21
+
+### Fixed
+
+- `RuntimeError: wrapped C/C++ object of type QgsVectorLayer has been deleted`
+  when the active layer was removed: the plugin now uses `sip.isdeleted`, clears
+  the stored reference before disconnecting signals, and reacts to the layer's
+  `destroyed` signal.
+- Plugin unload no longer fails after the active layer has been deleted.
+- The difference pick tool is released if its layer is destroyed.
+
 ## 2.0.0 — 2026-11-19
 
 Modern rewrite of the plugin with full functional parity with

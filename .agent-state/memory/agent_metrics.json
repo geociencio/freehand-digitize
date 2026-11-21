@@ -16,14 +16,14 @@
         "overall_effectiveness_score": 1.0,
         "task_completion_rate": 1.0,
         "avg_retries_per_session": 1.0,
-        "tests_ok": 134,
-        "tests_static": 134,
-        "tests_executed": 134,
-        "test_count": 134,
+        "tests_ok": 138,
+        "tests_static": 138,
+        "tests_executed": 138,
+        "test_count": 138,
         "quality_score_latest": 55.6,
         "maintainability_score": 99.9,
         "security_score": 100.0,
-        "type_hint_coverage_params": 87.5,
+        "type_hint_coverage_params": 86.4,
         "type_hint_coverage_returns": 100.0,
         "docstring_coverage": 100.0,
         "cyclomatic_complexity_gate": "PASS",
@@ -38,7 +38,7 @@
             "MISSING_TYPE_HINTS": 0
         },
         "tests_unit": 57,
-        "tests_integration": 77,
+        "tests_integration": 81,
         "i18n_catalogs": [
             "en"
         ]
@@ -61,17 +61,17 @@
         "tests_local": {
             "date": "2026-11-19",
             "command": "PYTHONPATH=.. uv run --frozen python -m unittest discover tests",
-            "result": "134 ran, 77 skipped (integration), OK"
+            "result": "138 ran, 81 skipped (integration), OK"
         },
         "tests_qgis": {
             "date": "2026-11-19",
             "command": "make test-qgis",
-            "result": "77 ran, OK (QGIS 4.2.2, Qt6)"
+            "result": "81 ran, OK (QGIS 4.2.2, Qt6)"
         },
         "tests_container": {
             "date": "2026-11-19",
             "command": "make docker-test",
-            "result": "77 ran, OK (qgis/qgis:latest, Qt5)"
+            "result": "81 ran, OK (qgis/qgis:latest, Qt5)"
         },
         "packaging": {
             "date": "2026-11-19",
@@ -82,7 +82,7 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "20 documentation files, relative links OK"
+            "result": "23 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
@@ -153,13 +153,13 @@
         }
     ],
     "release": {
-        "version": "2.0.0",
+        "version": "2.0.1",
         "tag": "v2.0.0",
         "commit": "f35f090",
-        "artifact": "dist/freehand_digitize.2.0.0.zip",
+        "artifact": "dist/freehand_digitize.2.0.1.zip",
         "sha256": "2faa4a4542f8bb041e1c1823e5eff7f22227671bb6b000a06bb297c60ef37b5d",
         "github_release": "published",
-        "portal": "uploaded; pending approval",
+        "portal": "2.0.0 uploaded pending approval; 2.0.1 not uploaded",
         "ci_run": "44684907873",
         "github_release_url": "https://github.com/geociencio/freehand-digitize/releases/tag/v2.0.0",
         "published_at": "2026-11-20T06:11:27Z",

@@ -22,6 +22,7 @@ from qgis.core import (
     QgsSettings,
     QgsVectorLayer,
 )
+from qgis.PyQt import sip
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QDoubleSpinBox
 
@@ -64,6 +65,16 @@ from .gui.texts import (
 
 MENU_NAME = "&Freehand Digitize"
 TOOLBAR_NAME = "Freehand Digitize"
+
+
+def _is_layer_alive(layer) -> bool:
+    """Return whether *layer* still has a live C++ object."""
+    if layer is None:
+        return False
+    try:
+        return not sip.isdeleted(layer)
+    except (AttributeError, RuntimeError, TypeError):
+        return False
 
 
 class FreehandDigitizePlugin:
@@ -467,26 +478,41 @@ class FreehandDigitizePlugin:
     def _on_current_layer_changed(self, *_args) -> None:
         """Reconnect the active layer's editing signals and refresh the UI."""
         layer = self.iface.activeLayer()
+        if not _is_layer_alive(layer):
+            layer = None
         if self._difference_pick_tool is not None and layer is not self._difference_pick_layer:
             self._deactivate_difference()
         if layer is not self._editing_layer:
             self._disconnect_editing_signals()
             self._editing_layer = layer
-            if isinstance(layer, QgsVectorLayer):
+            if isinstance(layer, QgsVectorLayer) and _is_layer_alive(layer):
                 try:
                     layer.editingStarted.connect(self._on_editing_started)
                     layer.editingStopped.connect(self._on_editing_stopped)
+                    layer.destroyed.connect(self._on_editing_layer_destroyed)
                 except (AttributeError, RuntimeError, TypeError) as exc:
                     self._log(f"editing signal connection failed: {exc}")
+                    self._editing_layer = None
         self._update_ui_state()
 
     def _disconnect_editing_signals(self) -> None:
-        """Disconnect the stored layer's editing signals."""
+        """Disconnect the stored layer's editing signals, even if it was deleted."""
         layer = self._editing_layer
-        if layer is not None:
+        self._editing_layer = None
+        if not _is_layer_alive(layer):
+            return
+        try:
             self._disconnect(layer.editingStarted, self._on_editing_started)
             self._disconnect(layer.editingStopped, self._on_editing_stopped)
-            self._editing_layer = None
+            self._disconnect(layer.destroyed, self._on_editing_layer_destroyed)
+        except (AttributeError, RuntimeError, TypeError) as exc:
+            self._log(f"editing signal disconnect failed: {exc}")
+
+    def _on_editing_layer_destroyed(self, *_args) -> None:
+        """Clear references after QGIS destroys the active layer."""
+        self._editing_layer = None
+        self._deactivate_difference()
+        self._update_ui_state()
 
     def _on_editing_started(self, *_args) -> None:
         """Enable the tools when the active layer enters edit mode."""
@@ -528,7 +554,7 @@ class FreehandDigitizePlugin:
 
     def _activation_warning(self, layer) -> str:
         """Return the appropriate warning for an unavailable layer."""
-        if layer is not None and isinstance(layer, QgsVectorLayer):
+        if _is_layer_alive(layer) and isinstance(layer, QgsVectorLayer):
             try:
                 if (
                     layer.isValid()
@@ -551,7 +577,7 @@ class FreehandDigitizePlugin:
     @staticmethod
     def _is_geographic(layer) -> bool:
         """Return whether *layer* uses a geographic CRS."""
-        if layer is None:
+        if not _is_layer_alive(layer):
             return False
         try:
             return bool(layer.crs().isGeographic())
@@ -561,7 +587,7 @@ class FreehandDigitizePlugin:
     @staticmethod
     def _is_drawable(layer) -> bool:
         """Return whether *layer* supports editable freehand drawing."""
-        if layer is None or not isinstance(layer, QgsVectorLayer):
+        if not _is_layer_alive(layer) or not isinstance(layer, QgsVectorLayer):
             return False
         try:
             if not layer.isValid():

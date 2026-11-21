@@ -44,10 +44,12 @@ make zip
 
 1. **Portal approval**: the ZIP is uploaded to plugins.qgis.org; wait for the
    approval and record the result. GitHub Release `v2.0.0` is published.
-2. **Feature roadmap approved**; no stage started. On request, begin Stage 1
+2. **2.0.1 published** on GitHub after the fix; upload 2.0.1 to the portal only
+   after the 2.0.0 approval status is known.
+3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
-3. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
-4. Optional: add `ai-context-core` and `make context` if the team wants the
+4. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
+5. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## ▶️ How to resume

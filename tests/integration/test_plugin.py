@@ -16,6 +16,8 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         """Bootstrap QGIS and import the modules under test."""
         ensure_qgis_app()
         from qgis.core import QgsFeature, QgsGeometry, QgsPointXY
+        from qgis.PyQt import sip
+        from qgis.PyQt.QtCore import QCoreApplication
 
         from freehand_digitize.freehand_plugin import FreehandDigitizePlugin
         from tests.integration.fakes import (
@@ -35,6 +37,8 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         cls.PRESS = PRESS
         cls.RELEASE = RELEASE
         cls.make_canvas = staticmethod(make_canvas)
+        cls.sip = sip
+        cls.QCoreApplication = QCoreApplication
         cls.QgsFeature = QgsFeature
         cls.QgsGeometry = QgsGeometry
         cls.QgsPointXY = QgsPointXY
@@ -57,6 +61,16 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
             self.plugin.unload()
         self.iface.close()
         self.canvas.deleteLater()
+
+    def _destroy_layer(self, layer) -> None:
+        """Delete *layer* after releasing canvas references."""
+        tool = self.canvas.mapTool()
+        if tool is not None:
+            self.canvas.unsetMapTool(tool)
+        self.canvas.setLayers([])
+        self.canvas.setCurrentLayer(None)
+        self.sip.delete(layer)
+        self.QCoreApplication.processEvents()
 
     def test_init_creates_action_and_tool(self) -> None:
         """The action, spinbox and tool are created and wired."""
@@ -86,6 +100,52 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertIs(self.canvas.mapTool(), self.plugin._difference_pick_tool)
         self.assertTrue(self.plugin.difference_action.isChecked())
         self.assertTrue(self.iface.messages.infos)
+
+    def test_deleted_active_layer_does_not_raise(self) -> None:
+        """Deleting the active layer clears the stored reference safely."""
+        doomed = self.make_layer("LineString")
+        self.iface.setActiveLayer(doomed)
+        self.plugin._on_current_layer_changed()
+        self.assertIs(self.plugin._editing_layer, doomed)
+        self._destroy_layer(doomed)
+        self.plugin._on_current_layer_changed()
+        self.assertIsNone(self.plugin._editing_layer)
+        self.iface.setActiveLayer(self.layer)
+
+    def test_force_dead_editing_reference_disconnects_safely(self) -> None:
+        """A stale reference can be disconnected without touching C++ signals."""
+        doomed = self.make_layer("LineString")
+        self.iface.setActiveLayer(doomed)
+        self.plugin._on_current_layer_changed()
+        self._destroy_layer(doomed)
+        self.plugin._editing_layer = doomed
+        self.plugin._disconnect_editing_signals()
+        self.assertIsNone(self.plugin._editing_layer)
+        self.iface.setActiveLayer(self.layer)
+
+    def test_unload_after_layer_deleted(self) -> None:
+        """Plugin unload survives a layer deleted before shutdown."""
+        doomed = self.make_layer("LineString")
+        self.iface.setActiveLayer(doomed)
+        self.plugin._on_current_layer_changed()
+        self._destroy_layer(doomed)
+        self.plugin._editing_layer = doomed
+        self.plugin.unload()
+        self.assertIsNone(self.plugin.action)
+        self.assertIsNone(self.plugin.tool)
+
+    def test_deleted_layer_cancels_difference_pick(self) -> None:
+        """The difference pick tool is released when its layer is deleted."""
+        doomed = self.make_layer("LineString")
+        doomed.startEditing()
+        self.iface.setActiveLayer(doomed)
+        self.plugin._on_current_layer_changed()
+        self.plugin._on_difference_triggered(True)
+        self.assertIsNotNone(self.plugin._difference_pick_tool)
+        self._destroy_layer(doomed)
+        self.QCoreApplication.processEvents()
+        self.assertIsNone(self.plugin._difference_pick_tool)
+        self.iface.setActiveLayer(self.layer)
 
     def test_sampling_action_exists_without_editing(self) -> None:
         """Sampling settings stay available outside an edit session."""

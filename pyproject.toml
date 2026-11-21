@@ -1,6 +1,6 @@
 [project]
 name = "freehand-digitize"
-version = "2.0.0"
+version = "2.0.1"
 description = "Freehand digitizing of lines and polygons for QGIS 3.28+ / QGIS 4.x"
 readme = "README.md"
 # Development/tooling runtime. The plugin itself targets Python 3.9 (QGIS 3.28);

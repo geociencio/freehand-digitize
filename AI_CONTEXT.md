@@ -12,7 +12,9 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
 
 ## Current state (2026-11-19)
 
-- Version **2.0.0**; `metadata.txt` validated with `qgis-manage validate --strict`.
+- Version **2.0.1**; `metadata.txt` validated with `qgis-manage validate --strict`.
+- 2.0.1 fixes the deleted-layer `RuntimeError` with `sip.isdeleted` and the
+  layer `destroyed` signal.
 - Feature parity restored: tolerance spinbox + persistence, geographic-CRS
   policy, CTRL snapping (first/last vertex), pencil cursor, layer-CRS geometry,
   attribute form, provider defaults, undo command, invalid-geometry prompt,
@@ -99,4 +101,6 @@ make zip             # package + validate ZIP
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Roadmap approved; no stage started. On request, Stage 1 is
   Backspace-to-remove-vertex for 2.1.0.
+- Deleted-layer crash: `docs/maintainer/PLAN_LAYER_LIFECYCLE.md` proposed as a
+  2.0.1 patch; no code changes yet.
 - Real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

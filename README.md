@@ -216,6 +216,7 @@ The `uv` modernization guide is in
 - [Feature-difference plan](docs/maintainer/PLAN_FEATURE_DIFFERENCE.md)
 - [CI checkout fix plan](docs/maintainer/PLAN_CI_CHECKOUT.md)
 - [Staged feature roadmap](docs/maintainer/PLAN_FEATURE_ROADMAP.md)
+- [Deleted-layer lifecycle fix](docs/maintainer/PLAN_LAYER_LIFECYCLE.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

@@ -34,9 +34,9 @@ class TestMetadata(unittest.TestCase):
         self.assertNotIn("supportsQt6", self.meta)
 
     def test_version_matches_release(self) -> None:
-        """The metadata version is the 2.0.0 release."""
-        self.assertEqual(self.meta["version"], "2.0.0")
-        self.assertIn("2.0.0", self.meta["changelog"])
+        """The metadata version is the 2.0.1 release."""
+        self.assertEqual(self.meta["version"], "2.0.1")
+        self.assertIn("2.0.1", self.meta["changelog"])
 
     def test_source_links(self) -> None:
         """The portal needs a repository and a tracker/homepage."""

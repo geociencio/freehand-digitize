@@ -4,7 +4,7 @@ qgisMinimumVersion=3.28
 qgisMaximumVersion=4.99
 description=Freehand digitizing and reshaping of lines and polygons on the active layer.
 general_description=Supported languages: Spanish, English
-version=2.0.0
+version=2.0.1
 author=Juan M. Bernales
 email=juanbernales@gmail.com
 about=Freehand Digitize lets you draw lines and polygons freehand by dragging over the map. It restores the features of the classic freehandEditing plugin: adjustable and persistent simplification tolerance, Ctrl snapping of the first and last vertex, pencil cursor, attribute form, provider default values, undo commands, freehand reshape of existing geometries, sampling in pixels or layer units, feature difference and a prompt for invalid geometries. Strokes are stored in the layer CRS (on-the-fly reprojection safe) and the plugin supports QGIS 3.28–4.x on Qt5/Qt6. It has no external Python dependencies and is released under GPL-2.0. The UI is available in Spanish (source language) and English; additional catalogs can be added. Derived from the original freehandEditing plugin by Pavol Kapusta.
@@ -13,6 +13,8 @@ tracker=https://github.com/geociencio/freehand-digitize/issues
 repository=https://github.com/geociencio/freehand-digitize
 hasProcessingProvider=False
 changelog=
+    2.0.1 (2026-11-21)
+    * Fixed a RuntimeError when the active vector layer was deleted while the plugin still held a reference to it.
     2.0.0 (2026-11-19)
     * Full parity with freehandEditing: tolerance, CTRL snapping, pencil cursor, layer CRS, invalid-geometry prompt, provider defaults, attribute form and undo commands.
     * New core/gui architecture with no QGIS dependency in the core.
