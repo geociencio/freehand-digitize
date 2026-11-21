@@ -13,9 +13,12 @@
 - **2.0.1** fixes the deleted-layer `RuntimeError` (sip + destroyed signal).
 - **Architecture**: `core/` (no QGIS/Qt) + `gui/` (PyQGIS) +
   `freehand_plugin.py` (wiring); Qt5/Qt6 shims in `gui/qt_compat.py`.
-- **Tests**: 134 total — 57 unit (no QGIS) and 77 integration, green against both
+- **Tests**: 138 total — 57 unit (no QGIS) and 81 integration, green against both
   QGIS 4.2.2 (host, Qt6) and the QGIS container (Qt5); `make test` reports the
   integration layer as skipped when QGIS is absent.
+- **Known QA gap (P0)**: with `.venv` first in `PATH`, `make test-qgis` and
+  `forge project test-full` report `OK (skipped=81)`; run with `/usr/bin/python3`
+  until the gate is fixed.
 - **QA**: ruff, flake8, mypy (core), qgis-analyzer (`--max-cc 10`),
   `qgis-manage validate --strict`, `package --repo-check`, `validate --zip`,
   `security --portal` (0 findings) and `pyqgis4-checker` (0 enum errors) green;
@@ -50,8 +53,10 @@ make zip
    already public.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
-4. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
-5. Optional: add `ai-context-core` and `make context` if the team wants the
+4. **P0 QA**: make `test-qgis` fail when integration tests are skipped (or pin the
+   QGIS interpreter) and guard the remaining deleted-layer paths in creators/tool.
+5. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
+6. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## ▶️ How to resume

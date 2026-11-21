@@ -1,4 +1,4 @@
-# Active Task Board — Freehand Digitize 2.0.0
+# Active Task Board — Freehand Digitize 2.0.1
 
 > Detailed history: `.agent-state/history/tasks/`. This board only tracks the
 > current work; closed sessions are archived.
@@ -28,7 +28,7 @@
 
 - [x] `pyproject.toml`, `uv.lock`, `.python-version`, Makefile.
 - [x] ruff / flake8 / mypy / qgis-analyzer gates green.
-- [x] 134 tests (57 unit + 77 QGIS 4.2.2 integration) green.
+- [x] 138 tests (57 unit + 81 QGIS 4.2.2 integration) green.
 - [x] `qgis-manage validate --strict` and ZIP validated.
 - [x] CI, pre-commit, Dockerfile, devcontainer, detect-secrets baseline.
 - [x] Python 3.9 syntax compatibility test.
@@ -46,12 +46,10 @@
       and confirmation dialog.
 - [x] CI checkout fix implemented; GitHub Actions run 44684907873 green.
 - [x] Tag `v2.0.0` created and pushed; GitHub Release published with ZIP assets.
-- [x] 2.0.0 approved and public on plugins.qgis.org (plugin ID 7091).
 - [x] Feature roadmap approved (`docs/maintainer/PLAN_FEATURE_ROADMAP.md`);
       no stage started. Stage 1 awaits an explicit kickoff.
 - [x] Deleted-layer lifecycle fix implemented as 2.0.1; GitHub Release
       published and deployed locally.
-- [x] 2.0.0 approved and public on plugins.qgis.org (plugin ID 7091).
 - [ ] Upload 2.0.1 to plugins.qgis.org (fixes the deleted-layer crash).
 
 ### Internationalization
@@ -81,9 +79,12 @@
 
 ## 📌 Pending
 
+- [ ] P0 QA: `test-qgis` must fail on `skipped=81` / pin the QGIS interpreter.
+- [ ] Guard the remaining deleted-layer paths in creators/tool.
+
 - [x] Run `make pre-release` and `make security-scan` end to end.
 - [x] Run `make qt6-check` (packaged ZIP, no enum errors).
-- [x] Run `make docker-test` (QGIS/Qt5 container: 77 integration cases OK).
+- [x] Run `make docker-test` (QGIS/Qt5 container: 81 integration cases OK).
 - [x] Metadata points to the dedicated repository (https://github.com/geociencio/freehand-digitize).
 - [x] Implement freehand reshape (features under the stroke, optional selection
       filter, multi-feature single undo) and deploy it to QGIS 4.
