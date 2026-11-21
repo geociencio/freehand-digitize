@@ -216,7 +216,7 @@ The integration job builds the Docker image and runs the suite; it must be green
 - `make test-qgis` / `forge test-full`: 82 tests OK.
 - `QGIS_PYTHON=.venv/bin/python3 make test-qgis` fails explicitly.
 - `make docker-test`: 82 OK; `make pre-release`: OK.
-- **Commit:** to be filled by the gate commit.
+- **Commit:** `57ab87e test: fail when QGIS integration tests are skipped`.
 
 ---
 
