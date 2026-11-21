@@ -19,9 +19,11 @@ from qgis.core import (
 )
 
 from ..core.constants import LOG_TAG, PLUGIN_NAME
+from .layer_utils import is_layer_alive
 from .texts import (
     edit_mode_required_text,
     invalid_reshaped_geometry_text,
+    layer_gone_text,
     no_feature_under_stroke_text,
     no_reshape_happened_text,
     reshape_edit_command_text,
@@ -50,6 +52,9 @@ class ReshapeCreator:
         Returns:
             ``True`` when at least one feature was reshaped.
         """
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            return False
         if stroke_geometry is None or stroke_geometry.isEmpty():
             self._warn(no_feature_under_stroke_text())
             return False
@@ -165,6 +170,9 @@ class ReshapeCreator:
 
     def _ensure_editable(self, layer: Any) -> bool:
         """Return whether the layer is already in edit mode."""
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            return False
         if layer.isEditable():
             return True
         self._warn(edit_mode_required_text(layer.name()))

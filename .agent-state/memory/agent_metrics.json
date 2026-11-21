@@ -16,14 +16,14 @@
         "overall_effectiveness_score": 1.0,
         "task_completion_rate": 1.0,
         "avg_retries_per_session": 1.0,
-        "tests_ok": 139,
-        "tests_static": 139,
-        "tests_executed": 139,
-        "test_count": 139,
-        "quality_score_latest": 55.6,
+        "tests_ok": 145,
+        "tests_static": 145,
+        "tests_executed": 145,
+        "test_count": 145,
+        "quality_score_latest": 56.2,
         "maintainability_score": 99.9,
         "security_score": 100.0,
-        "type_hint_coverage_params": 86.4,
+        "type_hint_coverage_params": 87.3,
         "type_hint_coverage_returns": 100.0,
         "docstring_coverage": 100.0,
         "cyclomatic_complexity_gate": "PASS",
@@ -38,7 +38,7 @@
             "MISSING_TYPE_HINTS": 0
         },
         "tests_unit": 57,
-        "tests_integration": 82,
+        "tests_integration": 88,
         "i18n_catalogs": [
             "en"
         ]
@@ -61,17 +61,17 @@
         "tests_local": {
             "date": "2026-11-19",
             "command": "PYTHONPATH=.. uv run --frozen python -m unittest discover tests",
-            "result": "139 ran, 82 skipped (integration), OK"
+            "result": "145 ran, 88 skipped (integration), OK"
         },
         "tests_qgis": {
             "date": "2026-11-19",
             "command": "make test-qgis",
-            "result": "82 ran, OK (QGIS 4.2.2, Qt6; REQUIRE_QGIS=1)"
+            "result": "88 ran, OK (QGIS 4.2.2, Qt6; REQUIRE_QGIS=1)"
         },
         "tests_container": {
             "date": "2026-11-19",
             "command": "make docker-test",
-            "result": "82 ran, OK (qgis/qgis:latest, Qt5; REQUIRE_QGIS=1)"
+            "result": "88 ran, OK (qgis/qgis:latest, Qt5; REQUIRE_QGIS=1)"
         },
         "packaging": {
             "date": "2026-11-19",
@@ -82,12 +82,12 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "26 documentation files, relative links OK"
+            "result": "27 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
             "command": "make i18n-check",
-            "result": "7 catalog tests OK; 48 messages translated; en.qm present"
+            "result": "7 catalog tests OK; 49 messages translated; en.qm present"
         },
         "github_actions": {
             "date": "2026-11-20",
@@ -169,18 +169,19 @@
         }
     ],
     "release": {
-        "version": "2.0.1",
+        "version": "2.0.2",
         "tag": "v2.0.1",
         "commit": "bd6bc35",
-        "artifact": "dist/freehand_digitize.2.0.1.zip",
-        "sha256": "63c6d36e39aee87bec850f9b871643263215bf9401628e540b1f1fbf5d492fdb",
-        "github_release": "published",
-        "portal": "2.0.0 approved; 2.0.1 not uploaded",
+        "artifact": "dist/freehand_digitize.2.0.2.zip",
+        "sha256": "74246a6e8b6973a4af0aadd41ee7dd4f5760c064da229ca06f3b27a575ada960",
+        "github_release": "pending tag",
+        "portal": "2.0.0 approved; 2.0.1 uploaded pending approval; 2.0.2 not uploaded",
         "ci_run": "44684907873",
         "github_release_url": "https://github.com/geociencio/freehand-digitize/releases/tag/v2.0.1",
         "published_at": "2026-11-20T06:11:27Z",
         "portal_url": "https://plugins.qgis.org/plugins/freehand_digitize/",
-        "portal_approval": "2.0.0 approved",
-        "portal_approved_version": "2.0.0"
+        "portal_approval": "2.0.1 pending",
+        "portal_approved_version": "2.0.0",
+        "portal_pending_version": "2.0.1"
     }
 }

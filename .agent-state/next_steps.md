@@ -10,10 +10,11 @@
   spinbox/persistence, geographic-CRS policy, pixel/layer-unit sampling, CTRL
   snapping, pencil cursor, layer-CRS geometry, attribute form, provider defaults,
   undo, validity prompt, layer enablement, secondary-release finish and ESC cancel.
-- **2.0.1** fixes the deleted-layer `RuntimeError` (sip + destroyed signal).
+- **2.0.1** fixes the editing-signal lifecycle; **2.0.2** guards the remaining
+  deleted-layer paths in creators/tool/callbacks.
 - **Architecture**: `core/` (no QGIS/Qt) + `gui/` (PyQGIS) +
   `freehand_plugin.py` (wiring); Qt5/Qt6 shims in `gui/qt_compat.py`.
-- **Tests**: 139 total — 57 unit (no QGIS) and 82 integration (incl. QGIS gate),
+- **Tests**: 145 total — 57 unit (no QGIS) and 88 integration (incl. QGIS gate),
   green against both QGIS 4.2.2 (host, Qt6) and the QGIS container (Qt5);
   `make test` reports the integration layer as skipped when QGIS is absent.
 - **QA gate fixed**: `test-qgis` auto-detects a QGIS Python (or uses
@@ -45,11 +46,10 @@ make zip
 
 ## 📌 Remaining
 
-1. **Upload 2.0.1 to the portal**: 2.0.0 is approved and public (plugin ID
-   7091), but it still has the deleted-layer bug. Upload
-   `dist/freehand_digitize.2.0.1.zip`; 2.0.1 is already published on GitHub.
-2. After the 2.0.1 portal approval, announce the update; the GitHub Release is
-   already public.
+1. **2.0.1 portal approval**: 2.0.0 is approved; 2.0.1 is uploaded and pending.
+   2.0.2 is published on GitHub; upload 2.0.2 to the portal after 2.0.1 is
+   approved (or if 2.0.1 is blocked).
+2. After 2.0.2 portal approval, announce the patch.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
 4. Residual deleted-layer guards in creators/tool remain a separate P1.

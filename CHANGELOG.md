@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.2 — 2026-11-21
+
+### Fixed
+
+- Residual `RuntimeError` paths when the target layer is deleted during
+  creation, reshape, difference or a stroke: guards in `FeatureCreator`,
+  `ReshapeCreator`, `FreehandTool` and the plugin completion callbacks.
+- The operation is cancelled with a translated warning and no partial edit.
+
 ## 2.0.1 — 2026-11-21
 
 ### Fixed

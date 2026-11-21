@@ -18,10 +18,14 @@ class TestFeatureCreator(unittest.TestCase):
         """Bootstrap QGIS and import the modules under test."""
         ensure_qgis_app()
         from qgis.core import QgsDefaultValue, QgsGeometry, QgsPointXY
+        from qgis.PyQt import sip
+        from qgis.PyQt.QtCore import QObject
 
         from freehand_digitize.gui.feature_creator import FeatureCreator
         from tests.integration.fakes import FakeIface, make_layer
 
+        cls.sip = sip
+        cls.QObject = QObject
         cls.QgsDefaultValue = QgsDefaultValue
         cls.QgsGeometry = QgsGeometry
         cls.QgsPointXY = QgsPointXY
@@ -148,6 +152,13 @@ class TestFeatureCreator(unittest.TestCase):
         created = self.creator.create(self.layer, self.QgsGeometry(), 0.0)
         self.assertFalse(created)
         self.assertEqual(self.layer.featureCount(), 0)
+
+    def test_rejects_deleted_layer(self) -> None:
+        """Creation returns cleanly when the layer was deleted."""
+        doomed = self.make_layer("LineString")
+        self.sip.delete(doomed)
+        self.assertFalse(self.creator.create(doomed, self.line([(0, 0), (1, 1)]), 0.0))
+        self.assertTrue(self.iface.messages.warnings)
 
     def test_rejects_non_editable_layer(self) -> None:
         """Creation requires an active edit session."""

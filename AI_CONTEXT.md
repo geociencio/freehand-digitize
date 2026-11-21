@@ -12,7 +12,7 @@ for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
 
 ## Current state (2026-11-21)
 
-- Version **2.0.1**; `metadata.txt` validated with `qgis-manage validate --strict`.
+- Version **2.0.2**; `metadata.txt` validated with `qgis-manage validate --strict`.
 - 2.0.1 fixes the deleted-layer `RuntimeError` with `sip.isdeleted` and the
   layer `destroyed` signal.
 - Feature parity restored: tolerance spinbox + persistence, geographic-CRS
@@ -93,13 +93,15 @@ make zip             # package + validate ZIP
 - Tag `v2.0.1` created and pushed; GitHub Release published with the ZIP and
   SHA256 assets.
 - 2.0.0 ZIP is **approved and public** on plugins.qgis.org (plugin ID 7091).
-- 2.0.1 ZIP is released on GitHub; it is **not uploaded to the portal yet** and
-  fixes the deleted-layer crash.
+- 2.0.1 ZIP is **uploaded to plugins.qgis.org and pending approval**.
+- 2.0.2 ZIP is published on GitHub and deployed; it guards the remaining
+  deleted-layer paths. Portal upload waits for 2.0.1 approval.
 
 ## Pending
 
-- Upload 2.0.1 to plugins.qgis.org now that 2.0.0 is approved; it fixes the
-  deleted-layer crash and is already validated on GitHub.
+- Portal: 2.0.1 uploaded, approval pending; do not upload 2.0.2 until 2.0.1 is
+  approved (or maintainers confirm superseding).
+- P1: approve/implement `docs/maintainer/PLAN_LAYER_GUARDS.md` as 2.0.2.
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Roadmap approved; no stage started. On request, Stage 1 is
   Backspace-to-remove-vertex for 2.1.0.

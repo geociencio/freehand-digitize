@@ -19,10 +19,14 @@ class TestReshapeCreator(unittest.TestCase):
         """Bootstrap QGIS and import the modules under test."""
         ensure_qgis_app()
         from qgis.core import QgsFeature, QgsGeometry, QgsPointXY
+        from qgis.PyQt import sip
+        from qgis.PyQt.QtCore import QObject
 
         from freehand_digitize.gui.reshape_creator import ReshapeCreator
         from tests.integration.fakes import FakeIface, make_layer
 
+        cls.sip = sip
+        cls.QObject = QObject
         cls.QgsFeature = QgsFeature
         cls.QgsGeometry = QgsGeometry
         cls.QgsPointXY = QgsPointXY
@@ -147,6 +151,13 @@ class TestReshapeCreator(unittest.TestCase):
         self.assertFalse(created)
         self.assertTrue(self.iface.messages.warnings)
         self.assertEqual(layer.getFeature(feature_id).geometry().asWkt(), original)
+
+    def test_rejects_deleted_layer(self) -> None:
+        """Reshape returns cleanly when the layer was deleted."""
+        layer = self.make_layer("Polygon")
+        self.sip.delete(layer)
+        self.assertFalse(self.creator.reshape(layer, self._line([(5, -2), (5, 12)])))
+        self.assertTrue(self.iface.messages.warnings)
 
     def test_rejects_non_editable_layer(self) -> None:
         """Reshape requires an active edit session."""

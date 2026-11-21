@@ -21,6 +21,7 @@ from ..core.geometry_rules import (
 from ..core.stroke import SamplingOptions, StrokeRecorder
 from .cursor import build_pencil_cursor
 from .geometry_factory import build_geometry
+from .layer_utils import is_layer_alive
 from .qt_compat import (
     KEY_CONTROL,
     KEY_ESCAPE,
@@ -29,7 +30,7 @@ from .qt_compat import (
     RUBBERBAND_POLYGON,
     SNAP_VERTEX,
 )
-from .texts import edit_mode_required_text
+from .texts import edit_mode_required_text, layer_gone_text
 
 MODE_CREATE = "create"
 MODE_RESHAPE = "reshape"
@@ -127,22 +128,8 @@ class FreehandTool(QgsMapTool):
         if event.button() != LEFT_BUTTON:
             return
 
-        layer = self._active_layer()
+        layer = self._prepare_draw_layer()
         if layer is None:
-            self._warn(
-                QCoreApplication.translate(
-                    "FreehandDigitize", "Selecciona primero la capa donde quieres dibujar."
-                )
-            )
-            return
-        if not is_supported_geometry(int(layer.geometryType())):
-            self._warn(
-                QCoreApplication.translate(
-                    "FreehandDigitize", "Esta herramienta solo dibuja en capas de línea o polígono."
-                )
-            )
-            return
-        if not self._require_editable(layer):
             return
 
         self._layer = layer
@@ -173,6 +160,10 @@ class FreehandTool(QgsMapTool):
         layer = self._layer
         if layer is None:
             return
+        if not is_layer_alive(layer):
+            self.cancel_stroke()
+            self._warn(layer_gone_text())
+            return
         device = event.pos()
         layer_point = self.toLayerCoordinates(layer, device)
         if self._recorder.add(
@@ -188,32 +179,14 @@ class FreehandTool(QgsMapTool):
 
         layer = self._layer
         kind = self._kind
+        if layer is not None and not is_layer_alive(layer):
+            self.cancel_stroke()
+            self._warn(layer_gone_text())
+            return
         if layer is not None and self._ctrl_pressed:
-            device = event.pos()
-            layer_point = self.toLayerCoordinates(layer, device)
-            layer_point, map_point = self._snapped_point(
-                layer, device, layer_point, event.mapPoint()
-            )
-            if (
-                self._recorder.add(
-                    (layer_point.x(), layer_point.y()),
-                    (device.x(), device.y()),
-                )
-                and self._rubber is not None
-            ):
-                self._rubber.addPoint(map_point)
+            self._add_release_point(layer, event)
 
-        points = self._recorder.points
-        geometry = build_geometry(points, kind) if has_enough_points(points, kind) else None
-
-        self._drawing = False
-        self._recorder.reset()
-        self._clear_rubber()
-        self._layer = None
-        self._kind = KIND_UNKNOWN
-
-        if geometry is not None and not geometry.isEmpty() and layer is not None:
-            self.geometryFinished.emit(geometry, layer)
+        self._finish_stroke(layer, kind)
 
     def keyPressEvent(self, event: Any) -> None:  # noqa: N802 - Qt API name
         """Track CTRL for snapping and handle Escape."""
@@ -237,6 +210,58 @@ class FreehandTool(QgsMapTool):
         super().keyReleaseEvent(event)
 
     # -- helpers ----------------------------------------------------------
+    def _prepare_draw_layer(self) -> Any:
+        """Return a live, supported, editable layer or warn and return None."""
+        layer = self._active_layer()
+        if layer is None:
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize", "Selecciona primero la capa donde quieres dibujar."
+                )
+            )
+            return None
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            return None
+        if not is_supported_geometry(int(layer.geometryType())):
+            self._warn(
+                QCoreApplication.translate(
+                    "FreehandDigitize", "Esta herramienta solo dibuja en capas de línea o polígono."
+                )
+            )
+            return None
+        if not self._require_editable(layer):
+            return None
+        return layer
+
+    def _add_release_point(self, layer: Any, event: Any) -> None:
+        """Snap and record the release point when CTRL is held."""
+        device = event.pos()
+        layer_point = self.toLayerCoordinates(layer, device)
+        layer_point, map_point = self._snapped_point(layer, device, layer_point, event.mapPoint())
+        if (
+            self._recorder.add(
+                (layer_point.x(), layer_point.y()),
+                (device.x(), device.y()),
+            )
+            and self._rubber is not None
+        ):
+            self._rubber.addPoint(map_point)
+
+    def _finish_stroke(self, layer: Any, kind: str) -> None:
+        """Build the geometry, reset the stroke state and emit if valid."""
+        points = self._recorder.points
+        geometry = build_geometry(points, kind) if has_enough_points(points, kind) else None
+
+        self._drawing = False
+        self._recorder.reset()
+        self._clear_rubber()
+        self._layer = None
+        self._kind = KIND_UNKNOWN
+
+        if geometry is not None and not geometry.isEmpty() and layer is not None:
+            self.geometryFinished.emit(geometry, layer)
+
     def _new_recorder(self) -> StrokeRecorder:
         """Build a recorder from the current sampling options."""
         options = SamplingOptions()
@@ -249,6 +274,9 @@ class FreehandTool(QgsMapTool):
 
     def _require_editable(self, layer: Any) -> bool:
         """Return whether the layer is already in edit mode."""
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            return False
         if layer.isEditable():
             return True
         self._warn(edit_mode_required_text(layer.name()))

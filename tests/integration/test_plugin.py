@@ -17,7 +17,7 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         ensure_qgis_app()
         from qgis.core import QgsFeature, QgsGeometry, QgsPointXY
         from qgis.PyQt import sip
-        from qgis.PyQt.QtCore import QCoreApplication
+        from qgis.PyQt.QtCore import QCoreApplication, QObject
 
         from freehand_digitize.freehand_plugin import FreehandDigitizePlugin
         from tests.integration.fakes import (
@@ -39,6 +39,7 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         cls.make_canvas = staticmethod(make_canvas)
         cls.sip = sip
         cls.QCoreApplication = QCoreApplication
+        cls.QObject = QObject
         cls.QgsFeature = QgsFeature
         cls.QgsGeometry = QgsGeometry
         cls.QgsPointXY = QgsPointXY
@@ -101,6 +102,35 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
         self.assertTrue(self.plugin.difference_action.isChecked())
         self.assertTrue(self.iface.messages.infos)
 
+    def test_geometry_finished_with_deleted_layer(self) -> None:
+        """Creation completion warns when the layer is gone."""
+        doomed = self.make_layer("LineString")
+        self.iface.setActiveLayer(doomed)
+        self.plugin._on_current_layer_changed()
+        self._destroy_layer(doomed)
+        geometry = self.QgsGeometry.fromPolylineXY([self.QgsPointXY(0, 0), self.QgsPointXY(1, 1)])
+        self.plugin._on_geometry_finished(geometry, doomed)
+        self.assertTrue(self.iface.messages.warnings)
+        self.iface.setActiveLayer(self.layer)
+
+    def test_reshape_finished_with_deleted_layer(self) -> None:
+        """Reshape completion warns when the layer is gone."""
+        doomed = self.make_layer("Polygon")
+        self.iface.setActiveLayer(doomed)
+        self.plugin._on_current_layer_changed()
+        self._destroy_layer(doomed)
+        geometry = self.QgsGeometry.fromPolylineXY([self.QgsPointXY(0, 0), self.QgsPointXY(1, 1)])
+        self.plugin._on_reshape_finished(geometry, doomed)
+        self.assertTrue(self.iface.messages.warnings)
+        self.iface.setActiveLayer(self.layer)
+
+    def test_difference_dialog_with_deleted_layer(self) -> None:
+        """The difference dialog is not opened for a deleted layer."""
+        doomed = self.QObject()
+        self.sip.delete(doomed)
+        self.plugin._open_difference_dialog(doomed, [1, 2])
+        self.assertTrue(self.iface.messages.warnings)
+
     def test_deleted_active_layer_does_not_raise(self) -> None:
         """Deleting the active layer clears the stored reference safely."""
         doomed = self.make_layer("LineString")
@@ -137,10 +167,9 @@ class TestFreehandDigitizePlugin(unittest.TestCase):
     def test_deleted_layer_cancels_difference_pick(self) -> None:
         """The difference pick tool is released when its layer is deleted."""
         doomed = self.make_layer("LineString")
-        doomed.startEditing()
         self.iface.setActiveLayer(doomed)
         self.plugin._on_current_layer_changed()
-        self.plugin._on_difference_triggered(True)
+        self.plugin._start_difference_pick(doomed)
         self.assertIsNotNone(self.plugin._difference_pick_tool)
         self._destroy_layer(doomed)
         self.QCoreApplication.processEvents()

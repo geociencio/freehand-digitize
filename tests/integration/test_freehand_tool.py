@@ -17,6 +17,8 @@ class TestFreehandTool(unittest.TestCase):
         """Bootstrap QGIS and import the modules under test."""
         ensure_qgis_app()
         from qgis.core import QgsSnappingConfig, QgsTolerance
+        from qgis.PyQt import sip
+        from qgis.PyQt.QtCore import QObject
 
         from freehand_digitize.gui.freehand_tool import MODE_RESHAPE, FreehandTool
         from freehand_digitize.gui.qt_compat import KEY_CONTROL, KEY_ESCAPE, RIGHT_BUTTON
@@ -32,6 +34,8 @@ class TestFreehandTool(unittest.TestCase):
             mouse_event,
         )
 
+        cls.sip = sip
+        cls.QObject = QObject
         cls.QgsSnappingConfig = QgsSnappingConfig
         cls.QgsTolerance = QgsTolerance
         cls.FreehandTool = FreehandTool
@@ -137,6 +141,16 @@ class TestFreehandTool(unittest.TestCase):
         tool.canvasMoveEvent(self.mouse_event(self.canvas, self.MOVE, 200, 200))
         tool.canvasReleaseEvent(self.mouse_event(self.canvas, self.RELEASE, 200, 200))
         self.assertFalse(emitted)
+
+    def test_press_after_layer_deleted_warns(self) -> None:
+        """A deleted active layer is rejected without a traceback."""
+        doomed = self.QObject()
+        self.sip.delete(doomed)
+        self.iface.setActiveLayer(doomed)
+        self.tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
+        self.assertFalse(self.emitted)
+        self.assertTrue(self.iface.messages.warnings)
+        self.iface.setActiveLayer(self.layer)
 
     def test_press_without_edit_session_warns_and_emits_nothing(self) -> None:
         """The tool never starts editing on its own."""

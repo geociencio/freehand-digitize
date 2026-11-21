@@ -22,7 +22,6 @@ from qgis.core import (
     QgsSettings,
     QgsVectorLayer,
 )
-from qgis.PyQt import sip
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QDoubleSpinBox
 
@@ -43,6 +42,7 @@ from .gui.difference_pick_tool import DifferencePickTool
 from .gui.feature_creator import FeatureCreator
 from .gui.freehand_tool import MODE_RESHAPE, FreehandTool
 from .gui.i18n import install_translations, remove_translations
+from .gui.layer_utils import is_layer_alive
 from .gui.qt_compat import QAction, exec_dialog
 from .gui.reshape_creator import ReshapeCreator
 from .gui.sampling_dialog import SamplingDialog
@@ -55,6 +55,7 @@ from .gui.texts import (
     difference_pick_target_text,
     difference_same_feature_text,
     edit_mode_required_text,
+    layer_gone_text,
     reshape_action_text,
     reshape_action_tooltip,
     sampling_action_text,
@@ -65,16 +66,6 @@ from .gui.texts import (
 
 MENU_NAME = "&Freehand Digitize"
 TOOLBAR_NAME = "Freehand Digitize"
-
-
-def _is_layer_alive(layer) -> bool:
-    """Return whether *layer* still has a live C++ object."""
-    if layer is None:
-        return False
-    try:
-        return not sip.isdeleted(layer)
-    except (AttributeError, RuntimeError, TypeError):
-        return False
 
 
 class FreehandDigitizePlugin:
@@ -314,6 +305,10 @@ class FreehandDigitizePlugin:
         """Create the feature for a finished creation stroke."""
         if self._creator is None or self.spinbox is None:
             return
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            self._set_checked(self.action, False)
+            return
         tolerance = self._effective_tolerance(layer)
         self._creator.create(
             layer,
@@ -324,8 +319,13 @@ class FreehandDigitizePlugin:
 
     def _on_reshape_finished(self, geometry, layer) -> None:
         """Reshape the geometries under a finished reshape stroke."""
-        if self._reshape_creator is not None:
-            self._reshape_creator.reshape(layer, geometry)
+        if self._reshape_creator is None:
+            return
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            self._set_checked(self.reshape_action, False)
+            return
+        self._reshape_creator.reshape(layer, geometry)
 
     def _on_sampling_settings(self, _checked: bool = False) -> None:
         """Open the sampling settings dialog."""
@@ -397,6 +397,9 @@ class FreehandDigitizePlugin:
     def _open_difference_dialog(self, layer, feature_ids: list[int]) -> None:
         """Show the target/cutter dialog and apply the difference."""
         if self._difference_creator is None:
+            return
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
             return
         dialog = DifferenceDialog(layer, feature_ids, self.iface.mainWindow())
         if exec_dialog(dialog) and dialog.target_id is not None:
@@ -478,14 +481,14 @@ class FreehandDigitizePlugin:
     def _on_current_layer_changed(self, *_args) -> None:
         """Reconnect the active layer's editing signals and refresh the UI."""
         layer = self.iface.activeLayer()
-        if not _is_layer_alive(layer):
+        if not is_layer_alive(layer):
             layer = None
         if self._difference_pick_tool is not None and layer is not self._difference_pick_layer:
             self._deactivate_difference()
         if layer is not self._editing_layer:
             self._disconnect_editing_signals()
             self._editing_layer = layer
-            if isinstance(layer, QgsVectorLayer) and _is_layer_alive(layer):
+            if isinstance(layer, QgsVectorLayer) and is_layer_alive(layer):
                 try:
                     layer.editingStarted.connect(self._on_editing_started)
                     layer.editingStopped.connect(self._on_editing_stopped)
@@ -499,7 +502,7 @@ class FreehandDigitizePlugin:
         """Disconnect the stored layer's editing signals, even if it was deleted."""
         layer = self._editing_layer
         self._editing_layer = None
-        if not _is_layer_alive(layer):
+        if not is_layer_alive(layer):
             return
         try:
             self._disconnect(layer.editingStarted, self._on_editing_started)
@@ -554,7 +557,7 @@ class FreehandDigitizePlugin:
 
     def _activation_warning(self, layer) -> str:
         """Return the appropriate warning for an unavailable layer."""
-        if _is_layer_alive(layer) and isinstance(layer, QgsVectorLayer):
+        if is_layer_alive(layer) and isinstance(layer, QgsVectorLayer):
             try:
                 if (
                     layer.isValid()
@@ -577,7 +580,7 @@ class FreehandDigitizePlugin:
     @staticmethod
     def _is_geographic(layer) -> bool:
         """Return whether *layer* uses a geographic CRS."""
-        if not _is_layer_alive(layer):
+        if not is_layer_alive(layer):
             return False
         try:
             return bool(layer.crs().isGeographic())
@@ -587,7 +590,7 @@ class FreehandDigitizePlugin:
     @staticmethod
     def _is_drawable(layer) -> bool:
         """Return whether *layer* supports editable freehand drawing."""
-        if not _is_layer_alive(layer) or not isinstance(layer, QgsVectorLayer):
+        if not is_layer_alive(layer) or not isinstance(layer, QgsVectorLayer):
             return False
         try:
             if not layer.isValid():

@@ -16,8 +16,9 @@ from qgis.PyQt.QtWidgets import QMessageBox
 
 from ..core.constants import LOG_TAG, PLUGIN_NAME
 from ..core.settings import SettingsBackend, show_attribute_form
+from .layer_utils import is_layer_alive
 from .qt_compat import exec_dialog
-from .texts import edit_command_text, edit_mode_required_text
+from .texts import edit_command_text, edit_mode_required_text, layer_gone_text
 
 IgnoreClicks = Optional[Callable[[bool], None]]
 
@@ -62,6 +63,9 @@ class FeatureCreator:
         Returns:
             ``True`` when the feature was added to the edit buffer.
         """
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            return False
         simplified = self._prepare_geometry(geometry, tolerance)
         if simplified is None:
             return False
@@ -69,7 +73,13 @@ class FeatureCreator:
             return False
         if not self._ensure_editable(layer):
             return False
-        return self._insert_feature(layer, simplified, ignore_clicks)
+        try:
+            return self._insert_feature(layer, simplified, ignore_clicks)
+        except RuntimeError as exc:
+            self._log(f"layer disappeared during create: {exc}")
+            self._abort(layer)
+            self._warn(layer_gone_text())
+            return False
 
     # -- internals --------------------------------------------------------
     def _prepare_geometry(self, geometry: Any, tolerance: float) -> Any:
@@ -96,6 +106,9 @@ class FeatureCreator:
         ignore_clicks: IgnoreClicks,
     ) -> bool:
         """Create the feature and commit it as a single undo command."""
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            return False
         layer.beginEditCommand(edit_command_text())
         feature = self._create_feature(layer, geometry)
         if feature is None:
@@ -146,8 +159,13 @@ class FeatureCreator:
 
     def _abort(self, layer: Any) -> None:
         """Discard the pending undo command and repaint."""
-        layer.destroyEditCommand()
-        layer.triggerRepaint()
+        if not is_layer_alive(layer):
+            return
+        try:
+            layer.destroyEditCommand()
+            layer.triggerRepaint()
+        except RuntimeError as exc:
+            self._log(f"abort failed: {exc}")
 
     def _settings_backend(self) -> SettingsBackend:
         """Return the settings backend, creating the QGIS one on demand."""
@@ -190,6 +208,9 @@ class FeatureCreator:
 
     def _ensure_editable(self, layer: Any) -> bool:
         """Return whether the layer is already in edit mode."""
+        if not is_layer_alive(layer):
+            self._warn(layer_gone_text())
+            return False
         if layer.isEditable():
             return True
         self._warn(edit_mode_required_text(layer.name()))

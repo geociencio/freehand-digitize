@@ -277,3 +277,11 @@ def difference_apply_text() -> str:
 def difference_applied_text() -> str:
     """Return the information message after a successful difference."""
     return QCoreApplication.translate("FreehandDigitize", "Diferencia aplicada.")
+
+
+def layer_gone_text() -> str:
+    """Return the warning used when the layer was deleted."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "La capa ya no está disponible; se canceló la operación.",
+    )

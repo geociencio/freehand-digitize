@@ -3,39 +3,39 @@
     <context>
         <name>FreehandDigitize</name>
         <message>
-            <location filename="../gui/feature_creator.py" line="80" />
+            <location filename="../gui/feature_creator.py" line="90" />
             <source>La geometría resultante está vacía; no se añadió nada.</source>
             <translation>The resulting geometry is empty; nothing was added.</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="126" />
+            <location filename="../gui/feature_creator.py" line="139" />
             <source>No se pudo crear la entidad: {error}</source>
             <translation>Could not create the feature: {error}</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="141" />
+            <location filename="../gui/feature_creator.py" line="154" />
             <source>La capa «{name}» rechazó la entidad.</source>
             <translation>Layer “{name}” rejected the feature.</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="177" />
+            <location filename="../gui/feature_creator.py" line="195" />
             <source>Entidad no válida</source>
             <translation>Invalid feature</translation>
         </message>
         <message>
-            <location filename="../gui/feature_creator.py" line="178" />
+            <location filename="../gui/feature_creator.py" line="196" />
             <source>La geometría de la entidad que acabas de dibujar no es válida.
 ¿Quieres usarla de todos modos?</source>
             <translation>The geometry of the feature you just drew is not valid.
 Do you want to use it anyway?</translation>
         </message>
         <message>
-            <location filename="../gui/freehand_tool.py" line="133" />
+            <location filename="../gui/freehand_tool.py" line="134" />
             <source>Selecciona primero la capa donde quieres dibujar.</source>
             <translation>Select the layer where you want to draw first.</translation>
         </message>
         <message>
-            <location filename="../gui/freehand_tool.py" line="140" />
+            <location filename="../gui/freehand_tool.py" line="144" />
             <source>Esta herramienta solo dibuja en capas de línea o polígono.</source>
             <translation>This tool only draws on line or polygon layers.</translation>
         </message>
@@ -246,7 +246,12 @@ Disabled for geographic CRS, where simplification always uses 0.</translation>
             <translation>Difference applied.</translation>
         </message>
         <message>
-            <location filename="../freehand_plugin.py" line="618" />
+            <location filename="../gui/texts.py" line="284" />
+            <source>La capa ya no está disponible; se canceló la operación.</source>
+            <translation>The layer is no longer available; the operation was cancelled.</translation>
+        </message>
+        <message>
+            <location filename="../freehand_plugin.py" line="647" />
             <source>Selecciona una capa vectorial de línea o polígono editable antes de dibujar.</source>
             <translation>Select an editable line or polygon vector layer before drawing.</translation>
         </message>

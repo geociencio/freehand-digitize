@@ -5,6 +5,22 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - Guardas de capa eliminada 2.0.2 (07:20)
+
+### Resultado
+- Helper `gui/layer_utils.py` y guardas en FeatureCreator, ReshapeCreator,
+  FreehandTool y callbacks del plugin.
+- Aviso traducido y cancelación limpia; sin edición parcial.
+- Tests: 145 (57 unitarios + 88 integración) en QGIS 4.2.2 y contenedor Qt5.
+- ZIP 2.0.2 validado; tag y GitHub Release publicados; deploy local.
+- Portal: 2.0.1 pendiente de aprobación; 2.0.2 no subido.
+
+### Artefacto
+- `dist/freehand_digitize.2.0.2.zip`
+- SHA256 `74246a6e8b6973a4af0aadd41ee7dd4f5760c064da229ca06f3b27a575ada960`
+
+---
+
 ## [2026-11-21] - Gate de integración QGIS (12:10)
 
 ### Problema

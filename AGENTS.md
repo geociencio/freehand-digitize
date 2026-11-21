@@ -328,6 +328,7 @@ Load only the relevant `SKILL.md` on demand.
 - **Staged feature roadmap (approved, no stage started)**: `docs/maintainer/PLAN_FEATURE_ROADMAP.md`
 - **Deleted-layer lifecycle fix (implemented in 2.0.1)**: `docs/maintainer/PLAN_LAYER_LIFECYCLE.md`
 - **QGIS integration test gate (implemented)**: `docs/maintainer/PLAN_QGIS_TEST_GATE.md`
+- **Deleted-layer guards P1 (implemented in 2.0.2)**: `docs/maintainer/PLAN_LAYER_GUARDS.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`

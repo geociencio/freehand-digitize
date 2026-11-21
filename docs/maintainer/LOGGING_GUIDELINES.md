@@ -63,7 +63,7 @@ agéntico y el QA del proyecto de referencia.
 - Tests unitarios e integración QGIS 4 y Qt5.
 
 ### Resultados
-- 139 tests (57 unitarios, 82 de integración).
+- 145 tests (57 unitarios, 88 de integración).
 - `make zip`: artefacto validado, 0 hallazgos críticos.
 
 ### Documentación
