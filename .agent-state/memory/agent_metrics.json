@@ -82,7 +82,7 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "23 documentation files, relative links OK"
+            "result": "24 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
@@ -105,22 +105,38 @@
         "human_escalations": 1
     },
     "last_session": {
-        "date": "2026-11-20",
-        "topic": "release_2_0_0_portal",
-        "tests_ok": 134,
+        "date": "2026-11-21",
+        "topic": "release_2_0_1_layer_fix",
+        "tests_ok": 138,
         "quality_score": 55.6,
         "task_completion_rate": 1.0,
         "retries": 0,
         "stop_conditions_triggered": 0,
         "tasks": [
-            "Released v2.0.0: tag, GitHub Release and validated ZIP",
-            "Uploaded the ZIP to plugins.qgis.org; approval pending",
-            "Approved the staged 2.1.0/2.2.0/2.3.0 feature roadmap (no stage started)",
-            "Closed the session with logs, memory and handover"
+            "Fixed deleted-layer RuntimeError with sip.isdeleted and destroyed signal",
+            "Released and deployed 2.0.1 (GitHub ZIP and tag)",
+            "Confirmed 2.0.0 portal approval (plugin ID 7091)",
+            "Closed session with 2.0.1 portal upload pending"
         ],
         "status": "SUCCESS"
     },
     "history": [
+        {
+            "date": "2026-11-20",
+            "tests_ok": 134,
+            "quality_score": 55.6,
+            "task_completion_rate": 1.0,
+            "retries": 0,
+            "stop_conditions_triggered": 0,
+            "tasks": [
+                "Released v2.0.0: tag, GitHub Release and validated ZIP",
+                "Uploaded the ZIP to plugins.qgis.org; approval pending",
+                "Approved the staged 2.1.0/2.2.0/2.3.0 feature roadmap (no stage started)",
+                "Closed the session with logs, memory and handover"
+            ],
+            "status": "SUCCESS",
+            "session": "release_2_0_0_portal"
+        },
         {
             "date": "2026-11-19",
             "tests_ok": 134,

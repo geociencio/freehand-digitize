@@ -93,7 +93,8 @@ make zip             # package + validate ZIP
 - Tag `v2.0.1` created and pushed; GitHub Release published with the ZIP and
   SHA256 assets.
 - 2.0.0 ZIP is **approved and public** on plugins.qgis.org (plugin ID 7091).
-- 2.0.1 ZIP is released on GitHub; it is **not uploaded to the portal yet**.
+- 2.0.1 ZIP is released on GitHub; it is **not uploaded to the portal yet** and
+  fixes the deleted-layer crash.
 
 ## Pending
 

@@ -1,15 +1,16 @@
-# Next Steps — Freehand Digitize 2.0.0
+# Next Steps — Freehand Digitize 2.0.1
 
-**Updated:** 2026-11-20
-**Session:** release_2_0_0_portal
+**Updated:** 2026-11-21
+**Session:** release_2_0_1_layer_fix
 
 ## ✅ Current state
 
-- **Plugin 2.0.0** implemented with full `freehandEditing` parity plus freehand
+- **Plugin 2.0.1** implemented with full `freehandEditing` parity plus freehand
   reshape, sampling, edit-session gating and feature difference: tolerance
   spinbox/persistence, geographic-CRS policy, pixel/layer-unit sampling, CTRL
   snapping, pencil cursor, layer-CRS geometry, attribute form, provider defaults,
   undo, validity prompt, layer enablement, secondary-release finish and ESC cancel.
+- **2.0.1** fixes the deleted-layer `RuntimeError` (sip + destroyed signal).
 - **Architecture**: `core/` (no QGIS/Qt) + `gui/` (PyQGIS) +
   `freehand_plugin.py` (wiring); Qt5/Qt6 shims in `gui/qt_compat.py`.
 - **Tests**: 134 total — 57 unit (no QGIS) and 77 integration, green against both
@@ -42,10 +43,10 @@ make zip
 
 ## 📌 Remaining
 
-1. **Portal**: 2.0.0 is approved and public (plugin ID 7091). Upload 2.0.1
-   (`dist/freehand_digitize.2.0.1.zip`) to plugins.qgis.org for the deleted-layer
-   fix; 2.0.1 is already published on GitHub.
-2. After the 2.0.1 portal approval, publish/announce it; the GitHub Release is
+1. **Upload 2.0.1 to the portal**: 2.0.0 is approved and public (plugin ID
+   7091), but it still has the deleted-layer bug. Upload
+   `dist/freehand_digitize.2.0.1.zip`; 2.0.1 is already published on GitHub.
+2. After the 2.0.1 portal approval, announce the update; the GitHub Release is
    already public.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.

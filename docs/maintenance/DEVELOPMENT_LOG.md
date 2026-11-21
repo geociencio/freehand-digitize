@@ -5,6 +5,19 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - Cierre de sesión: 2.0.1 y portal (06:15)
+
+### Estado
+- 2.0.0 **aprobado y público** en plugins.qgis.org (plugin ID 7091).
+- 2.0.1 publicado en GitHub y desplegado; portal pendiente de subida manual.
+- Roadmap de features aprobado, sin etapas iniciadas.
+
+### Verificación
+- 138 tests (57 unitarios + 81 integración); 37 tests del framework agéntico.
+- CI verde en los commits del fix y documentación.
+
+---
+
 ## [2026-11-21] - 2.0.0 aprobado en el portal (06:00)
 
 ### Estado

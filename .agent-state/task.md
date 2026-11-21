@@ -51,8 +51,8 @@
       no stage started. Stage 1 awaits an explicit kickoff.
 - [x] Deleted-layer lifecycle fix implemented as 2.0.1; GitHub Release
       published and deployed locally.
-- [ ] Upload 2.0.1 to plugins.qgis.org (2.0.0 is approved; 2.0.1 fixes the
-      deleted-layer crash).
+- [x] 2.0.0 approved and public on plugins.qgis.org (plugin ID 7091).
+- [ ] Upload 2.0.1 to plugins.qgis.org (fixes the deleted-layer crash).
 
 ### Internationalization
 
