@@ -17,6 +17,8 @@ export UV_CACHE_DIR
 UV ?= uv
 UV_RUN = $(UV) run --frozen
 PYTHON ?= python3
+# Interpreter used for QGIS integration tests; auto-detected when unset.
+QGIS_PYTHON ?= $(shell $(UV_RUN) python scripts/find_qgis_python.py 2>/dev/null)
 PYLUPDATE ?= pylupdate6
 # Parent directory that exposes the plugin as ``freehand_digitize`` for tests.
 TEST_PYTHONPATH ?= ..
@@ -61,7 +63,8 @@ test:
 	PYTHONPATH=$(TEST_PYTHONPATH) $(UV_RUN) python -m unittest discover tests
 
 test-qgis:
-	@QT_QPA_PLATFORM=offscreen PYTHONPATH=$(TEST_PYTHONPATH) $(PYTHON) -m unittest discover -s tests/integration -t . ; \
+	@test -n "$(QGIS_PYTHON)" || (echo "❌ No QGIS Python found. Set QGIS_PYTHON=/path/to/python3."; exit 1)
+	@QT_QPA_PLATFORM=offscreen REQUIRE_QGIS=1 PYTHONPATH=$(TEST_PYTHONPATH) $(QGIS_PYTHON) -m unittest discover -s tests/integration -t . ; \
 	code=$$?; \
 	if [ $$code -eq 139 ]; then \
 		echo "⚠️  Tolerated QGIS teardown segfault (exit 139) after the tests."; \
@@ -148,7 +151,7 @@ docker-build:
 
 docker-test:
 	docker run --rm -v $(CURDIR):/app/freehand_digitize \
-		-w /app/freehand_digitize -e QT_QPA_PLATFORM=offscreen \
+		-w /app/freehand_digitize -e QT_QPA_PLATFORM=offscreen -e REQUIRE_QGIS=1 \
 		-e PYTHONPATH=/app:/usr/share/qgis/python qgis/qgis:latest \
 		python3 -m unittest discover tests/integration
 

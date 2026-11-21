@@ -103,7 +103,7 @@ make zip             # package + validate ZIP
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Roadmap approved; no stage started. On request, Stage 1 is
   Backspace-to-remove-vertex for 2.1.0.
-- P0 QA gap: `make test-qgis` can report `OK (skipped=81)` when `.venv` is first
-  in `PATH`; run `/usr/bin/python3` until the gate is fixed.
+- QA gate fixed: `test-qgis` auto-detects/uses `QGIS_PYTHON` and fails if QGIS
+  is unavailable (`REQUIRE_QGIS=1`).
 - Residual deleted-layer guards in `FeatureCreator`, `ReshapeCreator` and
   `FreehandTool` (edge case after `sip.delete`).

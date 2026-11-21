@@ -28,7 +28,7 @@
 
 - [x] `pyproject.toml`, `uv.lock`, `.python-version`, Makefile.
 - [x] ruff / flake8 / mypy / qgis-analyzer gates green.
-- [x] 138 tests (57 unit + 81 QGIS 4.2.2 integration) green.
+- [x] 139 tests (57 unit + 82 QGIS 4.2.2 integration incl. gate) green.
 - [x] `qgis-manage validate --strict` and ZIP validated.
 - [x] CI, pre-commit, Dockerfile, devcontainer, detect-secrets baseline.
 - [x] Python 3.9 syntax compatibility test.
@@ -79,12 +79,13 @@
 
 ## 📌 Pending
 
-- [ ] P0 QA: `test-qgis` must fail on `skipped=81` / pin the QGIS interpreter.
+- [x] P0 QA gate implemented: `test-qgis` fails when QGIS is unavailable;
+      `forge test-full` runs 82 tests.
 - [ ] Guard the remaining deleted-layer paths in creators/tool.
 
 - [x] Run `make pre-release` and `make security-scan` end to end.
 - [x] Run `make qt6-check` (packaged ZIP, no enum errors).
-- [x] Run `make docker-test` (QGIS/Qt5 container: 81 integration cases OK).
+- [x] Run `make docker-test` (QGIS/Qt5 container: 82 integration cases OK).
 - [x] Metadata points to the dedicated repository (https://github.com/geociencio/freehand-digitize).
 - [x] Implement freehand reshape (features under the stroke, optional selection
       filter, multi-feature single undo) and deploy it to QGIS 4.

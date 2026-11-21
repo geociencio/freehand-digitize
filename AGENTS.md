@@ -119,7 +119,7 @@ uv lock --check               # lockfile is authoritative
 
 # Tests
 make test                     # unit tests, no QGIS required
-make test-qgis                # integration tests against the host QGIS
+make test-qgis                # integration tests; auto-detects QGIS or QGIS_PYTHON
 make test-all                 # both
 make docker-test              # integration tests in the QGIS container
 
@@ -327,6 +327,7 @@ Load only the relevant `SKILL.md` on demand.
 - **CI checkout fix (implemented in 2.0.0)**: `docs/maintainer/PLAN_CI_CHECKOUT.md`
 - **Staged feature roadmap (approved, no stage started)**: `docs/maintainer/PLAN_FEATURE_ROADMAP.md`
 - **Deleted-layer lifecycle fix (implemented in 2.0.1)**: `docs/maintainer/PLAN_LAYER_LIFECYCLE.md`
+- **QGIS integration test gate (implemented)**: `docs/maintainer/PLAN_QGIS_TEST_GATE.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`

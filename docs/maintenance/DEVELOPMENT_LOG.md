@@ -5,6 +5,22 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - Gate de integración QGIS (12:10)
+
+### Problema
+`make test-qgis` y `forge project test-full` daban `OK (skipped=81)` cuando el
+intérprete del `.venv` no tenía QGIS.
+
+### Solución
+- `scripts/find_qgis_python.py` auto-detecta QGIS o respeta `QGIS_PYTHON`.
+- `make test-qgis` usa `REQUIRE_QGIS=1` y falla si QGIS no está disponible.
+- Test de gate `tests/integration/test_qgis_gate.py`.
+- Docker/CI ejecutan el gate.
+- `make test`: 139 tests (57 unit + 82 skipped); `make test-qgis`: 82 OK;
+  `forge project test-full`: 82 OK.
+
+---
+
 ## [2026-11-21] - Cierre de sesión: 2.0.1 y portal (06:15)
 
 ### Estado

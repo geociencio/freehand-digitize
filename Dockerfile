@@ -5,6 +5,7 @@ FROM qgis/qgis:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV QT_QPA_PLATFORM=offscreen
+ENV REQUIRE_QGIS=1
 ENV PYTHONPATH=/app:/usr/share/qgis/python
 
 WORKDIR /app/freehand_digitize

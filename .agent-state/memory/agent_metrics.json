@@ -16,10 +16,10 @@
         "overall_effectiveness_score": 1.0,
         "task_completion_rate": 1.0,
         "avg_retries_per_session": 1.0,
-        "tests_ok": 138,
-        "tests_static": 138,
-        "tests_executed": 138,
-        "test_count": 138,
+        "tests_ok": 139,
+        "tests_static": 139,
+        "tests_executed": 139,
+        "test_count": 139,
         "quality_score_latest": 55.6,
         "maintainability_score": 99.9,
         "security_score": 100.0,
@@ -38,7 +38,7 @@
             "MISSING_TYPE_HINTS": 0
         },
         "tests_unit": 57,
-        "tests_integration": 81,
+        "tests_integration": 82,
         "i18n_catalogs": [
             "en"
         ]
@@ -61,17 +61,17 @@
         "tests_local": {
             "date": "2026-11-19",
             "command": "PYTHONPATH=.. uv run --frozen python -m unittest discover tests",
-            "result": "138 ran, 81 skipped (integration), OK"
+            "result": "139 ran, 82 skipped (integration), OK"
         },
         "tests_qgis": {
             "date": "2026-11-19",
             "command": "make test-qgis",
-            "result": "81 ran, OK (QGIS 4.2.2, Qt6)"
+            "result": "82 ran, OK (QGIS 4.2.2, Qt6; REQUIRE_QGIS=1)"
         },
         "tests_container": {
             "date": "2026-11-19",
             "command": "make docker-test",
-            "result": "81 ran, OK (qgis/qgis:latest, Qt5)"
+            "result": "82 ran, OK (qgis/qgis:latest, Qt5; REQUIRE_QGIS=1)"
         },
         "packaging": {
             "date": "2026-11-19",
@@ -82,7 +82,7 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "24 documentation files, relative links OK"
+            "result": "26 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",

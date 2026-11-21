@@ -217,6 +217,7 @@ The `uv` modernization guide is in
 - [CI checkout fix plan](docs/maintainer/PLAN_CI_CHECKOUT.md)
 - [Staged feature roadmap](docs/maintainer/PLAN_FEATURE_ROADMAP.md)
 - [Deleted-layer lifecycle fix](docs/maintainer/PLAN_LAYER_LIFECYCLE.md)
+- [QGIS integration test gate](docs/maintainer/PLAN_QGIS_TEST_GATE.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)
