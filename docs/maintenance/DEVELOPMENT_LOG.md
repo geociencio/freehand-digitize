@@ -5,6 +5,21 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-21] - Cierre de sesión: gate + 2.0.2 (07:40)
+
+### Resultado
+- Gate `REQUIRE_QGIS=1` y detección de QGIS operativos.
+- Guardas P1 y 2.0.2 publicadas, desplegadas y conservadas.
+- Tests: 145 (57 unitarios + 88 integración); CI verde.
+- Portal: 2.0.0 aprobado; 2.0.1 pendiente; 2.0.2 sin subir.
+
+### Handover
+- Esperar la aprobación de 2.0.1 y subir 2.0.2.
+- Sincronizar la deriva documental restante.
+- Roadmap aprobado; Etapa 1 sin iniciar.
+
+---
+
 ## [2026-11-21] - Decisión: conservar 2.0.2 (07:30)
 
 ### Decisión

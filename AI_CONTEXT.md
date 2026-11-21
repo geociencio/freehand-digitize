@@ -94,8 +94,8 @@ make zip             # package + validate ZIP
   SHA256 assets.
 - 2.0.0 ZIP is **approved and public** on plugins.qgis.org (plugin ID 7091).
 - 2.0.1 ZIP is **uploaded to plugins.qgis.org and pending approval**.
-- 2.0.2 ZIP is published on GitHub and deployed; it guards the remaining
-  deleted-layer paths. Portal upload waits for 2.0.1 approval.
+- 2.0.2 ZIP is published on GitHub and deployed; the user chose to keep it.
+  Portal upload waits for 2.0.1 approval.
 
 ## Pending
 

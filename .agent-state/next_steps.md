@@ -1,7 +1,7 @@
-# Next Steps — Freehand Digitize 2.0.1
+# Next Steps — Freehand Digitize 2.0.2
 
 **Updated:** 2026-11-21
-**Session:** release_2_0_1_layer_fix
+**Session:** release_2_0_2_layer_guards
 
 ## ✅ Current state
 
@@ -11,7 +11,7 @@
   snapping, pencil cursor, layer-CRS geometry, attribute form, provider defaults,
   undo, validity prompt, layer enablement, secondary-release finish and ESC cancel.
 - **2.0.1** fixes the editing-signal lifecycle; **2.0.2** guards the remaining
-  deleted-layer paths in creators/tool/callbacks.
+  deleted-layer paths in creators/tool/callbacks and is **kept by the user**.
 - **Architecture**: `core/` (no QGIS/Qt) + `gui/` (PyQGIS) +
   `freehand_plugin.py` (wiring); Qt5/Qt6 shims in `gui/qt_compat.py`.
 - **Tests**: 145 total — 57 unit (no QGIS) and 88 integration (incl. QGIS gate),
@@ -46,13 +46,14 @@ make zip
 
 ## 📌 Remaining
 
-1. **2.0.1 portal approval**: 2.0.0 is approved; 2.0.1 is uploaded and pending.
-   2.0.2 is published on GitHub and **will be kept**; upload 2.0.2 to the portal
-   after 2.0.1 is approved (or if 2.0.1 is blocked).
+1. **Portal 2.0.1**: 2.0.0 is approved; 2.0.1 is uploaded and pending approval.
+   2.0.2 is published on GitHub and kept; upload 2.0.2 after 2.0.1 is approved
+   (or if 2.0.1 is blocked).
 2. After 2.0.1/2.0.2 portal approval, announce the patch.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
-4. Residual deleted-layer guards in creators/tool remain a separate P1.
+4. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
+   README, CHANGELOG, `pyproject.toml`).
 5. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
 6. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.

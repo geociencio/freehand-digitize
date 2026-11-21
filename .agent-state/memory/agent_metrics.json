@@ -45,11 +45,11 @@
     },
     "ground_truth_sources": {
         "qgis_analyzer": {
-            "date": "2026-11-19",
+            "date": "2026-11-21",
             "command": "uv run --frozen qgis-analyzer analyze . --max-cc 10",
             "output": "analysis_results/",
             "scores": {
-                "module_stability": 55.6,
+                "module_stability": 56.2,
                 "maintainability": 99.9,
                 "security": 100.0
             },
@@ -82,7 +82,7 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "27 documentation files, relative links OK"
+            "result": "28 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
@@ -106,21 +106,37 @@
     },
     "last_session": {
         "date": "2026-11-21",
-        "topic": "release_2_0_1_layer_fix",
-        "tests_ok": 138,
-        "quality_score": 55.6,
+        "topic": "release_2_0_2_layer_guards",
+        "tests_ok": 145,
+        "quality_score": 56.2,
         "task_completion_rate": 1.0,
         "retries": 0,
         "stop_conditions_triggered": 0,
         "tasks": [
-            "Fixed deleted-layer RuntimeError with sip.isdeleted and destroyed signal",
-            "Released and deployed 2.0.1 (GitHub ZIP and tag)",
-            "Confirmed 2.0.0 portal approval (plugin ID 7091)",
-            "Closed session with 2.0.1 portal upload pending"
+            "Fixed the QGIS integration false-green with REQUIRE_QGIS=1",
+            "Implemented deleted-layer guards (P1) as 2.0.2",
+            "Released and deployed 2.0.2; user chose to keep it",
+            "Recorded the plan-first process lesson"
         ],
         "status": "SUCCESS"
     },
     "history": [
+        {
+            "date": "2026-11-21",
+            "tests_ok": 138,
+            "quality_score": 55.6,
+            "task_completion_rate": 1.0,
+            "retries": 0,
+            "stop_conditions_triggered": 0,
+            "tasks": [
+                "Fixed deleted-layer RuntimeError with sip.isdeleted and destroyed signal",
+                "Released and deployed 2.0.1 (GitHub ZIP and tag)",
+                "Confirmed 2.0.0 portal approval (plugin ID 7091)",
+                "Closed session with 2.0.1 portal upload pending"
+            ],
+            "status": "SUCCESS",
+            "session": "release_2_0_1_layer_fix"
+        },
         {
             "date": "2026-11-20",
             "tests_ok": 134,
