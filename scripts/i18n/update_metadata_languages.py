@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Update ``metadata.txt`` with the languages that have a catalog.
 
-Adapted from SecInterp: the base language is the source language (Spanish) and
-each ``i18n/freehand_digitize_<code>.ts`` adds a translated language to the
-``general_description`` line.
+The base language is English; each ``i18n/freehand_digitize_<code>.ts`` adds a
+translated language to the ``general_description`` line.
 
 Usage:
     python scripts/i18n/update_metadata_languages.py
@@ -13,7 +12,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-BASE_LANGUAGE = "Spanish"
+BASE_LANGUAGE = "English"
 PLUGIN_PREFIX = "freehand_digitize_"
 I18N_DIR = Path("i18n")
 METADATA_FILE = Path("metadata.txt")
@@ -39,15 +38,21 @@ ISO_MAP = {
 }
 
 
+LOCALE_ORDER = ("es", "pt_BR", "fr", "de", "it", "id")
+
+
 def supported_languages() -> list[str]:
     """Return the source language plus every catalog found in ``i18n/``.
 
     Returns:
-        Language names in deterministic order, base language first.
+        Language names in deterministic order, base language first and the
+        release locales in priority order.
     """
-    codes = sorted(
+    discovered = {
         path.stem.removeprefix(PLUGIN_PREFIX) for path in I18N_DIR.glob(f"{PLUGIN_PREFIX}*.ts")
-    )
+    }
+    codes = [code for code in LOCALE_ORDER if code in discovered]
+    codes += sorted(discovered - set(codes))
     languages = [BASE_LANGUAGE]
     for code in codes:
         name = ISO_MAP.get(code, code)

@@ -6,7 +6,7 @@ Adapted from the SecInterp ``apply_full.py`` workflow: translations live in
 are injected with ElementTree, never by editing the XML by hand.
 
 Usage:
-    python scripts/i18n/apply_full.py en scripts/i18n/master_data/en.json
+    python scripts/i18n/apply_full.py es scripts/i18n/master_data/es.json
 """
 
 from __future__ import annotations

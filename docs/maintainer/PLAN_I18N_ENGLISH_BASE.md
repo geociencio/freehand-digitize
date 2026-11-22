@@ -1,6 +1,8 @@
 # Implementation Plan — English as the i18n Base
 
-> **Status: PROPOSED (revision 3)** — no code changes until the user approves.
+> **Status: IMPLEMENTED (2026-11-22), UNRELEASED** — English source and six
+> catalogs are in the working tree. Version stays **2.0.2**; no tag or portal
+> upload until 2.0.2 is public in the portal.
 >
 > Type: i18n refactor | Target version: **2.1.0 (release gated)** | Date: 2026-11-22
 > Revision 2: includes the `pt_BR`, `fr`, `de`, `it` and `id` catalogs in the
@@ -244,7 +246,21 @@ until 2.0.2 is public.
 
 ---
 
-## 9. Approval
+## 9. Results
+
+- English is the source language; all 49 messages are English literals.
+- Catalogs generated and compiled: `es`, `pt_BR`, `fr`, `de`, `it`, `id`.
+- Spanish catalog preserves the previous wording exactly from the old `en.ts`
+  translations.
+- 245 new translations reviewed for placeholders and terminology.
+- Tests: **146** (57 unit + 89 integration incl. gate); `make test-qgis` 89 OK;
+  `make docker-test` 89 OK; `make pre-release` OK.
+- Version stays **2.0.2**; no tag, release or portal upload.
+- **Commit:** to be filled by the i18n commit.
+
+---
+
+## 10. Approval
 
 The plan is **PROPOSED**. Implementation starts only after the user approves:
 

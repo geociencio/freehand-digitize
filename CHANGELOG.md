@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- English is now the UI source language; the Spanish catalog preserves the
+  previous wording, and `pt_BR`, `fr`, `de`, `it` and `id` catalogs are included.
+- Release is gated until the 2.0.x portal submissions are resolved.
+
 ## 2.0.2 — 2026-11-21
 
 ### Fixed

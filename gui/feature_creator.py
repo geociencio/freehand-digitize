@@ -89,7 +89,7 @@ class FeatureCreator:
             self._warn(
                 QCoreApplication.translate(
                     "FreehandDigitize",
-                    "La geometría resultante está vacía; no se añadió nada.",
+                    "The resulting geometry is empty; nothing was added.",
                 )
             )
             return None
@@ -137,7 +137,7 @@ class FeatureCreator:
         except (RuntimeError, TypeError) as exc:
             self._warn(
                 QCoreApplication.translate(
-                    "FreehandDigitize", "No se pudo crear la entidad: {error}"
+                    "FreehandDigitize", "Could not create the feature: {error}"
                 ).format(error=exc)
             )
             return None
@@ -152,7 +152,7 @@ class FeatureCreator:
         if not added:
             self._warn(
                 QCoreApplication.translate(
-                    "FreehandDigitize", "La capa «{name}» rechazó la entidad."
+                    "FreehandDigitize", "Layer “{name}” rejected the feature."
                 ).format(name=layer.name())
             )
         return added
@@ -192,11 +192,11 @@ class FeatureCreator:
         try:
             reply = QMessageBox.question(
                 self._parent(),
-                QCoreApplication.translate("FreehandDigitize", "Entidad no válida"),
+                QCoreApplication.translate("FreehandDigitize", "Invalid feature"),
                 QCoreApplication.translate(
                     "FreehandDigitize",
-                    "La geometría de la entidad que acabas de dibujar no es válida.\n"
-                    "¿Quieres usarla de todos modos?",
+                    "The geometry of the feature you just drew is not valid.\n"
+                    "Do you want to use it anyway?",
                 ),
                 yes | no,
                 no,

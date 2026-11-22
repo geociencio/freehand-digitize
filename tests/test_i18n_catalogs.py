@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 I18N = ROOT / "i18n"
-LOCALES = ["en"]
+LOCALES = ["es", "pt_BR", "fr", "de", "it", "id"]
 PLACEHOLDER = re.compile(r"(\{[^}]*\})")
 
 
@@ -22,7 +22,7 @@ def messages(locale: str):
 
 
 class TestTranslationCatalogs(unittest.TestCase):
-    """The English catalog must be complete, safe and packaged."""
+    """The six catalogs must be complete, safe and packaged."""
 
     def test_catalogs_exist(self) -> None:
         """Every configured locale has a source catalog."""
@@ -60,7 +60,7 @@ class TestTranslationCatalogs(unittest.TestCase):
         self.assertEqual(offenders, {}, f"Empty translations: {offenders}")
 
     def test_placeholders_are_preserved(self) -> None:
-        """``{name}``/``{error}`` placeholders must survive translation."""
+        """``{name}``/``{error}``/``{count}`` placeholders must survive."""
         offenders = []
         for locale in LOCALES:
             for message in messages(locale):
@@ -71,27 +71,26 @@ class TestTranslationCatalogs(unittest.TestCase):
         self.assertEqual(offenders, [], f"Placeholder mismatch: {offenders}")
 
     def test_key_ui_strings_are_translated(self) -> None:
-        """The strings a user sees first must be translated, not copied."""
+        """The Spanish catalog preserves the shipped wording."""
         required = {
-            "Dibujo a mano alzada": "Freehand digitize",
-            "Reformar geometría": "Reshape feature",
-            "Configuración de muestreo": "Sampling settings",
-            "Diferencia de entidades": "Feature difference",
-            "Activa la edición de la capa «{name}» antes de dibujar.": (
-                "Start editing layer “{name}” before drawing."
+            "Freehand digitize": "Dibujo a mano alzada",
+            "Reshape feature": "Reformar geometría",
+            "Sampling settings": "Configuración de muestreo",
+            "Feature difference": "Diferencia de entidades",
+            "Start editing layer “{name}” before drawing.": (
+                "Activa la edición de la capa «{name}» antes de dibujar."
             ),
-            "Entidad no válida": "Invalid feature",
-            "Selecciona una capa vectorial de línea o polígono editable antes de dibujar.": (
-                "Select an editable line or polygon vector layer before drawing."
+            "Invalid feature": "Entidad no válida",
+            "Select an editable line or polygon vector layer before drawing.": (
+                "Selecciona una capa vectorial de línea o polígono editable antes de dibujar."
             ),
         }
-        for locale in LOCALES:
-            pairs = {
-                message.findtext("source"): message.findtext("translation")
-                for message in messages(locale)
-            }
-            for source, expected in required.items():
-                self.assertEqual(pairs.get(source), expected, f"{locale}: {source!r}")
+        pairs = {
+            message.findtext("source"): message.findtext("translation")
+            for message in messages("es")
+        }
+        for source, expected in required.items():
+            self.assertEqual(pairs.get(source), expected, source)
 
     def test_compiled_catalogs_exist(self) -> None:
         """The ZIP must ship non-empty ``.qm`` files."""
@@ -108,8 +107,16 @@ class TestTranslationCatalogs(unittest.TestCase):
         parser = configparser.ConfigParser(interpolation=None)
         parser.read(ROOT / "metadata.txt", encoding="utf-8")
         description = parser["general"].get("general_description", "")
-        self.assertIn("Spanish", description)
-        self.assertIn("English", description)
+        for language in (
+            "English",
+            "Spanish",
+            "Portuguese (Brazil)",
+            "French",
+            "German",
+            "Italian",
+            "Indonesian",
+        ):
+            self.assertIn(language, description)
 
 
 if __name__ == "__main__":

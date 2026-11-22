@@ -5,8 +5,8 @@ settings, try the full locale and then the two-letter language, load the first
 ``.qm`` found and install it on the QCoreApplication. The caller must keep the
 returned ``QTranslator`` alive and remove it on unload.
 
-The plugin source language is Spanish; if no catalog matches (for example an
-``es_ES`` user) the source strings are shown unchanged.
+The plugin source language is English; if no catalog matches (for example an
+unknown locale or an ``en_US`` user) the English source strings are shown.
 """
 
 from __future__ import annotations

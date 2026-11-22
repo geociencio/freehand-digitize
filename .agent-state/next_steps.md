@@ -53,10 +53,9 @@ make zip
 2. After 2.0.1/2.0.2 portal approval, announce the patch.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
-4. **English i18n base + five catalogs**: approve/implement
-   `docs/maintainer/PLAN_I18N_ENGLISH_BASE.md` (revision 3): `es`, `pt_BR`,
-   `fr`, `de`, `it`, `id`. **Gated:** 2.0.1 pending and 2.0.2 GitHub-only;
-   do not tag/publish 2.1.0 until 2.0.2 is public in the portal.
+4. **English i18n base + five catalogs implemented** (unreleased). Version stays
+   2.0.2. **Gated:** 2.0.1 pending and 2.0.2 GitHub-only; do not tag/publish
+   2.1.0 until 2.0.2 is public in the portal.
 5. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
    README, CHANGELOG, `pyproject.toml`).
 6. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).

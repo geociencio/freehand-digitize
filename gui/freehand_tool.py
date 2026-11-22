@@ -216,7 +216,7 @@ class FreehandTool(QgsMapTool):
         if layer is None:
             self._warn(
                 QCoreApplication.translate(
-                    "FreehandDigitize", "Selecciona primero la capa donde quieres dibujar."
+                    "FreehandDigitize", "Select the layer where you want to draw first."
                 )
             )
             return None
@@ -226,7 +226,7 @@ class FreehandTool(QgsMapTool):
         if not is_supported_geometry(int(layer.geometryType())):
             self._warn(
                 QCoreApplication.translate(
-                    "FreehandDigitize", "Esta herramienta solo dibuja en capas de línea o polígono."
+                    "FreehandDigitize", "This tool only draws on line or polygon layers."
                 )
             )
             return None

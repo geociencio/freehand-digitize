@@ -40,10 +40,11 @@ It restores the feature set of the classic `freehandEditing` plugin:
 - a prompt when the resulting geometry is invalid;
 - the action is enabled only for editable line/polygon layers.
 
-The UI is available in Spanish (source language) and English. With an English
-QGIS locale the action reads **Freehand digitize**; with a Spanish locale it
-reads **Dibujo a mano alzada**. This guide uses the English labels and shows the
-Spanish one where useful.
+The UI is available in English (source language), Spanish, Portuguese (Brazil),
+French, German, Italian and Indonesian. With an English QGIS locale the action
+reads **Freehand digitize**; with a Spanish locale it reads **Dibujo a mano
+alzada**. This guide uses the English labels and shows the Spanish one where
+useful.
 
 ---
 
@@ -283,8 +284,8 @@ Technical messages are written to the QGIS message log with the
 
 ## 12. Known limitations
 
-- **UI languages**: Spanish is the source language; an English catalog is
-  included and additional catalogs can be added under `i18n/`.
+- **UI languages**: English is the source language; Spanish, Portuguese (Brazil),
+  French, German, Italian and Indonesian catalogs are included.
 - **Snapping depends on QGIS settings**; the plugin does not override them.
 - **No background processing**: the drawing path is interactive and synchronous.
 - **Repository** is <https://github.com/geociencio/freehand-digitize>; the upstream `freehandEditing` project is

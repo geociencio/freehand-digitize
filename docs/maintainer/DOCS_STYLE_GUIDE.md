@@ -12,7 +12,7 @@
 | Code, commits, `README.md`, `CHANGELOG.md`, user guide | **English** |
 | API/architecture docs and maintainer guides | **English** |
 | Internal plans, parity reports, session logs and the logging guidelines | **Spanish** |
-| Plugin UI strings | **Spanish** source; English catalog shipped; more catalogs allowed |
+| Plugin UI strings | **English** source; `es`, `pt_BR`, `fr`, `de`, `it`, `id` catalogs shipped |
 
 User-facing documentation (README, CHANGELOG and the feature/user guide) is
 English. Internal project records may stay in Spanish, but everything that is

@@ -212,11 +212,11 @@ point = self.toLayerCoordinates(layer, event.pos())
 - Ruff is the formatter and linter: 100 columns, double quotes, `py39` target
   syntax. `core/` is mypy-checked.
 - Naming: `PascalCase` classes, `snake_case` functions, `UPPER_SNAKE` constants.
-- **Language policy**: the plugin UI source strings are Spanish and an English
-  catalog is shipped; `README.md`, `CHANGELOG.md`, the user guide, code, tests,
-  docstrings, commits, API/architecture docs and maintainer guides are English;
-  internal plans, parity reports, session logs and the logging guidelines may
-  stay Spanish. New catalogs live under `i18n/`.
+- **Language policy**: the plugin UI source strings are English and six catalogs
+  are shipped (`es`, `pt_BR`, `fr`, `de`, `it`, `id`); `README.md`, `CHANGELOG.md`,
+  the user guide, code, tests, docstrings, commits, API/architecture docs and
+  maintainer guides are English; internal plans, parity reports, session logs
+  and the logging guidelines may stay Spanish. New catalogs live under `i18n/`.
 - Errors in Qt callbacks are logged (`QgsMessageLog`) and surfaced via
   `iface.messageBar()`; never let an exception escape a canvas event.
 - Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`,
@@ -329,7 +329,7 @@ Load only the relevant `SKILL.md` on demand.
 - **Deleted-layer lifecycle fix (implemented in 2.0.1)**: `docs/maintainer/PLAN_LAYER_LIFECYCLE.md`
 - **QGIS integration test gate (implemented)**: `docs/maintainer/PLAN_QGIS_TEST_GATE.md`
 - **Deleted-layer guards P1 (implemented in 2.0.2)**: `docs/maintainer/PLAN_LAYER_GUARDS.md`
-- **English i18n base (proposed)**: `docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`
+- **English i18n base (implemented, release gated)**: `docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`
@@ -356,5 +356,5 @@ Load only the relevant `SKILL.md` on demand.
 4. **ALWAYS** keep the Qt5/Qt6 shims in `gui/qt_compat.py`.
 5. **ALWAYS** test both environments: `make test` and `make test-qgis`.
 6. **NEVER** re-add `supportsQt6`; QGIS 4 Ready is `qgisMaximumVersion >= 4.0`.
-7. **KEEP** Spanish as the UI source language with an English catalog; README, CHANGELOG, user guide, code and commits in English; internal plans/logs may be Spanish.
+7. **KEEP** English as the UI source language with `es`, `pt_BR`, `fr`, `de`, `it` and `id` catalogs; README, CHANGELOG, user guide, code and commits in English; internal plans/logs may be Spanish.
 8. **RUN** `make pre-release` before claiming a task is complete.

@@ -1,32 +1,29 @@
 # Freehand Digitize i18n
 
-Adapted from the SecInterp translation system to a much smaller catalog. The
-same principles apply: Qt `.ts` catalogs generated from source, translations
-kept in JSON master data, compiled `.qm` files shipped with the plugin, and a
-quality gate that rejects unfinished or broken entries.
+Qt `.ts` catalogs generated from the English source, translations kept in JSON
+master data, compiled `.qm` files shipped with the plugin, and a quality gate
+that rejects unfinished or broken entries.
 
 ## Architecture
 
-- **Source language: Spanish.** The plugin UI strings are Spanish literals.
-- **English catalog:** `i18n/freehand_digitize_en.ts` / `.qm`.
-- **Master data:** `scripts/i18n/master_data/en.json` maps every Spanish source
-  string to its English translation. It is the single source of truth for
-  translations; do not edit `.ts` by hand.
+- **Source language: English.** The plugin UI strings are English literals.
+- **Catalogs:** `i18n/freehand_digitize_<locale>.ts` / `.qm` for `es`, `pt_BR`,
+  `fr`, `de`, `it` and `id`.
+- **Master data:** `scripts/i18n/master_data/<locale>.json` maps every English
+  source string to its translation. It is the single source of truth; do not
+  edit `.ts` by hand.
 - **Loader:** `gui/i18n.py` reads `locale/userLocale` from QGIS settings, tries
-  the full locale (`en_US`, `pt_BR`) and then the language (`en`, `pt`), loads
-  the first `.qm` found and installs it.
-- **Fallback:** if no catalog matches (for example `es_ES`), the Spanish source
+  the full locale (`pt_BR`) and then the language (`pt`), loads the first `.qm`
+  found and installs it.
+- **Fallback:** if no catalog matches (for example `en_US`), the English source
   strings are shown unchanged.
 
-The SecInterp system also injects a translator into core classes and auto-
-translates missing strings through an external API. Neither part is needed
-here: `core/` has no user-facing strings and the English catalog is maintained
-by hand.
+`core/` has no user-facing strings and no translation injection is needed.
 
 ## Workflow
 
 ```bash
-# 1. Extract new strings and apply the English master data
+# 1. Extract new strings and apply the master data for every locale
 make transup
 
 # 2. Compile the .ts catalogs into .qm
@@ -40,8 +37,9 @@ make transclean
 ```
 
 `make transup` runs `pylupdate6` over the plugin sources, applies
-`scripts/i18n/apply_full.py`, and refreshes the `general_description` line in
-`metadata.txt` with `scripts/i18n/update_metadata_languages.py`.
+`scripts/i18n/apply_full.py` for each locale in `LOCALES`, and refreshes the
+`general_description` line in `metadata.txt` with
+`scripts/i18n/update_metadata_languages.py`.
 
 ## Golden rules
 
@@ -51,33 +49,30 @@ make transclean
 - Keep `{placeholders}` identical in source and translation.
 - Never edit `.qm` files; they are compiled binaries.
 - Never edit `.ts` directly: `make transup` regenerates it and injects the JSON.
-- JSON keys are the exact source strings (including `\n`); values are the
-  English translations.
+- JSON keys are the exact English source strings (including `\n`); values are the
+  translations.
 - Add a new language by creating `i18n/freehand_digitize_<code>.ts` with
   `pylupdate6`, `master_data/<code>.json`, then run `make transup`,
   `make transcompile` and `make i18n-check`.
 
 ## Language priority
 
-Based on the QGIS 3.40 translation statistics (last update 2026-03-12,
-<https://docs.qgis.org/3.40/en/docs/about/translation_stats.html>) and the
-languages already supported by SecInterp, the recommended order after English is:
+The current catalogs are `es`, `pt_BR`, `fr`, `de`, `it` and `id`. The order is
+based on QGIS country opens (last-30-day public analytics), QGIS documentation
+translation coverage and the size of the local community:
 
-| Priority | Locale | QGIS translation ratio | Notes |
-| :---: | :--- | :---: | :--- |
-| 1 | `en` | source | Universal; required for the portal. |
-| 2 | `fr` | 83.48 % | Large QGIS community. |
-| 3 | `de` | 60.22 % | Large QGIS community. |
-| 4 | `it` | 99.96 % | Very complete QGIS translation. |
-| 5 | `pt_BR` | 62.02 % | Large QGIS community. |
-| 6 | `nl` | 100.00 % | Complete QGIS translation. |
-| 7 | `ja` | 97.68 % | Complete QGIS translation. |
-| 8 | `ko` | 94.62 % | Complete QGIS translation. |
-| 9 | `sv` | 99.99 % | Complete, smaller user base. |
-| 10 | `zh_CN` | 28.68 % | Large user base despite lower coverage. |
-| 11 | `ru` | 27.51 % | Large user base despite lower coverage. |
-| 12 | `pl` | 13.14 % | Lower QGIS coverage. |
+| Priority | Locale | Notes |
+| :---: | :--- | :--- |
+| 1 | `es` | Large QGIS community; exact prior wording preserved. |
+| 2 | `pt_BR` | Strong QGIS use and community. |
+| 3 | `fr` | Large historical QGIS community. |
+| 4 | `de` | Large QGIS community. |
+| 5 | `it` | High documentation coverage. |
+| 6 | `id` | High QGIS use despite lower documentation coverage. |
+| 7 | `zh_CN` | Large user base; future catalog. |
+| 8 | `ja` | High documentation coverage; future catalog. |
+| 9 | `pl` | Notable QGIS use; future catalog. |
+| 10 | `ko` | High documentation coverage; future catalog. |
 
-Spanish is the source language, so it does not need a catalog. Avoid adding
-many catalogs at once: every new locale must pass `make i18n-check` and stay
-complete.
+Do not ship a half-translated catalog: `make i18n-check` must pass for every
+locale included in `LOCALES`.

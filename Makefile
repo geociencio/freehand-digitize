@@ -22,7 +22,7 @@ QGIS_PYTHON ?= $(shell $(UV_RUN) python scripts/find_qgis_python.py 2>/dev/null)
 PYLUPDATE ?= pylupdate6
 # Parent directory that exposes the plugin as ``freehand_digitize`` for tests.
 TEST_PYTHONPATH ?= ..
-LOCALES = en
+LOCALES = es pt_BR fr de it id
 
 PORTAL_ZIP ?= $(shell ls -t dist/*.zip 2>/dev/null | head -1)
 

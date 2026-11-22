@@ -71,9 +71,9 @@ make zip             # package + validate ZIP
 
 ## Decisions
 
-- **Spanish UI source + English catalog**; README, CHANGELOG, user guide and
-  code/docs are English; internal plans, parity reports and logs may stay
-  Spanish. The analyzer `MISSING_I18N` rule stays disabled because catalogs are
+- **English UI source + six catalogs** (`es`, `pt_BR`, `fr`, `de`, `it`, `id`);
+  README, CHANGELOG, user guide and code/docs are English; internal plans,
+  parity reports and logs may stay Spanish. The analyzer `MISSING_I18N` rule stays disabled because catalogs are
   maintained through `make transup`/`make i18n-check`.
 - **Edit-session gating**: create/reshape require an active edit session; the
   plugin never calls `startEditing()` and deactivates on `editingStopped`.
@@ -107,6 +107,6 @@ make zip             # package + validate ZIP
 - QA gate fixed: `test-qgis` auto-detects/uses `QGIS_PYTHON` and fails if QGIS
   is unavailable (`REQUIRE_QGIS=1`).
 - Portal was unavailable (502) on 2026-11-22; recheck 2.0.1 approval later.
-- English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs plan
-  (`docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`, revision 3) is PROPOSED; release
-  gated until 2.0.2 is public in the portal.
+- English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs implemented
+  (unreleased); version stays 2.0.2 and release is gated until 2.0.2 is public
+  in the portal.

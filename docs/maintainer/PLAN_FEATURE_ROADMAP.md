@@ -409,7 +409,7 @@ features in the active layer, instead of silently producing overlapping geometry
   operations stay in `gui/`.
 - **Edit-session gate**: all modification actions require `layer.isEditable()`.
 - **Undo**: every mutation is one edit command.
-- **i18n**: Spanish source + English catalog; `make transup`/`i18n-check`.
+- **i18n**: English source + six catalogs; `make transup`/`i18n-check`.
 - **Tests**: unit for pure rules (stroke, settings), integration for QGIS;
   Qt5 container for every release.
 - **Quality**: `make pre-release`, `make zip`, `make security-scan`,

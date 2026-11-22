@@ -646,5 +646,5 @@ def _invalid_layer_text() -> str:
     """Return the warning shown when no drawable layer is active."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "Selecciona una capa vectorial de línea o polígono editable antes de dibujar.",
+        "Select an editable line or polygon vector layer before drawing.",
     )

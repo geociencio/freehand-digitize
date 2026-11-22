@@ -387,18 +387,18 @@ of the code uses the stable constants.
 
 ## 🌍 Internationalization
 
-The UI source language is Spanish. User-facing strings are wrapped in
+The UI source language is English. User-facing strings are wrapped in
 `QCoreApplication.translate("FreehandDigitize", "...")` at the point of use
 (literal context and source so ``pylupdate6`` can extract them).
 
-- `i18n/freehand_digitize_en.ts` — source catalog (Spanish source, English
-  translations).
-- `i18n/freehand_digitize_en.qm` — compiled catalog shipped in the ZIP.
-- `scripts/i18n/master_data/en.json` — translation memory; the `.ts` is
+- `i18n/freehand_digitize_<locale>.ts` — one catalog per locale (`es`, `pt_BR`,
+  `fr`, `de`, `it`, `id`), generated from the English source.
+- `i18n/freehand_digitize_<locale>.qm` — compiled catalogs shipped in the ZIP.
+- `scripts/i18n/master_data/<locale>.json` — translation memory; the `.ts` is
   regenerated from it, never edited by hand.
 - `gui/i18n.py` — reads `locale/userLocale`, tries the full locale then the
   two-letter language, installs the first matching `.qm`, and removes it on
-  unload. `es_ES` falls back to the Spanish source.
+  unload. `en_US` falls back to the English source.
 
 Workflow: `make transup`, `make transcompile`, `make i18n-check`. See the
 [i18n guide](../scripts/i18n/README.md) for additional languages.
@@ -485,8 +485,8 @@ value; the GUI must not duplicate the geographic-CRS rule.
 
 ## ⚠️ Known limitations
 
-- **Translations**: Spanish is the source language; an English catalog is
-  included. More catalogs can be added under `i18n/` (see the i18n README).
+- **Translations**: English is the source language; six catalogs are included.
+  More catalogs can be added under `i18n/` (see the i18n README).
 - **CTRL snapping depends on the QGIS snapping configuration** (mode, tolerance
   and layers). If the engine finds no match, the free point is used.
 - **Repository** is <https://github.com/geociencio/freehand-digitize>; upstream `freehandEditing` is credited as

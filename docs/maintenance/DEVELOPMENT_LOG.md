@@ -5,6 +5,20 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-22] - Inglés como base i18n (sin release)
+
+### Resultado
+- Código con cadenas fuente en inglés; 49 mensajes.
+- Catálogos `es`, `pt_BR`, `fr`, `de`, `it`, `id` generados y compilados.
+- Español conserva exactamente la redacción anterior.
+- Tests: 146 (57 unitarios + 89 integración); pre-release y Docker verdes.
+- Versión **2.0.2**: sin tag, release ni subida al portal.
+
+### Pendiente
+- Publicar 2.1.0 solo cuando 2.0.2 esté público en el portal.
+
+---
+
 ## [2026-11-21] - Cierre de sesión: gate + 2.0.2 (07:40)
 
 ### Resultado

@@ -56,9 +56,9 @@
       published and deployed; **kept by the user**; portal upload pending 2.0.1
       approval.
 - [ ] Portal: confirm 2.0.1 approval (portal 502 on 2026-11-22), then upload 2.0.2.
-- [ ] English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs
-      (`docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`, revision 3) proposed;
-      release gated until 2.0.2 is public in the portal.
+- [x] English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs
+      implemented; 146 tests green. Version stays 2.0.2; release gated until
+      2.0.2 is public in the portal.
 - [ ] Portal: 2.0.1 pending approval; 2.0.2 GitHub-only, not uploaded.
 
 ### Internationalization

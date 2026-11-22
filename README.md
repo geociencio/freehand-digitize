@@ -34,7 +34,7 @@ stroke across them and release.
 | Secondary button | Finishes the current stroke (like the original plugin). |
 | `Esc` | Cancels the stroke; with no stroke it deactivates the tool. |
 | No dependencies | No external Python packages; uses `qgis.PyQt`. |
-| Languages | Spanish source UI with an English catalog; more catalogs can be added. |
+| Languages | English source UI with Spanish, Portuguese (Brazil), French, German, Italian and Indonesian catalogs. |
 
 ### Parity with `freehandEditing`
 
@@ -219,7 +219,7 @@ The `uv` modernization guide is in
 - [Deleted-layer lifecycle fix](docs/maintainer/PLAN_LAYER_LIFECYCLE.md)
 - [QGIS integration test gate](docs/maintainer/PLAN_QGIS_TEST_GATE.md)
 - [Deleted-layer guards P1](docs/maintainer/PLAN_LAYER_GUARDS.md)
-- [English i18n base (proposed)](docs/maintainer/PLAN_I18N_ENGLISH_BASE.md)
+- [English i18n base (implemented, release gated)](docs/maintainer/PLAN_I18N_ENGLISH_BASE.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

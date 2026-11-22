@@ -16,10 +16,10 @@
         "overall_effectiveness_score": 1.0,
         "task_completion_rate": 1.0,
         "avg_retries_per_session": 1.0,
-        "tests_ok": 145,
-        "tests_static": 145,
-        "tests_executed": 145,
-        "test_count": 145,
+        "tests_ok": 146,
+        "tests_static": 146,
+        "tests_executed": 146,
+        "test_count": 146,
         "quality_score_latest": 56.2,
         "maintainability_score": 99.9,
         "security_score": 100.0,
@@ -38,7 +38,7 @@
             "MISSING_TYPE_HINTS": 0
         },
         "tests_unit": 57,
-        "tests_integration": 88,
+        "tests_integration": 89,
         "i18n_catalogs": [
             "en"
         ]
@@ -61,17 +61,17 @@
         "tests_local": {
             "date": "2026-11-19",
             "command": "PYTHONPATH=.. uv run --frozen python -m unittest discover tests",
-            "result": "145 ran, 88 skipped (integration), OK"
+            "result": "146 ran, 89 skipped (integration), OK"
         },
         "tests_qgis": {
             "date": "2026-11-19",
             "command": "make test-qgis",
-            "result": "88 ran, OK (QGIS 4.2.2, Qt6; REQUIRE_QGIS=1)"
+            "result": "89 ran, OK (QGIS 4.2.2, Qt6; REQUIRE_QGIS=1)"
         },
         "tests_container": {
             "date": "2026-11-19",
             "command": "make docker-test",
-            "result": "88 ran, OK (qgis/qgis:latest, Qt5; REQUIRE_QGIS=1)"
+            "result": "89 ran, OK (qgis/qgis:latest, Qt5; REQUIRE_QGIS=1)"
         },
         "packaging": {
             "date": "2026-11-19",
@@ -82,12 +82,12 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "28 documentation files, relative links OK"
+            "result": "29 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
             "command": "make i18n-check",
-            "result": "7 catalog tests OK; 49 messages translated; en.qm present"
+            "result": "7 catalog tests OK; 49 messages x 6 catalogs; en source"
         },
         "github_actions": {
             "date": "2026-11-20",

@@ -2,7 +2,8 @@
 
 All strings use the ``FreehandDigitize`` translation context so a single
 catalog covers the toolbar, map tool, feature creator and warnings. The source
-language is Spanish; English is provided by ``i18n/freehand_digitize_en.ts``.
+language is English; Spanish and the other locales are provided by the catalogs
+in ``i18n/``.
 
 The literals stay inside ``QCoreApplication.translate`` calls so ``pylupdate6``
 can extract them; do not replace them with variables.
@@ -15,16 +16,16 @@ from qgis.PyQt.QtCore import QCoreApplication
 
 def action_text() -> str:
     """Return the toolbar/menu action text."""
-    return QCoreApplication.translate("FreehandDigitize", "Dibujo a mano alzada")
+    return QCoreApplication.translate("FreehandDigitize", "Freehand digitize")
 
 
 def action_tooltip() -> str:
     """Return the action tooltip."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "Arrastra con el botón izquierdo para dibujar una línea o un polígono en la "
-        "capa activa.\nMantén Ctrl para ajustar el primer y el último vértice; "
-        "Esc cancela el trazo.",
+        "Drag with the left mouse button to draw a line or polygon on the active "
+        "layer.\nHold Ctrl to snap the first and last vertex; Esc cancels the "
+        "stroke.",
     )
 
 
@@ -32,8 +33,8 @@ def tolerance_tooltip() -> str:
     """Return the projection-aware tolerance tooltip."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "Tolerancia de simplificación en unidades de la capa (0 = sin simplificación).\n"
-        "Se desactiva con CRS geográficos, donde la simplificación siempre usa 0.",
+        "Simplification tolerance in layer units (0 = no simplification).\n"
+        "Disabled for geographic CRS, where simplification always uses 0.",
     )
 
 
@@ -41,114 +42,115 @@ def tolerance_tooltip_geographic() -> str:
     """Return the tooltip shown for geographic layers."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "La capa activa usa un CRS geográfico: la tolerancia se ignora y la simplificación usa 0.",
+        "The active layer uses a geographic CRS: the tolerance is ignored and "
+        "simplification uses 0.",
     )
 
 
 def edit_command_text() -> str:
     """Return the undo-stack label for a created feature."""
-    return QCoreApplication.translate("FreehandDigitize", "Freehand Digitize: añadir entidad")
+    return QCoreApplication.translate("FreehandDigitize", "Freehand Digitize: add feature")
 
 
 def reshape_action_text() -> str:
     """Return the reshape action text."""
-    return QCoreApplication.translate("FreehandDigitize", "Reformar geometría")
+    return QCoreApplication.translate("FreehandDigitize", "Reshape feature")
 
 
 def reshape_action_tooltip() -> str:
     """Return the reshape action tooltip."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "Dibuja un trazo que cruce la geometría que quieras reformar. Si hay una "
-        "selección, solo se reformarán las entidades seleccionadas.",
+        "Draw a stroke crossing the geometry you want to reshape. If there is a "
+        "selection, only the selected features are reshaped.",
     )
 
 
 def reshape_edit_command_text() -> str:
     """Return the undo-stack label for a reshape operation."""
-    return QCoreApplication.translate("FreehandDigitize", "Freehand Digitize: reformar entidad(es)")
+    return QCoreApplication.translate("FreehandDigitize", "Freehand Digitize: reshape feature(s)")
 
 
 def no_feature_under_stroke_text() -> str:
     """Return the warning shown when the stroke crosses no feature."""
-    return QCoreApplication.translate("FreehandDigitize", "El trazo no cruza ninguna entidad.")
+    return QCoreApplication.translate("FreehandDigitize", "The stroke does not cross any feature.")
 
 
 def no_reshape_happened_text() -> str:
     """Return the warning shown when candidates could not be reshaped."""
-    return QCoreApplication.translate("FreehandDigitize", "El trazo no reformó ninguna entidad.")
+    return QCoreApplication.translate("FreehandDigitize", "The stroke did not reshape any feature.")
 
 
 def invalid_reshaped_geometry_text() -> str:
     """Return the warning shown when the reshaped geometry is invalid."""
     return QCoreApplication.translate(
-        "FreehandDigitize", "La geometría reformada no es válida; no se modificó nada."
+        "FreehandDigitize", "The reshaped geometry is not valid; nothing was changed."
     )
 
 
 def reshape_rejected_text(name: str) -> str:
     """Return the warning shown when the provider rejects a reshape."""
     return QCoreApplication.translate(
-        "FreehandDigitize", "La capa «{name}» rechazó la reforma."
+        "FreehandDigitize", "Layer “{name}” rejected the reshape."
     ).format(name=name)
 
 
 def reshaped_count_text(count: int) -> str:
     """Return the information message shown after a successful reshape."""
-    return QCoreApplication.translate(
-        "FreehandDigitize", "{count} entidad(es) reformada(s)."
-    ).format(count=count)
+    return QCoreApplication.translate("FreehandDigitize", "{count} feature(s) reshaped.").format(
+        count=count
+    )
 
 
 def edit_mode_required_text(name: str) -> str:
     """Return the warning shown when the layer is not in edit mode."""
     return QCoreApplication.translate(
-        "FreehandDigitize", "Activa la edición de la capa «{name}» antes de dibujar."
+        "FreehandDigitize", "Start editing layer “{name}” before drawing."
     ).format(name=name)
 
 
 def sampling_action_text() -> str:
     """Return the sampling-settings action text."""
-    return QCoreApplication.translate("FreehandDigitize", "Configuración de muestreo")
+    return QCoreApplication.translate("FreehandDigitize", "Sampling settings")
 
 
 def sampling_action_tooltip() -> str:
     """Return the sampling-settings action tooltip."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "Elige la unidad y la distancia mínima entre vértices del trazo.",
+        "Choose the unit and the minimum distance between stroke vertices.",
     )
 
 
 def sampling_dialog_title() -> str:
     """Return the sampling dialog title."""
-    return QCoreApplication.translate("FreehandDigitize", "Configuración de muestreo")
+    return QCoreApplication.translate("FreehandDigitize", "Sampling settings")
 
 
 def sampling_unit_label() -> str:
     """Return the sampling-unit field label."""
-    return QCoreApplication.translate("FreehandDigitize", "Unidad de muestreo:")
+    return QCoreApplication.translate("FreehandDigitize", "Sampling unit:")
 
 
 def sampling_pixels_text() -> str:
     """Return the pixels unit label."""
-    return QCoreApplication.translate("FreehandDigitize", "Píxeles")
+    return QCoreApplication.translate("FreehandDigitize", "Pixels")
 
 
 def sampling_layer_units_text() -> str:
     """Return the layer-units unit label."""
-    return QCoreApplication.translate("FreehandDigitize", "Unidades de la capa")
+    return QCoreApplication.translate("FreehandDigitize", "Layer units")
 
 
 def sampling_distance_label() -> str:
     """Return the minimum-distance field label."""
-    return QCoreApplication.translate("FreehandDigitize", "Distancia mínima:")
+    return QCoreApplication.translate("FreehandDigitize", "Minimum distance:")
 
 
 def sampling_distance_tooltip() -> str:
     """Return the minimum-distance tooltip."""
     return QCoreApplication.translate(
-        "FreehandDigitize", "Distancia mínima entre vértices del trazo."
+        "FreehandDigitize", "Minimum distance between stroke vertices."
     )
 
 
@@ -156,7 +158,7 @@ def sampling_help_text() -> str:
     """Return the general sampling explanation."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "Píxeles: independiente del CRS y del zoom. Unidades de capa: depende del CRS.",
+        "Pixels: independent of CRS and zoom. Layer units: depends on the CRS.",
     )
 
 
@@ -164,86 +166,85 @@ def sampling_geographic_warning_text() -> str:
     """Return the geographic-CRS warning."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "La capa activa usa un CRS geográfico. En unidades de capa la distancia se "
-        "mide en grados; un grado de longitud no tiene una longitud constante "
-        "(depende de la latitud). Usa píxeles si quieres una densidad uniforme en "
-        "pantalla.",
+        "The active layer uses a geographic CRS. In layer units the distance is "
+        "measured in degrees; one degree of longitude is not a constant length "
+        "(it depends on latitude). Use pixels for a uniform on-screen density.",
     )
 
 
 def sampling_ok_text() -> str:
     """Return the dialog OK button text."""
-    return QCoreApplication.translate("FreehandDigitize", "Aceptar")
+    return QCoreApplication.translate("FreehandDigitize", "OK")
 
 
 def sampling_cancel_text() -> str:
     """Return the dialog Cancel button text."""
-    return QCoreApplication.translate("FreehandDigitize", "Cancelar")
+    return QCoreApplication.translate("FreehandDigitize", "Cancel")
 
 
 def sampling_reset_text() -> str:
     """Return the dialog Reset button text."""
-    return QCoreApplication.translate("FreehandDigitize", "Restablecer")
+    return QCoreApplication.translate("FreehandDigitize", "Reset")
 
 
 def difference_action_text() -> str:
     """Return the feature-difference action text."""
-    return QCoreApplication.translate("FreehandDigitize", "Diferencia de entidades")
+    return QCoreApplication.translate("FreehandDigitize", "Feature difference")
 
 
 def difference_action_tooltip() -> str:
     """Return the feature-difference action tooltip."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "Resta una entidad de otra. Con dos entidades seleccionadas abre el "
-        "diálogo; si no, haz clic en la objetivo y luego en la de corte.",
+        "Subtract one feature from another. With two selected features the dialog "
+        "opens; otherwise click the target and then the cutter.",
     )
 
 
 def difference_dialog_title() -> str:
     """Return the difference dialog title."""
-    return QCoreApplication.translate("FreehandDigitize", "Diferencia de entidades")
+    return QCoreApplication.translate("FreehandDigitize", "Feature difference")
 
 
 def difference_target_label() -> str:
     """Return the target-feature field label."""
-    return QCoreApplication.translate("FreehandDigitize", "Entidad objetivo:")
+    return QCoreApplication.translate("FreehandDigitize", "Target feature:")
 
 
 def difference_cutter_label() -> str:
     """Return the cutter-feature field label."""
-    return QCoreApplication.translate("FreehandDigitize", "Entidad de corte:")
+    return QCoreApplication.translate("FreehandDigitize", "Cutter feature:")
 
 
 def difference_help_text() -> str:
     """Return the difference dialog explanation."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "La entidad objetivo se actualiza; la de corte no se modifica.",
+        "The target feature is updated; the cutter is not modified.",
     )
 
 
 def difference_pick_target_text() -> str:
     """Return the first pick-tool instruction."""
-    return QCoreApplication.translate("FreehandDigitize", "Haz clic en la entidad objetivo.")
+    return QCoreApplication.translate("FreehandDigitize", "Click the target feature.")
 
 
 def difference_pick_cutter_text() -> str:
     """Return the second pick-tool instruction."""
-    return QCoreApplication.translate("FreehandDigitize", "Haz clic en la entidad de corte.")
+    return QCoreApplication.translate("FreehandDigitize", "Click the cutter feature.")
 
 
 def difference_same_feature_text() -> str:
     """Return the warning for picking the same feature twice."""
     return QCoreApplication.translate(
-        "FreehandDigitize", "La entidad de corte debe ser distinta de la objetivo."
+        "FreehandDigitize", "The cutter feature must be different from the target."
     )
 
 
 def difference_empty_text() -> str:
     """Return the warning for an empty difference."""
     return QCoreApplication.translate(
-        "FreehandDigitize", "La diferencia está vacía; no se modificó la entidad."
+        "FreehandDigitize", "The difference is empty; the feature was not changed."
     )
 
 
@@ -251,37 +252,35 @@ def difference_invalid_text() -> str:
     """Return the warning for an invalid difference."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "La geometría resultante no es válida; no se modificó la entidad.",
+        "The resulting geometry is not valid; the feature was not changed.",
     )
 
 
 def difference_rejected_text(name: str) -> str:
     """Return the warning for a provider-rejected difference."""
     return QCoreApplication.translate(
-        "FreehandDigitize", "La capa «{name}» rechazó la diferencia."
+        "FreehandDigitize", "Layer “{name}” rejected the difference."
     ).format(name=name)
 
 
 def difference_edit_command_text() -> str:
     """Return the undo-stack label for a difference operation."""
-    return QCoreApplication.translate(
-        "FreehandDigitize", "Freehand Digitize: diferencia de entidades"
-    )
+    return QCoreApplication.translate("FreehandDigitize", "Freehand Digitize: feature difference")
 
 
 def difference_apply_text() -> str:
     """Return the difference dialog Apply button text."""
-    return QCoreApplication.translate("FreehandDigitize", "Aplicar")
+    return QCoreApplication.translate("FreehandDigitize", "Apply")
 
 
 def difference_applied_text() -> str:
     """Return the information message after a successful difference."""
-    return QCoreApplication.translate("FreehandDigitize", "Diferencia aplicada.")
+    return QCoreApplication.translate("FreehandDigitize", "Difference applied.")
 
 
 def layer_gone_text() -> str:
     """Return the warning used when the layer was deleted."""
     return QCoreApplication.translate(
         "FreehandDigitize",
-        "La capa ya no está disponible; se canceló la operación.",
+        "The layer is no longer available; the operation was cancelled.",
     )
