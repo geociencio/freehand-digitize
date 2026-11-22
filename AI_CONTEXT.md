@@ -108,5 +108,5 @@ make zip             # package + validate ZIP
   is unavailable (`REQUIRE_QGIS=1`).
 - Portal was unavailable (502) on 2026-11-22; recheck 2.0.1 approval later.
 - English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs plan
-  (`docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`, revision 2) is PROPOSED; no code
-  changes until approval.
+  (`docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`, revision 3) is PROPOSED; release
+  gated until 2.0.2 is public in the portal.

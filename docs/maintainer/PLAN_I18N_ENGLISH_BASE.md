@@ -1,10 +1,12 @@
 # Implementation Plan — English as the i18n Base
 
-> **Status: PROPOSED (revision 2)** — no code changes until the user approves.
+> **Status: PROPOSED (revision 3)** — no code changes until the user approves.
 >
-> Type: i18n refactor | Target version: **2.1.0** | Date: 2026-11-22
+> Type: i18n refactor | Target version: **2.1.0 (release gated)** | Date: 2026-11-22
 > Revision 2: includes the `pt_BR`, `fr`, `de`, `it` and `id` catalogs in the
-> same change, not just the English base.
+> same change. Revision 3 corrects the portal sequence: 2.0.1 is pending in the
+> portal and 2.0.2 is GitHub-only, so 2.1.0 is **not tagged or published** until
+> 2.0.x is resolved in the portal.
 > Procedure: [CHANGE_PROCEDURE.md](CHANGE_PROCEDURE.md)
 
 ---
@@ -166,16 +168,37 @@ The old `en.ts` and `en.json` are removed; Git history preserves them.
 
 ---
 
-## 5. Versioning and release
+## 5. Versioning and release gate
 
-**2.1.0** (minor):
+**2.1.0** (minor, release blocked):
 
 - No plugin API or behaviour change; the visible strings are the same.
-- It is a structural i18n change and the base for adding `pt_BR`, `fr`, `de`, etc.
-- Tag/GitHub Release `v2.1.0`; deploy locally.
-- **Portal sequencing:** 2.0.1 is pending and 2.0.2 is already on GitHub. Do not
-  upload 2.1.0 until the 2.0.x portal status is known; if the portal accepts one
-  current upload, prefer the newest stable after 2.0.1 is resolved.
+- It is a structural i18n change and the base for adding more languages.
+
+### Current portal reality
+
+| Version | GitHub | Portal |
+| :--- | :--- | :--- |
+| 2.0.1 | published | **uploaded; approval pending** |
+| 2.0.2 | published | **not uploaded** |
+| 2.1.0 | not created | not uploaded |
+
+### Release gate
+
+1. Wait for **2.0.1 portal approval**.
+2. Upload **2.0.2** to the portal (or handle a 2.0.1 block first).
+3. Wait for **2.0.2 portal approval**.
+4. Only then tag and upload **2.1.0**.
+
+While the portal is unresolved:
+
+- do not create the `v2.1.0` tag;
+- do not upload 2.1.0;
+- implementation may proceed on the working tree, but the version bump and
+  release metadata stay at 2.0.2 until the gate opens.
+
+If the user prefers not to develop ahead of the portal, implementation waits
+until 2.0.2 is public.
 
 ---
 
@@ -206,8 +229,9 @@ The old `en.ts` and `en.json` are removed; Git history preserves them.
 - [ ] `make i18n-check` passes with six catalogs.
 - [ ] ~146 tests pass in QGIS 4.2.2 and the Qt5 container.
 - [ ] `make pre-release`, `make zip`, security and Qt6 checks pass.
-- [ ] Metadata advertises English (source) and Spanish.
+- [ ] Metadata advertises English (source) and the six catalogs.
 - [ ] CI green with the gate active.
+- [ ] 2.1.0 is not tagged or uploaded before 2.0.2 is public in the portal.
 
 ---
 
@@ -224,11 +248,11 @@ The old `en.ts` and `en.json` are removed; Git history preserves them.
 
 The plan is **PROPOSED**. Implementation starts only after the user approves:
 
-1. English as source + Spanish as the only catalog, version **2.1.0**.
-2. Reuse the current English catalog as the new source (recommended) rather than
-   rewriting the English from scratch.
+1. English as source + `es`, `pt_BR`, `fr`, `de`, `it` and `id` catalogs.
+2. Reuse the current English catalog as the new source.
 3. Keep the Spanish wording identical to the current UI.
-4. Ship `pt_BR`, `fr`, `de`, `it` and `id` in the same 2.1.0 release, with
-   reviewed translations.
+4. Ship the five new catalogs in the same change, with reviewed translations.
+5. **Do not tag or publish 2.1.0 until 2.0.2 is public in the portal.**
 
-Do you approve this revised plan?
+Do you approve this revision 3, and should implementation start now or wait until
+2.0.2 is public in the portal?
