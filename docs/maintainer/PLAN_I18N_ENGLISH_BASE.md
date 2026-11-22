@@ -256,7 +256,7 @@ until 2.0.2 is public.
 - Tests: **146** (57 unit + 89 integration incl. gate); `make test-qgis` 89 OK;
   `make docker-test` 89 OK; `make pre-release` OK.
 - Version stays **2.0.2**; no tag, release or portal upload.
-- **Commit:** to be filled by the i18n commit.
+- **Commit:** `1cf3165 feat(i18n): make English the source language`.
 
 ---
 
