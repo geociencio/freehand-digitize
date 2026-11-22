@@ -243,7 +243,7 @@ This plan does not create a tag, release, ZIP or portal upload.
   exit; `make test-qgis` and the Docker/CI command use it (10/10 stable local
   runs).
 - No plugin version bump, tag, ZIP or portal upload.
-- **Commit:** to be filled by the release-notes commit.
+- **Commit:** `176f25c chore(release): add versioned notes and stable test runner`.
 
 ---
 
