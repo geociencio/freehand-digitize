@@ -107,5 +107,6 @@ make zip             # package + validate ZIP
 - QA gate fixed: `test-qgis` auto-detects/uses `QGIS_PYTHON` and fails if QGIS
   is unavailable (`REQUIRE_QGIS=1`).
 - Portal was unavailable (502) on 2026-11-22; recheck 2.0.1 approval later.
-- English i18n base plan (`docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`) is
-  PROPOSED; no code changes until approval.
+- English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs plan
+  (`docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`, revision 2) is PROPOSED; no code
+  changes until approval.
