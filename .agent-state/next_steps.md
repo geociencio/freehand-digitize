@@ -53,10 +53,12 @@ make zip
 2. After 2.0.1/2.0.2 portal approval, announce the patch.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
-4. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
+4. **English i18n base**: approve/implement
+   `docs/maintainer/PLAN_I18N_ENGLISH_BASE.md` as 2.1.0.
+5. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
    README, CHANGELOG, `pyproject.toml`).
-5. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
-6. Optional: add `ai-context-core` and `make context` if the team wants the
+6. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
+7. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## ▶️ How to resume

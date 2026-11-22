@@ -219,6 +219,7 @@ The `uv` modernization guide is in
 - [Deleted-layer lifecycle fix](docs/maintainer/PLAN_LAYER_LIFECYCLE.md)
 - [QGIS integration test gate](docs/maintainer/PLAN_QGIS_TEST_GATE.md)
 - [Deleted-layer guards P1](docs/maintainer/PLAN_LAYER_GUARDS.md)
+- [English i18n base (proposed)](docs/maintainer/PLAN_I18N_ENGLISH_BASE.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

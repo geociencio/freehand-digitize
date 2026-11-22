@@ -329,6 +329,7 @@ Load only the relevant `SKILL.md` on demand.
 - **Deleted-layer lifecycle fix (implemented in 2.0.1)**: `docs/maintainer/PLAN_LAYER_LIFECYCLE.md`
 - **QGIS integration test gate (implemented)**: `docs/maintainer/PLAN_QGIS_TEST_GATE.md`
 - **Deleted-layer guards P1 (implemented in 2.0.2)**: `docs/maintainer/PLAN_LAYER_GUARDS.md`
+- **English i18n base (proposed)**: `docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`

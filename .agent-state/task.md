@@ -56,6 +56,8 @@
       published and deployed; **kept by the user**; portal upload pending 2.0.1
       approval.
 - [ ] Portal: confirm 2.0.1 approval (portal 502 on 2026-11-22), then upload 2.0.2.
+- [ ] English i18n base (`docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`) proposed;
+      waiting for approval before code changes.
 
 ### Internationalization
 
