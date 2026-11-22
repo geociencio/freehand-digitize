@@ -28,7 +28,7 @@
 
 - [x] `pyproject.toml`, `uv.lock`, `.python-version`, Makefile.
 - [x] ruff / flake8 / mypy / qgis-analyzer gates green.
-- [x] 145 tests (57 unit + 88 QGIS 4.2.2 integration incl. gate) green.
+- [x] 150 tests (61 unit + 89 QGIS 4.2.2 integration incl. gate) green.
 - [x] `qgis-manage validate --strict` and ZIP validated.
 - [x] CI, pre-commit, Dockerfile, devcontainer, detect-secrets baseline.
 - [x] Python 3.9 syntax compatibility test.
@@ -62,6 +62,7 @@
 - [ ] Portal: 2.0.1 pending approval; 2.0.2 GitHub-only, not uploaded.
 - [x] Versioned release notes implemented (`docs/releases/notes/vX.Y.Z.md`),
       validator and release workflow updated; 150 tests green.
+- [x] Qt teardown stabilized with `tests/run_integration.py` (10/10).
 
 ### Internationalization
 

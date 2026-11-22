@@ -5,6 +5,20 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-22] - Cierre de sesión: i18n y release notes (09:00)
+
+### Resultado
+- Inglés como fuente + seis catálogos (sin release; versión 2.0.2).
+- Release notes versionadas 2.0.0–2.0.2, validador y workflow `--notes-file`.
+- Runner de integración estable con `DeferredDelete`; 10/10.
+- 150 tests; pre-release y Docker verdes; CI verde.
+
+### Handover
+- Portal: 2.0.1 pendiente; 2.0.2 solo en GitHub.
+- 2.1.0 y su nota quedan bloqueados hasta que 2.0.2 sea público en el portal.
+
+---
+
 ## [2026-11-22] - Release notes versionadas y runner estable
 
 ### Resultado

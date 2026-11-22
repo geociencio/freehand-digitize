@@ -1,7 +1,7 @@
 # Next Steps — Freehand Digitize 2.0.2
 
 **Updated:** 2026-11-22
-**Session:** start_2026-11-22
+**Session:** i18n_release_notes
 
 ## ✅ Current state
 
@@ -14,7 +14,7 @@
   deleted-layer paths in creators/tool/callbacks and is **kept by the user**.
 - **Architecture**: `core/` (no QGIS/Qt) + `gui/` (PyQGIS) +
   `freehand_plugin.py` (wiring); Qt5/Qt6 shims in `gui/qt_compat.py`.
-- **Tests**: 145 total — 57 unit (no QGIS) and 88 integration (incl. QGIS gate),
+- **Tests**: 150 total — 61 unit (no QGIS) and 89 integration (incl. QGIS gate),
   green against both QGIS 4.2.2 (host, Qt6) and the QGIS container (Qt5);
   `make test` reports the integration layer as skipped when QGIS is absent.
 - **QA gate fixed**: `test-qgis` auto-detects a QGIS Python (or uses
@@ -23,8 +23,12 @@
   `qgis-manage validate --strict`, `package --repo-check`, `validate --zip`,
   `security --portal` (0 findings) and `pyqgis4-checker` (0 enum errors) green;
   CI/pre-commit/Docker/detect-secrets configured.
-- **i18n**: Spanish source UI with an English catalog; locale loader, master
-  data JSON, `make i18n-check` and catalog tests.
+- **i18n**: English source UI with `es`, `pt_BR`, `fr`, `de`, `it`, `id`
+  catalogs; locale loader, master data JSON, `make i18n-check` and catalog tests.
+- **Release notes**: `docs/releases/notes/vX.Y.Z.md`, template, validator and
+  `--notes-file` in the release workflow.
+- **Stable QGIS tests**: `tests/run_integration.py` flushes Qt `DeferredDelete`
+  before exit; no intermittent teardown abort.
 - **Docs**: English README, CHANGELOG, metadata and user guide; architecture,
   style/commit/user-guide conventions, a development log and `make docs-check`;
   internal plan, parity report, development log and logging guide remain Spanish.
@@ -58,10 +62,12 @@ make zip
    2.1.0 until 2.0.2 is public in the portal.
 5. **Versioned release notes implemented**: `docs/releases/notes/vX.Y.Z.md`,
    `make release-notes-check` and the release workflow now use `--notes-file`.
-6. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
+6. Release 2.1.0 only after 2.0.2 is public in the portal; create
+   `docs/releases/notes/v2.1.0.md` at that point.
+7. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
    README, CHANGELOG, `pyproject.toml`).
-7. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
-8. Optional: add `ai-context-core` and `make context` if the team wants the
+8. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
+9. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## ▶️ How to resume

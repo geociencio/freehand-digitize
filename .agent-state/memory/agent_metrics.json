@@ -28,7 +28,7 @@
         "docstring_coverage": 100.0,
         "cyclomatic_complexity_gate": "PASS",
         "module_size_gate": "PASS",
-        "i18n_hygiene_gate": "PASS (en catalog; 48 messages; make i18n-check)",
+        "i18n_hygiene_gate": "PASS (6 catalogs; 49 messages each; make i18n-check)",
         "total_issues": 4,
         "issue_breakdown": {
             "GOD_OBJECT": 4,
@@ -40,7 +40,12 @@
         "tests_unit": 61,
         "tests_integration": 89,
         "i18n_catalogs": [
-            "en"
+            "es",
+            "pt_BR",
+            "fr",
+            "de",
+            "it",
+            "id"
         ]
     },
     "ground_truth_sources": {
@@ -82,7 +87,7 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "36 documentation files, relative links OK"
+            "result": "37 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
@@ -105,22 +110,38 @@
         "human_escalations": 1
     },
     "last_session": {
-        "date": "2026-11-21",
-        "topic": "release_2_0_2_layer_guards",
-        "tests_ok": 145,
+        "date": "2026-11-22",
+        "topic": "i18n_release_notes",
+        "tests_ok": 150,
         "quality_score": 56.2,
         "task_completion_rate": 1.0,
         "retries": 0,
         "stop_conditions_triggered": 0,
         "tasks": [
-            "Fixed the QGIS integration false-green with REQUIRE_QGIS=1",
-            "Implemented deleted-layer guards (P1) as 2.0.2",
-            "Released and deployed 2.0.2; user chose to keep it",
-            "Recorded the plan-first process lesson"
+            "Inverted i18n to English and shipped es/pt_BR/fr/de/it/id catalogs",
+            "Added versioned release notes, backfill and validator",
+            "Stabilized QGIS integration teardown with DeferredDelete runner",
+            "Kept version 2.0.2 and the portal release gate"
         ],
         "status": "SUCCESS"
     },
     "history": [
+        {
+            "date": "2026-11-21",
+            "tests_ok": 145,
+            "quality_score": 56.2,
+            "task_completion_rate": 1.0,
+            "retries": 0,
+            "stop_conditions_triggered": 0,
+            "tasks": [
+                "Fixed the QGIS integration false-green with REQUIRE_QGIS=1",
+                "Implemented deleted-layer guards (P1) as 2.0.2",
+                "Released and deployed 2.0.2; user chose to keep it",
+                "Recorded the plan-first process lesson"
+            ],
+            "status": "SUCCESS",
+            "session": "release_2_0_2_layer_guards"
+        },
         {
             "date": "2026-11-21",
             "tests_ok": 138,
@@ -192,7 +213,7 @@
         "sha256": "74246a6e8b6973a4af0aadd41ee7dd4f5760c064da229ca06f3b27a575ada960",
         "github_release": "published",
         "portal": "2.0.0 approved; 2.0.1 uploaded pending approval; 2.0.2 not uploaded",
-        "ci_run": "44684907873",
+        "ci_run": "44903387347",
         "github_release_url": "https://github.com/geociencio/freehand-digitize/releases/tag/v2.0.2",
         "published_at": "2026-11-20T06:11:27Z",
         "portal_url": "https://plugins.qgis.org/plugins/freehand_digitize/",

@@ -112,3 +112,5 @@ make zip             # package + validate ZIP
   in the portal.
 - Versioned release notes implemented under `docs/releases/notes/`; the release
   workflow uses `--notes-file` and `make release-notes-check`.
+- QGIS integration tests use `tests/run_integration.py`, which flushes Qt
+  `DeferredDelete` objects before exit to avoid intermittent teardown aborts.
