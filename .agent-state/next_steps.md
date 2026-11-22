@@ -56,10 +56,12 @@ make zip
 4. **English i18n base + five catalogs implemented** (unreleased). Version stays
    2.0.2. **Gated:** 2.0.1 pending and 2.0.2 GitHub-only; do not tag/publish
    2.1.0 until 2.0.2 is public in the portal.
-5. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
+5. **Versioned release notes**: approve/implement
+   `docs/maintainer/PLAN_RELEASE_NOTES.md` (docs + validator, no plugin bump).
+6. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
    README, CHANGELOG, `pyproject.toml`).
-6. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
-7. Optional: add `ai-context-core` and `make context` if the team wants the
+7. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
+8. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## ▶️ How to resume

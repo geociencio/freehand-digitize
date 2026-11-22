@@ -60,6 +60,8 @@
       implemented; 146 tests green. Version stays 2.0.2; release gated until
       2.0.2 is public in the portal.
 - [ ] Portal: 2.0.1 pending approval; 2.0.2 GitHub-only, not uploaded.
+- [ ] Versioned release notes (`docs/maintainer/PLAN_RELEASE_NOTES.md`) proposed;
+      waiting for approval before docs/script changes.
 
 ### Internationalization
 

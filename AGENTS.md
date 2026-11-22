@@ -330,6 +330,7 @@ Load only the relevant `SKILL.md` on demand.
 - **QGIS integration test gate (implemented)**: `docs/maintainer/PLAN_QGIS_TEST_GATE.md`
 - **Deleted-layer guards P1 (implemented in 2.0.2)**: `docs/maintainer/PLAN_LAYER_GUARDS.md`
 - **English i18n base (implemented, release gated)**: `docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`
+- **Versioned release notes (proposed)**: `docs/maintainer/PLAN_RELEASE_NOTES.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`
