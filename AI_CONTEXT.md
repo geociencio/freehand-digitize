@@ -10,7 +10,7 @@ A QGIS plugin that restores the freehand line/polygon digitizing features of the
 classic [`freehandEditing`](https://github.com/vinayan/freehandEditing) plugin
 for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
 
-## Current state (2026-11-21)
+## Current state (2026-11-22)
 
 - Version **2.0.2**; `metadata.txt` validated with `qgis-manage validate --strict`.
 - 2.0.1 fixes the deleted-layer `RuntimeError` with `sip.isdeleted` and the
@@ -99,13 +99,11 @@ make zip             # package + validate ZIP
 
 ## Pending
 
-- Portal: 2.0.1 uploaded, approval pending; do not upload 2.0.2 until 2.0.1 is
-  approved (or maintainers confirm superseding).
-- P1: approve/implement `docs/maintainer/PLAN_LAYER_GUARDS.md` as 2.0.2.
+- Portal: 2.0.1 uploaded, approval pending (recheck; 502 on 2026-11-22); do not
+  upload 2.0.2 until 2.0.1 is approved (or maintainers confirm superseding).
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Roadmap approved; no stage started. On request, Stage 1 is
   Backspace-to-remove-vertex for 2.1.0.
 - QA gate fixed: `test-qgis` auto-detects/uses `QGIS_PYTHON` and fails if QGIS
   is unavailable (`REQUIRE_QGIS=1`).
-- Residual deleted-layer guards in `FeatureCreator`, `ReshapeCreator` and
-  `FreehandTool` (edge case after `sip.delete`).
+- Portal was unavailable (502) on 2026-11-22; recheck 2.0.1 approval later.

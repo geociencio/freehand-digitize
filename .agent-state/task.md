@@ -3,7 +3,7 @@
 > Detailed history: `.agent-state/history/tasks/`. This board only tracks the
 > current work; closed sessions are archived.
 
-## 🎯 Focus: 2.0.0 — parity + agentic system + QA
+## 🎯 Focus: 2.0.2 — parity, QA gate and deleted-layer guards
 
 ### Planning and baseline
 
@@ -55,6 +55,7 @@
 - [x] P1 deleted-layer guards implemented as 2.0.2; GitHub Release `v2.0.2`
       published and deployed; **kept by the user**; portal upload pending 2.0.1
       approval.
+- [ ] Portal: confirm 2.0.1 approval (portal 502 on 2026-11-22), then upload 2.0.2.
 
 ### Internationalization
 
@@ -84,8 +85,8 @@
 ## 📌 Pending
 
 - [x] P0 QA gate implemented: `test-qgis` fails when QGIS is unavailable;
-      `forge test-full` runs 82 tests.
-- [ ] Guard the remaining deleted-layer paths in creators/tool.
+      `forge test-full` runs 88 tests.
+- [x] P1 deleted-layer guards implemented as 2.0.2; kept by the user.
 
 - [x] Run `make pre-release` and `make security-scan` end to end.
 - [x] Run `make qt6-check` (packaged ZIP, no enum errors).
