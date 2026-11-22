@@ -41,14 +41,16 @@ Update, in this order, and keep them consistent:
 | `metadata.txt` | `version=X.Y.Z` and a `changelog` entry |
 | `pyproject.toml` | `version = "X.Y.Z"` |
 | `CHANGELOG.md` | new `## X.Y.Z — YYYY-MM-DD` section |
+| `docs/releases/notes/vX.Y.Z.md` | versioned release note (GitHub body) |
 | `AI_CONTEXT.md` | current release and date |
 | `.agent-state/task.md` | close the release tasks |
 | `.agent-state/next_steps.md` | handoff for the next session |
 | `README.md` | only if features or requirements changed |
 
-Use the `changelog-generator` skill to turn commits into user-facing notes. Do
-not invent metrics; record the actual test count and analyzer scores in
-`.agent-state/memory/agent_metrics.json`.
+Use the `changelog-generator` skill to turn commits into user-facing notes.
+Create `docs/releases/notes/vX.Y.Z.md` from the template and run
+`make release-notes-check`. Do not invent metrics; record the actual test count
+and analyzer scores in `.agent-state/memory/agent_metrics.json`.
 
 ## Phase 3 — Final verification
 
@@ -62,8 +64,8 @@ make portal-check
 `make zip` must produce `dist/freehand_digitize.X.Y.Z.zip` with:
 
 - one `freehand_digitize/` root folder;
-- `metadata.txt`, `__init__.py`, `LICENSE`, `icon.png`, the plugin code and
-  `i18n/freehand_digitize_en.qm`;
+- `metadata.txt`, `__init__.py`, `LICENSE`, `icon.png`, the plugin code and the
+  six `i18n/freehand_digitize_<locale>.qm` catalogs;
 - no `tests/`, `docs/`, `.agent`, `.agent-state`, `.ai-context`, caches,
   `uv.lock` or `i18n/*.ts` (ship `.qm`, not `.ts`).
 
@@ -93,8 +95,14 @@ git push origin main && git push origin vX.Y.Z
    `Validated (configured)` / `Blocked`.
 3. A `Blocked` status means a CRITICAL Bandit/detect-secrets finding. Fix it and
    upload a **new** version; never reuse the version string.
-4. Create the GitHub release with the ZIP attached (draft first if the portal is
-   still validating).
+4. Create the GitHub release with the note file and ZIP attached (draft first if
+   the portal is still validating):
+
+   ```bash
+   gh release create vX.Y.Z --title "Freehand Digitize X.Y.Z" \
+     --notes-file docs/releases/notes/vX.Y.Z.md \
+     dist/freehand_digitize.X.Y.Z.zip dist/freehand_digitize.X.Y.Z.zip.sha256
+   ```
 5. Run `uv run python .agent/tools/forge.py memory prune --apply` and update the
    session history.
 

@@ -110,5 +110,5 @@ make zip             # package + validate ZIP
 - English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs implemented
   (unreleased); version stays 2.0.2 and release is gated until 2.0.2 is public
   in the portal.
-- Versioned release-notes plan (`docs/maintainer/PLAN_RELEASE_NOTES.md`) is
-  PROPOSED; no docs/script changes until approval.
+- Versioned release notes implemented under `docs/releases/notes/`; the release
+  workflow uses `--notes-file` and `make release-notes-check`.

@@ -12,4 +12,4 @@ WORKDIR /app/freehand_digitize
 
 COPY . .
 
-CMD ["python3", "-m", "unittest", "discover", "tests/integration"]
+CMD ["python3", "tests/run_integration.py"]

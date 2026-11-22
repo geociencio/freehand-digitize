@@ -5,6 +5,18 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-22] - Release notes versionadas y runner estable
+
+### Resultado
+- `docs/releases/notes/v2.0.0.md`, `v2.0.1.md`, `v2.0.2.md` y plantilla.
+- `scripts/check_release_notes.py`, `make release-notes-check` y tests.
+- Workflow de release con `--notes-file`; ZIP y catálogos actualizados.
+- `tests/run_integration.py` procesa `DeferredDelete` antes de salir; 10/10
+  ejecuciones estables.
+- 150 tests; sin bump de versión ni release.
+
+---
+
 ## [2026-11-22] - Inglés como base i18n (sin release)
 
 ### Resultado

@@ -1,6 +1,7 @@
 # Implementation Plan — Versioned Release Notes
 
-> **Status: PROPOSED** — no files or workflow changes until the user approves.
+> **Status: IMPLEMENTED (2026-11-22)** — notes, validator and workflow updated;
+> no plugin version bump.
 >
 > Type: docs/release process | Plugin version: unchanged (**2.0.2**)
 > Date: 2026-11-22 | Procedure: [CHANGE_PROCEDURE.md](CHANGE_PROCEDURE.md)
@@ -228,7 +229,25 @@ This plan does not create a tag, release, ZIP or portal upload.
 
 ---
 
-## 7. Approval
+## 7. Results
+
+- Added `docs/releases/README.md`, `RELEASE_NOTES_TEMPLATE.md` and notes
+  `v2.0.0`, `v2.0.1`, `v2.0.2`.
+- Added `scripts/check_release_notes.py` and `make release-notes-check`
+  (included in `pre-release`).
+- Added four unit tests for the validator (150 tests total: 61 unit + 89
+  integration).
+- Updated the release workflow to use `--notes-file`, list all six `.qm`
+  catalogs and run the note check.
+- Added `tests/run_integration.py` to flush Qt `DeferredDelete` objects before
+  exit; `make test-qgis` and the Docker/CI command use it (10/10 stable local
+  runs).
+- No plugin version bump, tag, ZIP or portal upload.
+- **Commit:** to be filled by the release-notes commit.
+
+---
+
+## 8. Approval
 
 The plan is **PROPOSED**. Implementation starts only after approval.
 

@@ -29,7 +29,7 @@ PORTAL_ZIP ?= $(shell ls -t dist/*.zip 2>/dev/null | head -1)
 .PHONY: help sync test test-qgis test-all lint format format-check flake8 mypy \
         analyzer agent-validate qgis-validate zip portal-check security-scan \
         qt6-check docker-build docker-test deploy docs-check transup transcompile \
-        transclean i18n-check pre-release clean
+        transclean i18n-check release-notes-check pre-release clean
 
 help:
 	@echo "Freehand Digitize targets:"
@@ -46,6 +46,7 @@ help:
 	@echo "  make transup         # extract .ts and apply master translations"
 	@echo "  make transcompile    # compile .ts catalogs into .qm"
 	@echo "  make i18n-check      # validate catalogs (unfinished/placeholders/.qm)"
+	@echo "  make release-notes-check # validate docs/releases/notes/vX.Y.Z.md"
 	@echo "  make transclean      # remove compiled .qm files"
 	@echo "  make agent-validate  # Agentic Forge validator"
 	@echo "  make qgis-validate   # qgis-manage validate --strict"
@@ -64,7 +65,7 @@ test:
 
 test-qgis:
 	@test -n "$(QGIS_PYTHON)" || (echo "❌ No QGIS Python found. Set QGIS_PYTHON=/path/to/python3."; exit 1)
-	@QT_QPA_PLATFORM=offscreen REQUIRE_QGIS=1 PYTHONPATH=$(TEST_PYTHONPATH) $(QGIS_PYTHON) -m unittest discover -s tests/integration -t . ; \
+	@QT_QPA_PLATFORM=offscreen REQUIRE_QGIS=1 PYTHONPATH=$(TEST_PYTHONPATH) $(QGIS_PYTHON) tests/run_integration.py ; \
 	code=$$?; \
 	if [ $$code -eq 139 ]; then \
 		echo "⚠️  Tolerated QGIS teardown segfault (exit 139) after the tests."; \
@@ -103,6 +104,9 @@ transclean:
 
 i18n-check:
 	$(UV_RUN) python -m unittest tests.test_i18n_catalogs
+
+release-notes-check:
+	$(UV_RUN) python scripts/check_release_notes.py
 
 flake8:
 	$(UV_RUN) flake8 $(FLAKE8_TARGETS) --config .flake8
@@ -153,12 +157,12 @@ docker-test:
 	docker run --rm -v $(CURDIR):/app/freehand_digitize \
 		-w /app/freehand_digitize -e QT_QPA_PLATFORM=offscreen -e REQUIRE_QGIS=1 \
 		-e PYTHONPATH=/app:/usr/share/qgis/python qgis/qgis:latest \
-		python3 -m unittest discover tests/integration
+		python3 tests/run_integration.py
 
 deploy:
 	$(UV_RUN) qgis-manage deploy --no-compile --qgis-version $(QGIS_VERSION)
 
-pre-release: format-check lint docs-check i18n-check flake8 mypy analyzer agent-validate test test-qgis qgis-validate
+pre-release: format-check lint docs-check i18n-check release-notes-check flake8 mypy analyzer agent-validate test test-qgis qgis-validate
 	@echo "✅ Pre-release validation complete"
 
 clean:

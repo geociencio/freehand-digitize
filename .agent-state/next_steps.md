@@ -56,8 +56,8 @@ make zip
 4. **English i18n base + five catalogs implemented** (unreleased). Version stays
    2.0.2. **Gated:** 2.0.1 pending and 2.0.2 GitHub-only; do not tag/publish
    2.1.0 until 2.0.2 is public in the portal.
-5. **Versioned release notes**: approve/implement
-   `docs/maintainer/PLAN_RELEASE_NOTES.md` (docs + validator, no plugin bump).
+5. **Versioned release notes implemented**: `docs/releases/notes/vX.Y.Z.md`,
+   `make release-notes-check` and the release workflow now use `--notes-file`.
 6. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
    README, CHANGELOG, `pyproject.toml`).
 7. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
