@@ -5,6 +5,22 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-22] - Cierre de sesión: análisis y planes (22:40)
+
+### Resultado
+- Análisis del repositorio y de la guía de estilo de SecInterp.
+- Investigación de requisitos QGIS, seguridad de GitHub Actions, changelog y
+  Diátaxis.
+- Dos planes PROPOSED: snapping/FIDs y docs/CI/empaquetado.
+- Sin cambios de código, versión, tag ni portal.
+
+### Handover
+- Aprobar o ajustar los planes antes de implementar.
+- Portal: 2.0.1 pendiente; 2.0.2 solo GitHub.
+- 2.1.0 bloqueado hasta que 2.0.2 sea público.
+
+---
+
 ## [2026-11-22] - Cierre de sesión: i18n y release notes (09:00)
 
 ### Resultado

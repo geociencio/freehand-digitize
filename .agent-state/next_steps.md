@@ -1,7 +1,7 @@
 # Next Steps — Freehand Digitize 2.0.2
 
 **Updated:** 2026-11-22
-**Session:** i18n_release_notes
+**Session:** repo_analysis_plans
 
 ## ✅ Current state
 
@@ -62,12 +62,11 @@ make zip
    2.1.0 until 2.0.2 is public in the portal.
 5. **Versioned release notes implemented**: `docs/releases/notes/vX.Y.Z.md`,
    `make release-notes-check` and the release workflow now use `--notes-file`.
-6. **Snapping/pick fixes**: approve/implement
-   `docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md` (terminal Ctrl snap,
-   negative/zero FIDs, no-overlap difference).
-7. **Docs/CI hardening**: approve/implement
-   `docs/maintainer/PLAN_DOCS_CI_HARDENING.md` (guide, index, CI permissions,
-   `.ts` packaging, QGIS 3.28).
+6. **Approve the two PROPOSED plans** (no code yet):
+   `docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md` and
+   `docs/maintainer/PLAN_DOCS_CI_HARDENING.md`.
+7. **After approval**: implement snapping/FIDs first (P0), then docs/CI and
+   packaging (P1); release remains gated.
 8. Release 2.1.0 only after 2.0.2 is public in the portal; create
    `docs/releases/notes/v2.1.0.md` at that point.
 9. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,

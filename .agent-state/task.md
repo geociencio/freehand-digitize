@@ -61,9 +61,9 @@
       2.0.2 is public in the portal.
 - [ ] Portal: 2.0.1 pending approval; 2.0.2 GitHub-only, not uploaded.
 - [ ] Snapping/pick fixes (`docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md`)
-      proposed; waiting for approval.
+      proposed; waiting for approval (P0).
 - [ ] Docs/CI/packaging hardening (`docs/maintainer/PLAN_DOCS_CI_HARDENING.md`)
-      proposed; waiting for approval.
+      proposed; waiting for approval (P1).
 - [x] Versioned release notes implemented (`docs/releases/notes/vX.Y.Z.md`),
       validator and release workflow updated; 150 tests green.
 - [x] Qt teardown stabilized with `tests/run_integration.py` (10/10).

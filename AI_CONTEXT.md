@@ -114,6 +114,7 @@ make zip             # package + validate ZIP
   workflow uses `--notes-file` and `make release-notes-check`.
 - QGIS integration tests use `tests/run_integration.py`, which flushes Qt
   `DeferredDelete` objects before exit to avoid intermittent teardown aborts.
-- Two plans are PROPOSED: `PLAN_SNAPPING_PICK_FIXES.md` (terminal Ctrl snap,
-  negative/zero FIDs, no-overlap difference) and `PLAN_DOCS_CI_HARDENING.md`
-  (docs index, CI permissions/pinning, `.ts` packaging, QGIS 3.28).
+- Two plans are PROPOSED and await explicit approval:
+  `PLAN_SNAPPING_PICK_FIXES.md` (terminal Ctrl snap, negative/zero FIDs,
+  no-overlap difference) and `PLAN_DOCS_CI_HARDENING.md` (docs index, CI
+  permissions/pinning, `.ts` packaging, QGIS 3.28). No implementation started.
