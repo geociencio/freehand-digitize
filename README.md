@@ -222,6 +222,8 @@ The `uv` modernization guide is in
 - [English i18n base (implemented, release gated)](docs/maintainer/PLAN_I18N_ENGLISH_BASE.md)
 - [Versioned release notes](docs/releases/README.md)
 - [Release notes plan](docs/maintainer/PLAN_RELEASE_NOTES.md)
+- [Snapping and difference pick fixes (proposed)](docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md)
+- [Documentation, CI and packaging hardening (proposed)](docs/maintainer/PLAN_DOCS_CI_HARDENING.md)
 - [Documentation style guide](docs/maintainer/DOCS_STYLE_GUIDE.md)
 - [Commit guidelines](docs/maintainer/COMMIT_GUIDELINES.md)
 - [User guide conventions](docs/maintainer/USER_GUIDE_CONVENTIONS.md)

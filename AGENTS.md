@@ -332,6 +332,8 @@ Load only the relevant `SKILL.md` on demand.
 - **English i18n base (implemented, release gated)**: `docs/maintainer/PLAN_I18N_ENGLISH_BASE.md`
 - **Versioned release notes (implemented)**: `docs/releases/README.md`
 - **Release notes plan**: `docs/maintainer/PLAN_RELEASE_NOTES.md`
+- **Snapping and difference pick fixes (proposed)**: `docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md`
+- **Documentation, CI and packaging hardening (proposed)**: `docs/maintainer/PLAN_DOCS_CI_HARDENING.md`
 - **User guide**: `docs/user/USER_GUIDE.md`
 - **i18n guide**: `scripts/i18n/README.md`
 - **Architecture**: `docs/ARCHITECTURE_EN.md`

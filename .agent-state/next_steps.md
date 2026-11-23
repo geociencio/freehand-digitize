@@ -62,12 +62,18 @@ make zip
    2.1.0 until 2.0.2 is public in the portal.
 5. **Versioned release notes implemented**: `docs/releases/notes/vX.Y.Z.md`,
    `make release-notes-check` and the release workflow now use `--notes-file`.
-6. Release 2.1.0 only after 2.0.2 is public in the portal; create
+6. **Snapping/pick fixes**: approve/implement
+   `docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md` (terminal Ctrl snap,
+   negative/zero FIDs, no-overlap difference).
+7. **Docs/CI hardening**: approve/implement
+   `docs/maintainer/PLAN_DOCS_CI_HARDENING.md` (guide, index, CI permissions,
+   `.ts` packaging, QGIS 3.28).
+8. Release 2.1.0 only after 2.0.2 is public in the portal; create
    `docs/releases/notes/v2.1.0.md` at that point.
-7. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
+9. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,
    README, CHANGELOG, `pyproject.toml`).
-8. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
-9. Optional: add `ai-context-core` and `make context` if the team wants the
+10. Run the real QGIS 3.28 smoke test (or raise `qgisMinimumVersion`).
+11. Optional: add `ai-context-core` and `make context` if the team wants the
    generated context bundle; `AI_CONTEXT.md` is curated manually for now.
 
 ## ▶️ How to resume
