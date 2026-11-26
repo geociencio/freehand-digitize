@@ -226,7 +226,7 @@ runtime suite.
 - Added `examples/sample_freehand.geojson` and README.
 - `CHANGELOG.md` uses Keep a Changelog headings and compare links.
 - Tests remain **157** (64 unit + 93 integration); no runtime version bump.
-- **Commit:** to be filled by the P1 commit.
+- **Commit:** `5f6044d chore: harden docs, CI and packaging`.
 
 ---
 
