@@ -10,7 +10,7 @@ A QGIS plugin that restores the freehand line/polygon digitizing features of the
 classic [`freehandEditing`](https://github.com/vinayan/freehandEditing) plugin
 for **QGIS 3.28–4.x** (Qt5/Qt6), without external Python dependencies.
 
-## Current state (2026-11-22)
+## Current state (2026-11-25)
 
 - Version **2.0.2**; `metadata.txt` validated with `qgis-manage validate --strict`.
 - 2.0.1 fixes the deleted-layer `RuntimeError` with `sip.isdeleted` and the
@@ -93,20 +93,19 @@ make zip             # package + validate ZIP
 - Tag `v2.0.2` created and pushed; GitHub Release published with the ZIP and
   SHA256 assets.
 - 2.0.0 ZIP is **approved and public** on plugins.qgis.org (plugin ID 7091).
-- 2.0.1 ZIP is **uploaded to plugins.qgis.org and pending approval**.
-- 2.0.2 ZIP is published on GitHub and deployed; the user chose to keep it.
-  Portal upload waits for 2.0.1 approval.
+- 2.0.1 ZIP is **approved and public** on plugins.qgis.org (36 downloads).
+- 2.0.2 ZIP is published on GitHub and deployed; upload it to the portal now
+  using the original GitHub artifact.
 
 ## Pending
 
-- Portal: 2.0.1 uploaded, approval pending (recheck; 502 on 2026-11-22); do not
-  upload 2.0.2 until 2.0.1 is approved (or maintainers confirm superseding).
+- Portal: upload 2.0.2 now (original GitHub ZIP); after approval, open the
+  2.1.0 release gate.
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Roadmap approved; no stage started. On request, Stage 1 is
   Backspace-to-remove-vertex for 2.1.0.
 - QA gate fixed: `test-qgis` auto-detects/uses `QGIS_PYTHON` and fails if QGIS
   is unavailable (`REQUIRE_QGIS=1`).
-- Portal was unavailable (502) on 2026-11-22; recheck 2.0.1 approval later.
 - English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs implemented
   (unreleased); version stays 2.0.2 and release is gated until 2.0.2 is public
   in the portal.

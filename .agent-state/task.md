@@ -50,7 +50,7 @@
       no stage started. Stage 1 awaits an explicit kickoff.
 - [x] Deleted-layer lifecycle fix implemented as 2.0.1; GitHub Release
       published and deployed locally.
-- [x] 2.0.1 uploaded to plugins.qgis.org; approval pending.
+- [x] 2.0.1 approved and public on plugins.qgis.org (36 downloads).
 - [x] 2.0.2 guards published on GitHub and deployed; kept by the user.
 - [x] P1 deleted-layer guards implemented as 2.0.2; GitHub Release `v2.0.2`
       published and deployed; **kept by the user**; portal upload pending 2.0.1
@@ -59,7 +59,7 @@
 - [x] English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs
       implemented; 146 tests green. Version stays 2.0.2; release gated until
       2.0.2 is public in the portal.
-- [ ] Portal: 2.0.1 pending approval; 2.0.2 GitHub-only, not uploaded.
+- [ ] Upload 2.0.2 to plugins.qgis.org with the original GitHub ZIP.
 - [ ] Snapping/pick fixes (`docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md`)
       proposed; waiting for approval (P0).
 - [ ] Docs/CI/packaging hardening (`docs/maintainer/PLAN_DOCS_CI_HARDENING.md`)

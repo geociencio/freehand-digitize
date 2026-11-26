@@ -5,6 +5,19 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-25] - 2.0.1 aprobado en el portal (20:20)
+
+### Estado
+- 2.0.1 es la última versión estable en plugins.qgis.org; 36 descargas.
+- 2.0.2 sigue solo en GitHub; hay que subir el ZIP original.
+- 2.1.0 continúa bloqueado hasta la aprobación de 2.0.2.
+
+### Siguiente
+- Subir `dist/freehand_digitize.2.0.2.zip` (SHA `74246a6e…`) al portal.
+- Tras la aprobación, abrir el release gate de 2.1.0.
+
+---
+
 ## [2026-11-22] - Cierre de sesión: análisis y planes (22:40)
 
 ### Resultado

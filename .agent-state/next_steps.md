@@ -1,7 +1,7 @@
 # Next Steps — Freehand Digitize 2.0.2
 
-**Updated:** 2026-11-22
-**Session:** repo_analysis_plans
+**Updated:** 2026-11-25
+**Session:** start_2026-11-25
 
 ## ✅ Current state
 
@@ -50,19 +50,18 @@ make zip
 
 ## 📌 Remaining
 
-1. **Portal 2.0.1**: 2.0.0 is approved; 2.0.1 is uploaded and pending approval.
-   The portal returned 502 on 2026-11-22, so the status could not be rechecked.
-   2.0.2 is published on GitHub and kept; upload 2.0.2 after 2.0.1 is approved
-   (or if 2.0.1 is blocked).
-2. After 2.0.1/2.0.2 portal approval, announce the patch.
+1. **Upload 2.0.2 to the portal**: 2.0.1 is now approved and public (36
+   downloads). Upload the original GitHub 2.0.2 ZIP
+   (`74246a6e…`), not a rebuild with the unreleased i18n.
+2. After 2.0.2 portal approval, announce the patch and open the 2.1.0 release gate.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.
 4. **English i18n base + five catalogs implemented** (unreleased). Version stays
-   2.0.2. **Gated:** 2.0.1 pending and 2.0.2 GitHub-only; do not tag/publish
-   2.1.0 until 2.0.2 is public in the portal.
+   2.0.2. **Gated:** 2.0.2 portal upload/approval; do not tag/publish 2.1.0
+   until 2.0.2 is public in the portal.
 5. **Versioned release notes implemented**: `docs/releases/notes/vX.Y.Z.md`,
    `make release-notes-check` and the release workflow now use `--notes-file`.
-6. **Approve the two PROPOSED plans** (no code yet):
+6. **Approve the two PROPOSED plans** (no code yet, after 2.0.2 upload):
    `docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md` and
    `docs/maintainer/PLAN_DOCS_CI_HARDENING.md`.
 7. **After approval**: implement snapping/FIDs first (P0), then docs/CI and
