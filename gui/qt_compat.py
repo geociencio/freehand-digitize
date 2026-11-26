@@ -36,8 +36,12 @@ try:
     RUBBERBAND_LINE = Qgis.GeometryType.Line
     RUBBERBAND_POLYGON = Qgis.GeometryType.Polygon
 except AttributeError:  # pragma: no cover - QGIS 3.28 without scoped enums
-    RUBBERBAND_LINE = QgsWkbTypes.LineGeometry
-    RUBBERBAND_POLYGON = QgsWkbTypes.PolygonGeometry
+    try:
+        RUBBERBAND_LINE = QgsWkbTypes.GeometryType.LineGeometry
+        RUBBERBAND_POLYGON = QgsWkbTypes.GeometryType.PolygonGeometry
+    except AttributeError:
+        RUBBERBAND_LINE = getattr(QgsWkbTypes, "LineGeometry")
+        RUBBERBAND_POLYGON = getattr(QgsWkbTypes, "PolygonGeometry")
 
 try:
     SNAP_VERTEX = QgsPointLocator.Type.Vertex
