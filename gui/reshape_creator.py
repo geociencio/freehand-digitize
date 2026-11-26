@@ -115,6 +115,7 @@ class ReshapeCreator:
             geometry = feature.geometry()
             if geometry is None or geometry.isEmpty():
                 continue
+            original_wkt = geometry.asWkt()
             try:
                 result = geometry.reshapeGeometry(line)
             except (RuntimeError, TypeError, ValueError) as exc:
@@ -122,6 +123,9 @@ class ReshapeCreator:
                 continue
             if result != Qgis.GeometryOperationResult.Success:
                 self._log(f"reshape skipped for feature {feature.id()}: {result}")
+                continue
+            if geometry.asWkt() == original_wkt:
+                self._log(f"reshape was a no-op for feature {feature.id()}")
                 continue
             if geometry.isEmpty() or not geometry.isGeosValid():
                 self._warn(invalid_reshaped_geometry_text())

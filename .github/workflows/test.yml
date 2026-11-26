@@ -5,15 +5,26 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   quality:
     name: Lint, types, agent system and metadata
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5.4.2
         with:
           version: "0.12.23"
           enable-cache: true
@@ -25,13 +36,14 @@ jobs:
       - run: uv run --frozen ruff format --check .
       - run: make flake8
       - run: make docs-check
+      - run: make release-notes-check
       - run: make i18n-check
       - run: make analyzer
       - run: make mypy
       - run: uv run --frozen python .agent/tools/forge.py validate
       - run: uv run --frozen qgis-manage validate --strict
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         if: always()
         with:
           name: qgis-analyzer-report
@@ -41,10 +53,13 @@ jobs:
   test:
     name: Unit tests (mock-free)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5.4.2
         with:
           version: "0.12.23"
           enable-cache: true
@@ -62,10 +77,13 @@ jobs:
   qt6:
     name: Qt6 / QGIS 4 enum check
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     container:
       image: ghcr.io/qgis/pyqgis4-checker:main-ubuntu
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Run PyQGIS 4 migration check
         run: |
@@ -82,19 +100,35 @@ jobs:
           fi
           echo "No Qt6/PyQt6 enum incompatibilities detected."
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         if: always()
         with:
           name: pyqt6-checker-report
           path: pyqt6_checker.log
           retention-days: 7
 
+  qgis328:
+    name: Integration tests (QGIS 3.28)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Run integration tests on QGIS 3.28
+        run: |
+          docker run --rm -i             -v "$GITHUB_WORKSPACE:/app/freehand_digitize"             -w /app/freehand_digitize             -e QT_QPA_PLATFORM=offscreen             -e REQUIRE_QGIS=1             -e PYTHONPATH=/app:/usr/share/qgis/python             qgis/qgis:release-3_28             python3 tests/run_integration.py
+
   integration:
     name: Integration tests (QGIS)
     runs-on: ubuntu-latest
-    needs: [quality, qt6]
+    timeout-minutes: 20
+    needs: [quality, qt6, qgis328]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Build test image
         run: DOCKER_BUILDKIT=1 docker build -t freehand_digitize_test .

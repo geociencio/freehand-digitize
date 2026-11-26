@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import unittest
 
+from tests.integration.geometry_utils import geometries_equal
 from tests.integration.qgis_env import ensure_qgis_app, requires_qgis
 
 SQUARE_A = [(0, 0), (10, 0), (10, 10), (0, 10), (0, 0)]
@@ -66,7 +67,7 @@ class TestDifferenceCreator(unittest.TestCase):
         geometry = layer.getFeature(target_id).geometry()
         self.assertTrue(geometry.isGeosValid())
         expected = self._polygon([(5, 0), (0, 0), (0, 10), (5, 10), (5, 0)])
-        self.assertTrue(geometry.isTopologicallyEqual(expected))
+        self.assertTrue(geometries_equal(geometry, expected))
         self.assertEqual(layer.getFeature(target_id)["name"], "feature")
         self.assertEqual(layer.getFeature(cutter_id).geometry().asWkt(), original_cutter)
 
@@ -84,7 +85,7 @@ class TestDifferenceCreator(unittest.TestCase):
         original = layer.getFeature(target_id).geometry()
         undo_count = layer.undoStack().count()
         self.assertFalse(self.creator.apply(layer, target_id, cutter_id))
-        self.assertTrue(layer.getFeature(target_id).geometry().isTopologicallyEqual(original))
+        self.assertTrue(geometries_equal(layer.getFeature(target_id).geometry(), original))
         self.assertEqual(layer.undoStack().count(), undo_count)
         self.assertTrue(self.iface.messages.infos)
 

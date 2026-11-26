@@ -1,6 +1,7 @@
 # Implementation Plan — Documentation, CI and QGIS Packaging Hardening
 
-> **Status: PROPOSED** — no files, workflow or packaging changes until approval.
+> **Status: IMPLEMENTED (2026-11-25)** — docs, CI and packaging updated;
+> plugin version unchanged (**2.0.2**).
 >
 > Type: docs/CI/packaging | Plugin version: unchanged (**2.0.2**)
 > Date: 2026-11-22 | Procedure: [CHANGE_PROCEDURE.md](CHANGE_PROCEDURE.md)
@@ -210,7 +211,26 @@ runtime suite.
 
 ---
 
-## 8. Approval
+## 8. Results
+
+- `DOCS_STYLE_GUIDE.md` updated to 2.0.2, six catalogs and release notes.
+- Added `docs/README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`,
+  issue templates and a PR template.
+- CI: `permissions: contents: read`, pinned actions, `concurrency`,
+  timeouts, `persist-credentials: false`, `release-notes-check` and a real
+  **QGIS 3.28** integration job.
+- QGIS 3.28: **93/93 integration tests pass** in `qgis/qgis:release-3_28`;
+  `qgisMinimumVersion=3.28` is now verified.
+- Packaging: `.ts` catalogs are included, `examples/` is excluded; a temporary
+  `qgis-manage package --repo-check` passed.
+- Added `examples/sample_freehand.geojson` and README.
+- `CHANGELOG.md` uses Keep a Changelog headings and compare links.
+- Tests remain **157** (64 unit + 93 integration); no runtime version bump.
+- **Commit:** to be filled by the P1 commit.
+
+---
+
+## 9. Approval
 
 The plan is **PROPOSED**. Implementation starts only after approval.
 

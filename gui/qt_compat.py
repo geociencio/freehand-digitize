@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from qgis.core import Qgis, QgsPointLocator
+from qgis.core import Qgis, QgsPointLocator, QgsWkbTypes
 from qgis.PyQt.QtCore import Qt
 
 try:  # PyQt6 ships QAction in QtGui; PyQt5 keeps it in QtWidgets.
@@ -36,8 +36,8 @@ try:
     RUBBERBAND_LINE = Qgis.GeometryType.Line
     RUBBERBAND_POLYGON = Qgis.GeometryType.Polygon
 except AttributeError:  # pragma: no cover - QGIS 3.28 without scoped enums
-    RUBBERBAND_LINE = getattr(Qgis, "Line")
-    RUBBERBAND_POLYGON = getattr(Qgis, "Polygon")
+    RUBBERBAND_LINE = QgsWkbTypes.LineGeometry
+    RUBBERBAND_POLYGON = QgsWkbTypes.PolygonGeometry
 
 try:
     SNAP_VERTEX = QgsPointLocator.Type.Vertex

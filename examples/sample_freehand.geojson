@@ -1,0 +1,22 @@
+{
+  "type": "FeatureCollection",
+  "name": "freehand_sample",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name": "sample line"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[0, 0], [2, 1], [4, 0], [6, 1]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"name": "sample polygon"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[0, 3], [4, 3], [4, 7], [0, 7], [0, 3]]]
+      }
+    }
+  ]
+}

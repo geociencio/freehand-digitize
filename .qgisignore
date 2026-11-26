@@ -63,8 +63,11 @@ logs/
 *.log
 pyqt6_checker.log
 
-# Translations: ship compiled catalogs, exclude Qt sources
-*.ts
+# Translations: ship Qt sources and compiled catalogs for contributors
+# (the QGIS Cookbook recommends distributing .ts files)
+
+# Sample data is for the repository only
+/examples/
 
 # GitHub CLI cache created during release checks
 .gh-cache/

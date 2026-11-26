@@ -87,7 +87,7 @@
         "docs_check": {
             "date": "2026-11-19",
             "command": "make docs-check",
-            "result": "40 documentation files, relative links OK"
+            "result": "41 documentation files, relative links OK"
         },
         "i18n_check": {
             "date": "2026-11-19",
@@ -100,6 +100,11 @@
             "branch": "main",
             "commit": "99adabe",
             "result": "quality, unit, Qt6 and QGIS integration green"
+        },
+        "tests_qgis_328": {
+            "command": "QGIS 3.28 container integration",
+            "result": "93 ran, OK",
+            "date": "2026-11-25"
         }
     },
     "retries": {

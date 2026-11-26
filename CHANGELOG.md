@@ -1,11 +1,13 @@
 # Changelog
 
-## Unreleased
+## [Unreleased]
 
 ### Changed
 
 - English is now the UI source language; the Spanish catalog preserves the
   previous wording, and `pt_BR`, `fr`, `de`, `it` and `id` catalogs are included.
+- Ship the six `.ts` catalogs alongside `.qm`; add sample data and verify QGIS
+  3.28 in CI.
 - Release is gated until the 2.0.x portal submissions are resolved.
 
 ### Fixed
@@ -17,7 +19,9 @@
 - A non-overlapping cutter no longer creates an empty edit command.
 - Difference labels prefer the layer display expression/field.
 
-## 2.0.2 — 2026-11-21
+
+
+## [2.0.2] - 2026-11-21
 
 ### Fixed
 
@@ -26,7 +30,7 @@
   `ReshapeCreator`, `FreehandTool` and the plugin completion callbacks.
 - The operation is cancelled with a translated warning and no partial edit.
 
-## 2.0.1 — 2026-11-21
+## [2.0.1] - 2026-11-21
 
 ### Fixed
 
@@ -37,7 +41,7 @@
 - Plugin unload no longer fails after the active layer has been deleted.
 - The difference pick tool is released if its layer is destroyed.
 
-## 2.0.0 — 2026-11-19
+## [2.0.0] - 2026-11-19
 
 Modern rewrite of the plugin with full functional parity with
 [`freehandEditing`](https://github.com/vinayan/freehandEditing) and support for
@@ -101,3 +105,8 @@ QGIS 3.28–4.x (Qt5/Qt6).
   `freehandEditing/` (excluded from the ZIP).
 - `supportsQt6` in `metadata.txt` (deprecated with qgis-manage 0.17; QGIS 4
   Ready is marked with `qgisMaximumVersion >= 4.0`).
+
+[Unreleased]: https://github.com/geociencio/freehand-digitize/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/geociencio/freehand-digitize/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/geociencio/freehand-digitize/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/geociencio/freehand-digitize/releases/tag/v2.0.0

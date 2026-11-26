@@ -61,8 +61,7 @@
       2.0.2 is public in the portal.
 - [x] 2.0.2 uploaded to plugins.qgis.org; approval pending.
 - [x] Snapping/pick fixes implemented (157 tests, unreleased 2.1.0).
-- [ ] Docs/CI/packaging hardening (`docs/maintainer/PLAN_DOCS_CI_HARDENING.md`)
-      proposed; waiting for approval (P1).
+- [x] Docs/CI/packaging hardening implemented (P1); QGIS 3.28 verified.
 - [x] Versioned release notes implemented (`docs/releases/notes/vX.Y.Z.md`),
       validator and release workflow updated; 150 tests green.
 - [x] Qt teardown stabilized with `tests/run_integration.py` (10/10).

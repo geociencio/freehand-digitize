@@ -63,8 +63,8 @@ make zip
    `make release-notes-check` and the release workflow now use `--notes-file`.
 6. **P0 implemented**: terminal Ctrl snap, negative/zero FIDs, no-overlap
    difference and display labels; 157 tests.
-7. **P1 pending**: approve/implement `docs/maintainer/PLAN_DOCS_CI_HARDENING.md`
-   (docs index, CI permissions/pinning, `.ts` packaging, QGIS 3.28).
+7. **P1 implemented**: docs index/contribution files, CI hardening, `.ts`
+   packaging and QGIS 3.28 verification (93/93).
 8. Release 2.1.0 only after 2.0.2 is public in the portal; create
    `docs/releases/notes/v2.1.0.md` at that point.
 9. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,

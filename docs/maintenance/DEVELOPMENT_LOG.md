@@ -5,6 +5,19 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-25] - Hardening de docs, CI y paquete (22:20)
+
+### Resultado
+- Guía de estilo y docs index actualizados; CONTRIBUTING/SECURITY/SUPPORT y
+  plantillas de issue/PR.
+- CI con permisos mínimos, acciones fijadas por SHA, concurrencia, timeouts,
+  `release-notes-check` y job QGIS 3.28.
+- QGIS 3.28: 93/93 tests de integración.
+- ZIP temporal: seis `.ts` + `.qm`, sin `examples/`; `package --repo-check` OK.
+- `metadata.category=Vector` ya estaba; sin bump de versión.
+
+---
+
 ## [2026-11-25] - Fixes P0 de snapping y diferencia (21:40)
 
 ### Resultado

@@ -115,5 +115,5 @@ make zip             # package + validate ZIP
   `DeferredDelete` objects before exit to avoid intermittent teardown aborts.
 - P0 snapping/pick fixes are implemented unreleased: terminal Ctrl snap,
   negative/zero FIDs, no-overlap difference and display labels; 157 tests.
-- P1 `PLAN_DOCS_CI_HARDENING.md` (docs index, CI permissions/pinning, `.ts`
-  packaging, QGIS 3.28) remains PROPOSED.
+- P1 docs/CI/packaging hardening is implemented; QGIS 3.28 passes 93/93 and
+  `.ts` catalogs are in the ZIP.
