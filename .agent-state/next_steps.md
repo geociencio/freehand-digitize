@@ -50,9 +50,9 @@ make zip
 
 ## 📌 Remaining
 
-1. **Upload 2.0.2 to the portal**: 2.0.1 is now approved and public (36
-   downloads). Upload the original GitHub 2.0.2 ZIP
-   (`74246a6e…`), not a rebuild with the unreleased i18n.
+1. **2.0.2 portal approval**: 2.0.1 is approved and public; 2.0.2 is uploaded
+   and pending approval. Do not rebuild it; the submitted artifact is the
+   original GitHub ZIP (`74246a6e…`).
 2. After 2.0.2 portal approval, announce the patch and open the 2.1.0 release gate.
 3. **Feature roadmap approved**; no stage started. On request, begin Stage 1
    (Backspace) for 2.1.0.

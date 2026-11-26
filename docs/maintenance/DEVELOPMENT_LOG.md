@@ -5,6 +5,20 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-25] - 2.0.2 subido al portal (20:35)
+
+### Estado
+- 2.0.1 aprobado y público (36 descargas).
+- 2.0.2 subido al portal; aprobación pendiente.
+- Portal público aún muestra 2.0.1 como última estable.
+- 2.1.0 bloqueado hasta la aprobación de 2.0.2.
+
+### Siguiente
+- Esperar la aprobación de 2.0.2.
+- Después: abrir el release gate de 2.1.0 y crear su nota.
+
+---
+
 ## [2026-11-25] - 2.0.1 aprobado en el portal (20:20)
 
 ### Estado

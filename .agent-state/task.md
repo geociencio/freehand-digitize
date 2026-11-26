@@ -59,7 +59,7 @@
 - [x] English i18n base + `es`/`pt_BR`/`fr`/`de`/`it`/`id` catalogs
       implemented; 146 tests green. Version stays 2.0.2; release gated until
       2.0.2 is public in the portal.
-- [ ] Upload 2.0.2 to plugins.qgis.org with the original GitHub ZIP.
+- [x] 2.0.2 uploaded to plugins.qgis.org; approval pending.
 - [ ] Snapping/pick fixes (`docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md`)
       proposed; waiting for approval (P0).
 - [ ] Docs/CI/packaging hardening (`docs/maintainer/PLAN_DOCS_CI_HARDENING.md`)

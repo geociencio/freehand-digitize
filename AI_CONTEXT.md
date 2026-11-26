@@ -94,13 +94,13 @@ make zip             # package + validate ZIP
   SHA256 assets.
 - 2.0.0 ZIP is **approved and public** on plugins.qgis.org (plugin ID 7091).
 - 2.0.1 ZIP is **approved and public** on plugins.qgis.org (36 downloads).
-- 2.0.2 ZIP is published on GitHub and deployed; upload it to the portal now
-  using the original GitHub artifact.
+- 2.0.2 ZIP is published on GitHub, deployed and **uploaded to the portal;
+  approval pending** (original GitHub artifact).
 
 ## Pending
 
-- Portal: upload 2.0.2 now (original GitHub ZIP); after approval, open the
-  2.1.0 release gate.
+- Portal: 2.0.2 uploaded, approval pending; after approval, open the 2.1.0
+  release gate.
 - Optional: real QGIS 3.28 smoke test (the ZIP declares 3.28).
 - Roadmap approved; no stage started. On request, Stage 1 is
   Backspace-to-remove-vertex for 2.1.0.
