@@ -202,7 +202,7 @@ Expected count: **~160 tests**; recalculate after implementation.
 - Deprecated `isGeosEqual()` calls were replaced in tests.
 - Tests: **157** (64 unit + 93 integration); QGIS 4.2.2 and Qt5 container green.
 - Version remains 2.0.2; no tag/release.
-- **Commit:** to be filled by the P0 commit.
+- **Commit:** `f4f82b4 fix: correct terminal snapping and difference picks`.
 
 ---
 
