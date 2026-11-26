@@ -226,7 +226,8 @@ runtime suite.
 - Added `examples/sample_freehand.geojson` and README.
 - `CHANGELOG.md` uses Keep a Changelog headings and compare links.
 - Tests remain **157** (64 unit + 93 integration); no runtime version bump.
-- **Commit:** `5f6044d chore: harden docs, CI and packaging`.
+- **Commit:** `2f6d7b9 fix: keep QGIS 4 enum compatibility in the 3.28 fallback`
+  (on top of `5f6044d chore: harden docs, CI and packaging`).
 
 ---
 
