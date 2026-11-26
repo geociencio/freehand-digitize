@@ -1,6 +1,7 @@
 # Implementation Plan — Snapping and Difference Pick Fixes
 
-> **Status: PROPOSED** — no code changes until the user approves.
+> **Status: IMPLEMENTED (2026-11-25), UNRELEASED** — fixes are in the working
+> tree for 2.1.0; no tag yet.
 >
 > Target: **2.1.0** (with the already-unreleased i18n work) | Date: 2026-11-22
 > Procedure: [CHANGE_PROCEDURE.md](CHANGE_PROCEDURE.md)
@@ -189,7 +190,23 @@ Expected count: **~160 tests**; recalculate after implementation.
 
 ---
 
-## 8. Approval
+## 8. Results
+
+- `StrokeRecorder.add_final` bypasses the sampling threshold for the release
+  point; terminal Ctrl snapping works even after the cursor stops.
+- `DifferencePickTool` accepts valid negative and zero FIDs; edit-buffer
+  retrieval with `getFeature` works (probe and integration test).
+- Non-overlapping difference returns `False`, changes nothing and creates no
+  undo entry; new string translated into six catalogs.
+- Difference labels use `displayExpression()`/`displayField()`.
+- Deprecated `isGeosEqual()` calls were replaced in tests.
+- Tests: **157** (64 unit + 93 integration); QGIS 4.2.2 and Qt5 container green.
+- Version remains 2.0.2; no tag/release.
+- **Commit:** to be filled by the P0 commit.
+
+---
+
+## 9. Approval
 
 The plan is **PROPOSED**. It starts only after the user approves:
 

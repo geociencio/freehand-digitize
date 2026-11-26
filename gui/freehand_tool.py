@@ -240,7 +240,7 @@ class FreehandTool(QgsMapTool):
         layer_point = self.toLayerCoordinates(layer, device)
         layer_point, map_point = self._snapped_point(layer, device, layer_point, event.mapPoint())
         if (
-            self._recorder.add(
+            self._recorder.add_final(
                 (layer_point.x(), layer_point.y()),
                 (device.x(), device.y()),
             )

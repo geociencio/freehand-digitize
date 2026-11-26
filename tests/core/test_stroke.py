@@ -77,6 +77,29 @@ class TestStrokeRecorder(unittest.TestCase):
         self.assertFalse(recorder.add((2, 2), (2, 2)))
         self.assertEqual(len(recorder), 2)
 
+    def test_final_point_bypasses_threshold(self) -> None:
+        """The release point is kept even when it is within the threshold."""
+        recorder = StrokeRecorder(SamplingOptions(distance_px=2.0))
+        recorder.start((0, 0), (0, 0))
+        self.assertFalse(recorder.add((1, 1), (1, 1)))
+        self.assertTrue(recorder.add_final((1, 1), (1, 1)))
+        self.assertEqual(recorder.points, [(0.0, 0.0), (1.0, 1.0)])
+
+    def test_final_point_rejects_exact_duplicate(self) -> None:
+        """A final point identical to the last layer point is not duplicated."""
+        recorder = StrokeRecorder()
+        recorder.start((0, 0), (0, 0))
+        self.assertFalse(recorder.add_final((0, 0), (0, 0)))
+        self.assertEqual(len(recorder), 1)
+
+    def test_final_point_respects_cap(self) -> None:
+        """The final point cannot exceed the configured cap."""
+        recorder = StrokeRecorder(SamplingOptions(distance_px=0.0), max_points=2)
+        recorder.start((0, 0), (0, 0))
+        recorder.add((1, 1), (1, 1))
+        self.assertFalse(recorder.add_final((2, 2), (2, 2)))
+        self.assertEqual(len(recorder), 2)
+
     def test_points_property_returns_copy(self) -> None:
         """Mutating the returned list does not change the recorder."""
         recorder = StrokeRecorder()

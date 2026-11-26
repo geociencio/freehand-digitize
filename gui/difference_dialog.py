@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from qgis.core import QgsExpression, QgsExpressionContext
 from qgis.PyQt.QtWidgets import (
     QComboBox,
     QDialog,
@@ -106,17 +107,51 @@ class DifferenceDialog(QDialog):
 
 
 def _feature_label(layer: Any, feature_id: int) -> str:
-    """Return a compact label for a feature."""
-    label = f"fid {feature_id}"
+    """Return a compact label using the layer display expression/field."""
+    label = f"Feature {feature_id}"
     try:
         feature = layer.getFeature(feature_id)
-        for field in layer.fields():
-            value = feature[field.name()]
-            if value is not None and str(value) != "":
-                return f"{label} — {field.name()}={str(value)[:30]}"
+        if not feature.isValid():
+            return label
+        for value in (
+            _display_expression_value(layer, feature),
+            _display_field_value(layer, feature),
+            _first_text_value(layer, feature),
+        ):
+            if value:
+                return f"{label} — {value[:30]}"
     except (AttributeError, KeyError, RuntimeError, TypeError, ValueError):
         pass
     return label
+
+
+def _display_expression_value(layer: Any, feature: Any) -> str:
+    """Return the evaluated display expression, or an empty string."""
+    expression_text = layer.displayExpression() or ""
+    if not expression_text:
+        return ""
+    context = QgsExpressionContext()
+    context.setFeature(feature)
+    value = QgsExpression(expression_text).evaluate(context)
+    return "" if value is None else str(value)
+
+
+def _display_field_value(layer: Any, feature: Any) -> str:
+    """Return the display-field value, or an empty string."""
+    display_field = layer.displayField() or ""
+    if not display_field:
+        return ""
+    value = feature[display_field]
+    return "" if value is None else str(value)
+
+
+def _first_text_value(layer: Any, feature: Any) -> str:
+    """Return the first non-empty field value, or an empty string."""
+    for field in layer.fields():
+        value = feature[field.name()]
+        if value is not None and str(value) != "":
+            return str(value)
+    return ""
 
 
 def _button(box: Any, name: str) -> Any:

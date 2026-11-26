@@ -41,11 +41,16 @@ class DifferencePickTool(QgsMapToolIdentifyFeature):
 
     def _on_feature_identified(self, feature: Any) -> None:
         """Handle the first and second clicks."""
-        try:
-            feature_id = feature.id() if isinstance(feature, QgsFeature) else int(feature)
-        except (AttributeError, TypeError, ValueError):
-            return
-        if feature_id <= 0:
+        if isinstance(feature, QgsFeature):
+            if not feature.isValid():
+                return
+            feature_id = feature.id()
+        else:
+            try:
+                feature_id = int(feature)
+            except (TypeError, ValueError):
+                return
+        if feature_id is None:
             return
         if self._target_id is None:
             self._target_id = feature_id

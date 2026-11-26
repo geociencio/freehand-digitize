@@ -246,6 +246,30 @@ class TestFreehandTool(unittest.TestCase):
         self.assertAlmostEqual(first.y(), 5.0, places=3)
         self.assertNotAlmostEqual(last.x(), 5.0, places=3)
 
+    def test_ctrl_snaps_the_last_vertex(self) -> None:
+        """CTRL snaps the terminal vertex even after the cursor stops."""
+        self.add_polyline(self.layer, [(5.0, 5.0), (6.0, 6.0)])
+        snapping = self.canvas.snappingUtils()
+        snapping.setCurrentLayer(self.layer)
+        config = snapping.config()
+        config.setEnabled(True)
+        config.setMode(self.QgsSnappingConfig.SnappingMode.ActiveLayer)
+        config.setType(self.QgsSnappingConfig.SnappingType.Vertex)
+        config.setTolerance(20)
+        config.setUnits(self.QgsTolerance.Pixels)
+        snapping.setConfig(config)
+
+        self.tool.canvasPressEvent(self.mouse_event(self.canvas, self.PRESS, 100, 100))
+        self.tool.canvasMoveEvent(self.mouse_event(self.canvas, self.MOVE, 300, 300))
+        x, y = self.device_point(self.canvas, (6.0, 6.0))
+        self.tool.keyPressEvent(SimpleNamespace(key=lambda: self.KEY_CONTROL))
+        self.tool.canvasReleaseEvent(self.mouse_event(self.canvas, self.RELEASE, x, y))
+
+        self.assertEqual(len(self.emitted), 1)
+        last = self.emitted[0][0].asPolyline()[-1]
+        self.assertAlmostEqual(last.x(), 6.0, places=3)
+        self.assertAlmostEqual(last.y(), 6.0, places=3)
+
 
 if __name__ == "__main__":
     unittest.main()

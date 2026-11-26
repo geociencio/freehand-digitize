@@ -256,6 +256,14 @@ def difference_invalid_text() -> str:
     )
 
 
+def difference_no_overlap_text() -> str:
+    """Return the warning for a cutter that does not intersect the target."""
+    return QCoreApplication.translate(
+        "FreehandDigitize",
+        "The cutter does not intersect the target; the feature was not changed.",
+    )
+
+
 def difference_rejected_text(name: str) -> str:
     """Return the warning for a provider-rejected difference."""
     return QCoreApplication.translate(

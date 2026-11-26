@@ -62,6 +62,12 @@ class TestDifferenceDialog(unittest.TestCase):
         self.assertEqual(dialog.cutter_combo.currentData(), self.second)
         self.assertTrue(dialog._apply_button.isEnabled())
 
+    def test_uses_layer_display_expression(self) -> None:
+        """The combo label prefers the layer display expression."""
+        self.layer.setDisplayExpression('upper("name")')
+        dialog = self._dialog()
+        self.assertIn("FEATURE", dialog.target_combo.itemText(0))
+
     def test_same_feature_disables_apply(self) -> None:
         """Selecting the same target and cutter disables Apply."""
         dialog = self._dialog()

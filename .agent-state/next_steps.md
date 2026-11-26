@@ -61,11 +61,10 @@ make zip
    until 2.0.2 is public in the portal.
 5. **Versioned release notes implemented**: `docs/releases/notes/vX.Y.Z.md`,
    `make release-notes-check` and the release workflow now use `--notes-file`.
-6. **Approve the two PROPOSED plans** (no code yet, after 2.0.2 upload):
-   `docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md` and
-   `docs/maintainer/PLAN_DOCS_CI_HARDENING.md`.
-7. **After approval**: implement snapping/FIDs first (P0), then docs/CI and
-   packaging (P1); release remains gated.
+6. **P0 implemented**: terminal Ctrl snap, negative/zero FIDs, no-overlap
+   difference and display labels; 157 tests.
+7. **P1 pending**: approve/implement `docs/maintainer/PLAN_DOCS_CI_HARDENING.md`
+   (docs index, CI permissions/pinning, `.ts` packaging, QGIS 3.28).
 8. Release 2.1.0 only after 2.0.2 is public in the portal; create
    `docs/releases/notes/v2.1.0.md` at that point.
 9. Sync the remaining documentation drift (`FEATURE_PARITY`, `ARCHITECTURE_EN`,

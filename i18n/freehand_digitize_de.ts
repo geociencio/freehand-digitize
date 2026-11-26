@@ -227,26 +227,31 @@ Bei geografischen KBS deaktiviert, wo die Vereinfachung immer 0 verwendet.</tran
         </message>
         <message>
             <location filename="../gui/texts.py" line="261" />
+            <source>The cutter does not intersect the target; the feature was not changed.</source>
+            <translation>Das Schneideobjekt schneidet das Zielobjekt nicht; das Objekt wurde nicht verändert.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="269" />
             <source>Layer “{name}” rejected the difference.</source>
             <translation>Der Layer „{name}“ hat die Differenz abgelehnt.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="268" />
+            <location filename="../gui/texts.py" line="276" />
             <source>Freehand Digitize: feature difference</source>
             <translation>Freehand Digitize: Objektdifferenz</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="273" />
+            <location filename="../gui/texts.py" line="281" />
             <source>Apply</source>
             <translation>Anwenden</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="278" />
+            <location filename="../gui/texts.py" line="286" />
             <source>Difference applied.</source>
             <translation>Differenz angewendet.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="283" />
+            <location filename="../gui/texts.py" line="291" />
             <source>The layer is no longer available; the operation was cancelled.</source>
             <translation>Der Layer ist nicht mehr verfügbar; der Vorgang wurde abgebrochen.</translation>
         </message>

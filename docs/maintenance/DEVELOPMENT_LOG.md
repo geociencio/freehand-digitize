@@ -5,6 +5,18 @@
 > [`docs/maintainer/LOGGING_GUIDELINES.md`](../maintainer/LOGGING_GUIDELINES.md)
 > para el formato.
 
+## [2026-11-25] - Fixes P0 de snapping y diferencia (21:40)
+
+### Resultado
+- `StrokeRecorder.add_final`: el vértice final con Ctrl no se descarta.
+- `DifferencePickTool`: acepta FIDs negativos y cero del buffer de edición.
+- Diferencia sin solapamiento: sin comando de edición ni undo vacío.
+- Etiquetas con `displayExpression()`/`displayField()`.
+- 157 tests (64 unitarios + 93 integración); catálogos 50 mensajes.
+- Versión 2.0.2; sin release.
+
+---
+
 ## [2026-11-25] - 2.0.2 subido al portal (20:35)
 
 ### Estado

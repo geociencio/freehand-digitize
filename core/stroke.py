@@ -109,6 +109,33 @@ class StrokeRecorder:
         self._last_layer = layer
         return True
 
+    def add_final(
+        self,
+        layer_point: tuple[float, float],
+        device_point: tuple[float, float],
+    ) -> bool:
+        """Append the final vertex even inside the sampling threshold.
+
+        The release point must keep the Ctrl snap target; normal moves still
+        use the distance-based :meth:`add`.
+
+        Args:
+            layer_point: Final vertex in layer coordinates.
+            device_point: Final vertex in device coordinates.
+
+        Returns:
+            ``True`` when the vertex was recorded.
+        """
+        layer = (float(layer_point[0]), float(layer_point[1]))
+        if len(self._points) >= self.max_points:
+            return False
+        if self._last_layer is not None and layer == self._last_layer:
+            return False
+        self._points.append(layer)
+        self._last_device = (float(device_point[0]), float(device_point[1]))
+        self._last_layer = layer
+        return True
+
     @property
     def points(self) -> list[tuple[float, float]]:
         """Return a copy of the recorded layer-space vertices."""

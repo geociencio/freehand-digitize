@@ -56,6 +56,17 @@ class TestDifferencePickTool(unittest.TestCase):
         self.layer.dataProvider().addFeature(feature)
         return max(item.id() for item in self.layer.getFeatures())
 
+    def _add_editing(self, points) -> int:
+        """Add a feature in the edit buffer and return its (negative) id."""
+        geometry = self.QgsGeometry.fromPolygonXY([[self.QgsPointXY(x, y) for x, y in points]])
+        feature = self.QgsFeature(self.layer.fields())
+        feature.setGeometry(geometry)
+        feature.setAttribute(1, "edit feature")
+        if not self.layer.isEditable():
+            self.assertTrue(self.layer.startEditing())
+        self.assertTrue(self.layer.addFeature(feature))
+        return feature.id()
+
     def _click(self, feature_id: int) -> None:
         """Simulate identifying a feature."""
         self.tool._on_feature_identified(self.layer.getFeature(feature_id))
@@ -66,6 +77,22 @@ class TestDifferencePickTool(unittest.TestCase):
         self.assertEqual(self.targets, [self.first])
         self._click(self.second)
         self.assertEqual(self.pairs, [(self.first, self.second)])
+
+    def test_edit_buffer_negative_fids_can_be_picked(self) -> None:
+        """Features with negative edit-buffer ids are valid targets/cutters."""
+        first = self._add_editing([(0, 0), (10, 0), (10, 10), (0, 10), (0, 0)])
+        second = self._add_editing([(2, 2), (8, 2), (8, 8), (2, 8), (2, 2)])
+        self.assertLess(first, 0)
+        self._click(first)
+        self._click(second)
+        self.assertEqual(self.pairs, [(first, second)])
+
+    def test_zero_fid_is_accepted(self) -> None:
+        """A valid feature with id 0 is not rejected by the pick tool."""
+        feature = self.layer.getFeature(self.first)
+        feature.setId(0)
+        self.tool._on_feature_identified(feature)
+        self.assertEqual(self.targets, [0])
 
     def test_duplicate_target_is_rejected(self) -> None:
         """Clicking the target twice warns and keeps waiting."""

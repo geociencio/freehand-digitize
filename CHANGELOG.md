@@ -8,6 +8,15 @@
   previous wording, and `pt_BR`, `fr`, `de`, `it` and `id` catalogs are included.
 - Release is gated until the 2.0.x portal submissions are resolved.
 
+### Fixed
+
+- Terminal Ctrl snapping now keeps the snapped last vertex even when the cursor
+  stops before release.
+- Feature difference accepts valid edit-buffer features with negative or zero
+  FIDs.
+- A non-overlapping cutter no longer creates an empty edit command.
+- Difference labels prefer the layer display expression/field.
+
 ## 2.0.2 — 2026-11-21
 
 ### Fixed

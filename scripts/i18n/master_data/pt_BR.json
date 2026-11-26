@@ -36,6 +36,7 @@
     "Target feature:": "Feição de destino:",
     "The active layer uses a geographic CRS. In layer units the distance is measured in degrees; one degree of longitude is not a constant length (it depends on latitude). Use pixels for a uniform on-screen density.": "A camada ativa usa um SRC geográfico. Em unidades da camada, a distância é medida em graus; um grau de longitude não tem comprimento constante (depende da latitude). Use pixels para uma densidade uniforme na tela.",
     "The active layer uses a geographic CRS: the tolerance is ignored and simplification uses 0.": "A camada ativa usa um SRC geográfico: a tolerância é ignorada e a simplificação usa 0.",
+    "The cutter does not intersect the target; the feature was not changed.": "A feição de corte não intersecta a de destino; a feição não foi alterada.",
     "The cutter feature must be different from the target.": "A feição de corte deve ser diferente da de destino.",
     "The difference is empty; the feature was not changed.": "A diferença está vazia; a feição não foi alterada.",
     "The geometry of the feature you just drew is not valid.\nDo you want to use it anyway?": "A geometria da feição que você acabou de desenhar não é válida.\nDeseja usá-la mesmo assim?",

@@ -227,26 +227,31 @@ Se desactiva con CRS geográficos, donde la simplificación siempre usa 0.</tran
         </message>
         <message>
             <location filename="../gui/texts.py" line="261" />
+            <source>The cutter does not intersect the target; the feature was not changed.</source>
+            <translation>La entidad de corte no interseca a la objetivo; no se modificó la entidad.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="269" />
             <source>Layer “{name}” rejected the difference.</source>
             <translation>La capa «{name}» rechazó la diferencia.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="268" />
+            <location filename="../gui/texts.py" line="276" />
             <source>Freehand Digitize: feature difference</source>
             <translation>Freehand Digitize: diferencia de entidades</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="273" />
+            <location filename="../gui/texts.py" line="281" />
             <source>Apply</source>
             <translation>Aplicar</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="278" />
+            <location filename="../gui/texts.py" line="286" />
             <source>Difference applied.</source>
             <translation>Diferencia aplicada.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="283" />
+            <location filename="../gui/texts.py" line="291" />
             <source>The layer is no longer available; the operation was cancelled.</source>
             <translation>La capa ya no está disponible; se canceló la operación.</translation>
         </message>

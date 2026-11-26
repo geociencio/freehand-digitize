@@ -227,26 +227,31 @@ Dinonaktifkan untuk CRS geografis, di mana penyederhanaan selalu menggunakan 0.<
         </message>
         <message>
             <location filename="../gui/texts.py" line="261" />
+            <source>The cutter does not intersect the target; the feature was not changed.</source>
+            <translation>Fitur pemotong tidak berpotongan dengan fitur target; fitur tidak diubah.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="269" />
             <source>Layer “{name}” rejected the difference.</source>
             <translation>Lapisan “{name}” menolak selisih.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="268" />
+            <location filename="../gui/texts.py" line="276" />
             <source>Freehand Digitize: feature difference</source>
             <translation>Freehand Digitize: selisih fitur</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="273" />
+            <location filename="../gui/texts.py" line="281" />
             <source>Apply</source>
             <translation>Terapkan</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="278" />
+            <location filename="../gui/texts.py" line="286" />
             <source>Difference applied.</source>
             <translation>Selisih diterapkan.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="283" />
+            <location filename="../gui/texts.py" line="291" />
             <source>The layer is no longer available; the operation was cancelled.</source>
             <translation>Lapisan tidak lagi tersedia; operasi dibatalkan.</translation>
         </message>

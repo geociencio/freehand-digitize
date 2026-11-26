@@ -227,26 +227,31 @@ Désactivée pour les CRS géographiques, où la simplification utilise toujours
         </message>
         <message>
             <location filename="../gui/texts.py" line="261" />
+            <source>The cutter does not intersect the target; the feature was not changed.</source>
+            <translation>L'entité de découpe n'intersecte pas la cible ; l'entité n'a pas été modifiée.</translation>
+        </message>
+        <message>
+            <location filename="../gui/texts.py" line="269" />
             <source>Layer “{name}” rejected the difference.</source>
             <translation>La couche « {name} » a rejeté la différence.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="268" />
+            <location filename="../gui/texts.py" line="276" />
             <source>Freehand Digitize: feature difference</source>
             <translation>Freehand Digitize : différence d'entités</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="273" />
+            <location filename="../gui/texts.py" line="281" />
             <source>Apply</source>
             <translation>Appliquer</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="278" />
+            <location filename="../gui/texts.py" line="286" />
             <source>Difference applied.</source>
             <translation>Différence appliquée.</translation>
         </message>
         <message>
-            <location filename="../gui/texts.py" line="283" />
+            <location filename="../gui/texts.py" line="291" />
             <source>The layer is no longer available; the operation was cancelled.</source>
             <translation>La couche n'est plus disponible ; l'opération a été annulée.</translation>
         </message>

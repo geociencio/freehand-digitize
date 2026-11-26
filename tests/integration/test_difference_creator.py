@@ -66,7 +66,7 @@ class TestDifferenceCreator(unittest.TestCase):
         geometry = layer.getFeature(target_id).geometry()
         self.assertTrue(geometry.isGeosValid())
         expected = self._polygon([(5, 0), (0, 0), (0, 10), (5, 10), (5, 0)])
-        self.assertTrue(geometry.isGeosEqual(expected))
+        self.assertTrue(geometry.isTopologicallyEqual(expected))
         self.assertEqual(layer.getFeature(target_id)["name"], "feature")
         self.assertEqual(layer.getFeature(cutter_id).geometry().asWkt(), original_cutter)
 
@@ -79,11 +79,14 @@ class TestDifferenceCreator(unittest.TestCase):
         self.assertEqual(layer.getFeature(target_id).geometry().asWkt(), original)
 
     def test_difference_without_overlap(self) -> None:
-        """A non-overlapping cutter leaves the target unchanged."""
+        """A non-overlapping cutter leaves the target and undo stack unchanged."""
         layer, (target_id, cutter_id) = self._layer(SQUARE_A, SQUARE_FAR)
         original = layer.getFeature(target_id).geometry()
-        self.assertTrue(self.creator.apply(layer, target_id, cutter_id))
-        self.assertTrue(layer.getFeature(target_id).geometry().isGeosEqual(original))
+        undo_count = layer.undoStack().count()
+        self.assertFalse(self.creator.apply(layer, target_id, cutter_id))
+        self.assertTrue(layer.getFeature(target_id).geometry().isTopologicallyEqual(original))
+        self.assertEqual(layer.undoStack().count(), undo_count)
+        self.assertTrue(self.iface.messages.infos)
 
     def test_empty_difference_is_rejected(self) -> None:
         """A cutter covering the target leaves it unchanged."""

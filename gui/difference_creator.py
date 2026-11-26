@@ -12,6 +12,7 @@ from .texts import (
     difference_edit_command_text,
     difference_empty_text,
     difference_invalid_text,
+    difference_no_overlap_text,
     difference_rejected_text,
     difference_same_feature_text,
     edit_mode_required_text,
@@ -59,6 +60,9 @@ class DifferenceCreator:
             return None
         if target.geometry().isEmpty() or cutter.geometry().isEmpty():
             self._warn(difference_invalid_text())
+            return None
+        if not target.geometry().intersects(cutter.geometry()):
+            self._info(difference_no_overlap_text())
             return None
         result = self._difference(target.geometry(), cutter.geometry())
         if result is None:

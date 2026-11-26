@@ -60,8 +60,7 @@
       implemented; 146 tests green. Version stays 2.0.2; release gated until
       2.0.2 is public in the portal.
 - [x] 2.0.2 uploaded to plugins.qgis.org; approval pending.
-- [ ] Snapping/pick fixes (`docs/maintainer/PLAN_SNAPPING_PICK_FIXES.md`)
-      proposed; waiting for approval (P0).
+- [x] Snapping/pick fixes implemented (157 tests, unreleased 2.1.0).
 - [ ] Docs/CI/packaging hardening (`docs/maintainer/PLAN_DOCS_CI_HARDENING.md`)
       proposed; waiting for approval (P1).
 - [x] Versioned release notes implemented (`docs/releases/notes/vX.Y.Z.md`),

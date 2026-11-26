@@ -36,6 +36,7 @@
     "Target feature:": "Entité cible :",
     "The active layer uses a geographic CRS. In layer units the distance is measured in degrees; one degree of longitude is not a constant length (it depends on latitude). Use pixels for a uniform on-screen density.": "La couche active utilise un CRS géographique. En unités de la couche, la distance est mesurée en degrés ; un degré de longitude n'a pas une longueur constante (elle dépend de la latitude). Utilisez les pixels pour une densité uniforme à l'écran.",
     "The active layer uses a geographic CRS: the tolerance is ignored and simplification uses 0.": "La couche active utilise un CRS géographique : la tolérance est ignorée et la simplification utilise 0.",
+    "The cutter does not intersect the target; the feature was not changed.": "L'entité de découpe n'intersecte pas la cible ; l'entité n'a pas été modifiée.",
     "The cutter feature must be different from the target.": "L'entité de découpe doit être différente de la cible.",
     "The difference is empty; the feature was not changed.": "La différence est vide ; l'entité n'a pas été modifiée.",
     "The geometry of the feature you just drew is not valid.\nDo you want to use it anyway?": "La géométrie de l'entité que vous venez de dessiner n'est pas valide.\nVoulez-vous l'utiliser quand même ?",
